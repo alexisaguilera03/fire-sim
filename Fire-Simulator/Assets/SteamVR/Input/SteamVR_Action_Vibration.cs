@@ -46,7 +46,7 @@ namespace Valve.VR
         /// <param name="inputSource">The device you would like to execute the haptic action. Any if the action is not device specific.</param>
         public void Execute(float secondsFromNow, float durationSeconds, float frequency, float amplitude, SteamVR_Input_Sources inputSource)
         {
-            sourceMap[inputSource].Execute(secondsFromNow, durationSeconds, frequency, amplitude);
+            // sourceMap[inputSource].Execute(secondsFromNow, durationSeconds, frequency, amplitude);
         }
 
 
@@ -194,20 +194,20 @@ namespace Valve.VR
         /// <param name="inputSource">The device you would like to execute the haptic action. Any if the action is not device specific.</param>
         public void Execute(float secondsFromNow, float durationSeconds, float frequency, float amplitude)
         {
-            if (SteamVR_Input.isStartupFrame)
-                return;
+            // if (SteamVR_Input.isStartupFrame)
+            //     return;
 
-            timeLastExecuted = Time.realtimeSinceStartup;
+            // timeLastExecuted = Time.realtimeSinceStartup;
 
-            EVRInputError err = OpenVR.Input.TriggerHapticVibrationAction(handle, secondsFromNow, durationSeconds, frequency, amplitude, inputSourceHandle);
+            // EVRInputError err = OpenVR.Input.TriggerHapticVibrationAction(handle, secondsFromNow, durationSeconds, frequency, amplitude, inputSourceHandle);
 
-            //Debug.Log(string.Format("[{5}: haptic] secondsFromNow({0}), durationSeconds({1}), frequency({2}), amplitude({3}), inputSource({4})", secondsFromNow, durationSeconds, frequency, amplitude, inputSource, this.GetShortName()));
+            // //Debug.Log(string.Format("[{5}: haptic] secondsFromNow({0}), durationSeconds({1}), frequency({2}), amplitude({3}), inputSource({4})", secondsFromNow, durationSeconds, frequency, amplitude, inputSource, this.GetShortName()));
 
-            if (err != EVRInputError.None)
-                Debug.LogError("<b>[SteamVR]</b> TriggerHapticVibrationAction (" + fullPath + ") error: " + err.ToString() + " handle: " + handle.ToString());
+            // if (err != EVRInputError.None)
+            //     Debug.LogError("<b>[SteamVR]</b> TriggerHapticVibrationAction (" + fullPath + ") error: " + err.ToString() + " handle: " + handle.ToString());
 
-            if (onExecute != null)
-                onExecute.Invoke(vibrationAction, inputSource, secondsFromNow, durationSeconds, frequency, amplitude);
+            // if (onExecute != null)
+            //     onExecute.Invoke(vibrationAction, inputSource, secondsFromNow, durationSeconds, frequency, amplitude);
         }
     }
 

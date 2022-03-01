@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
 
         this.gameObject.SetActive(true);
 
-        m_Ridigbody.AddRelativeForce(Vector3.forward * blaster.m_Force, ForceMode.Impulse);
+        m_Ridigbody.AddRelativeForce(Vector3.forward * extinguisher.m_Force, ForceMode.Impulse);
         StartCoroutine(TrackLifetime());
     }
 
