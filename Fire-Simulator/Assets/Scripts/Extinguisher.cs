@@ -3,63 +3,76 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
+using Valve.VR.InteractionSystem;
+[RequireComponent(typeof(Interactable))]
 
 public class Extinguisher : MonoBehaviour
 {
-    public SteamVR_Action_Boolean m_FireAction = null;
-    public SteamVR_Action_Boolean m_ReloadAction = null;
-
-    public int m_Force = 10;
-    public int m_MaxProjectileCount = 6;
-    public float m_ReloadTime = 1.5f;
-
-    public Transform m_Barrel = null;
-    private ProjectilePool m_ProjectilePool = null;
-    private SteamVR_Behaviour_Pose m_pose = null;
-    public GameObject m_ProjectilePrefab = null;
+    public SteamVR_Action_Boolean grabAction = null;
+    public SteamVR_Action_Boolean releaseAction = null;
     public Text m_AmmoOutput = null;
 
-    private bool m_IsReloading = false;
-    private int m_FiredCount = 0;
+    private bool isAttached = false;
+    private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
+    
 
-    private void Awake()
-    {
-        m_pose = GetComponentInParent<SteamVR_Behaviour_Pose>();
-        m_ProjectilePool = new ProjectilePool(m_ProjectilePrefab, m_MaxProjectileCount);
-    }
+
+    private bool m_IsReloading = false;
+    private Hand AttachedHand = null;
+    private Interaction interactionSystem = null;
+
+
 
     private void Start()
     {
-        UpdateFiredCount(0);
+        interactionSystem = GetComponentInParent<Interaction>();
+        if (interactionSystem == null)
+        {
+            interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
+        }
     }
 
     private void Update()
     {
-        if(m_IsReloading)
+        if (!isAttached)
         {
             return;
         }
-        if(m_FireAction.GetStateDown(m_pose.inputSource))
+
+        //print(SteamVR_Actions._default.Squeeze.GetAxis(AttachedHand.handType));
+        if ( grabAction.GetStateDown(AttachedHand.handType)|| Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Fire();
+            //place code here to spawn particle effects in front of fire extinguisher
         }
 
-        if(m_ReloadAction.GetStateDown(m_pose.inputSource))
-            StartCoroutine(Reload());
-    }
+        if (releaseAction.GetStateDown(AttachedHand.handType) || Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            interactionSystem.Release(AttachedHand, gameObject, ref isAttached);
+            AttachedHand = null;
+        }
 
-    private void Fire()
+    }
+    void HandHoverUpdate(Hand hand)
     {
-        if(m_FiredCount >= m_MaxProjectileCount)
-        {
-            return;
-        }
-        Projectile targetProjectile = m_ProjectilePool.m_Projectiles[m_FiredCount];
-        targetProjectile.Launch(this);
-        UpdateFiredCount(m_FiredCount + 1);
+       interactionSystem.OnHandHover(hand, gameObject, ref isAttached);
+       if (!isAttached) return;
+       AttachedHand = hand;
+       softAttach = false;
     }
+}
 
-    private IEnumerator Reload()
+/*  private void Fire()
+  {
+      if(m_FiredCount >= m_MaxProjectileCount)
+      {
+          return;
+      }
+      Projectile targetProjectile = m_ProjectilePool.m_Projectiles[m_FiredCount];
+      targetProjectile.Launch(this);
+      UpdateFiredCount(m_FiredCount + 1);
+  }*/
+
+    /*private IEnumerator Reload()
     {
         if(m_FiredCount == 0)
             yield break;
@@ -70,11 +83,13 @@ public class Extinguisher : MonoBehaviour
         yield return new WaitForSeconds(m_ReloadTime);
         UpdateFiredCount(0);
         m_IsReloading = false;
-    }
+    }*/
 
-    private void UpdateFiredCount(int newValue)
+    /*private void UpdateFiredCount(int newValue)
     {
         m_FiredCount = newValue;
         m_AmmoOutput.text = (m_MaxProjectileCount - m_FiredCount).ToString();
-    }
-}
+    }*/
+
+   
+

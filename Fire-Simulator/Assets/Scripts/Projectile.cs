@@ -17,12 +17,12 @@ public class Projectile : MonoBehaviour
     public void Launch(Extinguisher extinguisher)
     {
         Debug.Log("Launch method ran");
-        transform.position = extinguisher.m_Barrel.position;
-        transform.rotation = extinguisher.m_Barrel.rotation;
+        //transform.position = extinguisher.m_Barrel.position;
+        //transform.rotation = extinguisher.m_Barrel.rotation;
 
         this.gameObject.SetActive(true);
 
-        m_Ridigbody.AddRelativeForce(Vector3.forward * extinguisher.m_Force, ForceMode.Impulse);
+        //m_Ridigbody.AddRelativeForce(Vector3.forward * extinguisher.m_Force, ForceMode.Impulse);
         StartCoroutine(TrackLifetime());
     }
 
