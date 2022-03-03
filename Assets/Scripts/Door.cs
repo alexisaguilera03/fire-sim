@@ -9,80 +9,50 @@ public class Door : MonoBehaviour
     public GameObject[] doorKnobs;
     public GameObject deadBolt;
     private Interaction interactionSystem = null;
-    private bool rotate = false;
-    private bool open = false;
+
     private Quaternion doorOriginalRotation;
 
     // Start is called before the first frame update
     void Start()
     {
         doorOriginalRotation = door.transform.rotation;
+        getInteractionSystem();
+        setParents();
+        setLimits();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+      
+    }
+    void getInteractionSystem()
+    {
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
         {
             interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
         }
+    }
 
+    void setParents()
+    {
         deadBolt.transform.parent = door.transform;
         foreach (GameObject knob in doorKnobs)
         {
             knob.transform.parent = door.transform;
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    void setLimits()
     {
-        if (rotate && !open)
-        {
-            openDoor();
-        }
+        HingeJoint joint = door.GetComponent<HingeJoint>();
+        JointLimits limits = joint.limits;
+        limits.min = -90;
+        limits.max = 90;
+        joint.limits = limits;
+        joint.useLimits = true;
 
-        else if (rotate && open)
-        {
-            closeDoor();
-        }
     }
 
-    void HandHoverUpdate(Hand hand)
-    {
-
-        interactionSystem.DoorHandHover(hand, ref rotate);
-    }
-
-    void openDoor()
-    {
-        StartCoroutine(Rotate());
-        door.transform.rotation = Quaternion.RotateTowards(door.transform.rotation, Quaternion.Euler(door.transform.rotation.x, door.transform.rotation.y + 90, door.transform.rotation.z), 250 * Time.deltaTime);
-    }
-
-    void closeDoor()
-    {
-        StartCoroutine(Rotate());
-        door.transform.rotation = Quaternion.RotateTowards(door.transform.rotation, doorOriginalRotation, 250 * Time.deltaTime);
-    }
-    void updateDoorStatus()
-    {
-        foreach(GameObject doorknob in doorKnobs)
-        {
-            Door[] components = doorknob.GetComponentsInChildren<Door>();
-            foreach (Door door in components)
-            {
-                if(door.gameObject == gameObject)
-                {
-                    continue;
-                }
-                door.open = open;
-            }
-        }
-    }
-
-    IEnumerator Rotate()
-    {
-        yield return new WaitForSeconds(2);
-        rotate = false;
-        open = !open;
-        updateDoorStatus();
-    }
 
 }
