@@ -11,11 +11,12 @@ public class Extinguisher : MonoBehaviour
     public SteamVR_Action_Boolean grabAction = null;
     public SteamVR_Action_Boolean releaseAction = null;
     public Text m_AmmoOutput = null;
+    public GameObject particles = null;
 
     private bool isAttached = false;
     private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
     
-
+    private bool particlesActive = false;
 
     private bool m_IsReloading = false;
     private Hand AttachedHand = null;
@@ -41,8 +42,17 @@ public class Extinguisher : MonoBehaviour
 
         //print(SteamVR_Actions._default.Squeeze.GetAxis(AttachedHand.handType));
         if ( grabAction.GetStateDown(AttachedHand.handType)|| Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            //place code here to spawn particle effects in front of fire extinguisher
+        {  
+            if(!particlesActive)
+            {
+                particles.gameObject.SetActive(true);
+                particlesActive = true;
+            }
+            else
+            {
+                particles.gameObject.SetActive(false);
+                particlesActive = false;
+            }
         }
 
         if (releaseAction.GetStateDown(AttachedHand.handType) || Input.GetKeyDown(KeyCode.Mouse1))
