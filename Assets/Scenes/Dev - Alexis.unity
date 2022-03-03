@@ -603,6 +603,7 @@ MonoBehaviour:
     actionPath: /actions/default/in/GrabGrip
     needsReinit: 0
   m_AmmoOutput: {fileID: 0}
+  particles: {fileID: 0}
 --- !u!1001 &1959160356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -658,6 +659,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1893486744838791738, guid: fe44196c5e4e1444db4df3069ca7c43e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eab36f348b1e5e54e963457bf6b10f26, type: 2}
     - target: {fileID: 1893486745305924819, guid: fe44196c5e4e1444db4df3069ca7c43e, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 27.905334
@@ -670,6 +675,10 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 13.140125
       objectReference: {fileID: 0}
+    - target: {fileID: 1893486746443221266, guid: fe44196c5e4e1444db4df3069ca7c43e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3635020642372ad4fbcc60914e99f2f6, type: 2}
     - target: {fileID: 2361563226054602385, guid: fe44196c5e4e1444db4df3069ca7c43e, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 23.619835
