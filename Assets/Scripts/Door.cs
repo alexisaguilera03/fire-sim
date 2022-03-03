@@ -61,12 +61,28 @@ public class Door : MonoBehaviour
         StartCoroutine(Rotate());
         door.transform.rotation = Quaternion.RotateTowards(door.transform.rotation, doorOriginalRotation, 250 * Time.deltaTime);
     }
+    void updateDoorStatus()
+    {
+        foreach(GameObject doorknob in doorKnobs)
+        {
+            Door[] components = doorknob.GetComponentsInChildren<Door>();
+            foreach (Door door in components)
+            {
+                if(door.gameObject == gameObject)
+                {
+                    continue;
+                }
+                door.open = open;
+            }
+        }
+    }
 
     IEnumerator Rotate()
     {
         yield return new WaitForSeconds(2);
         rotate = false;
         open = !open;
+        updateDoorStatus();
     }
 
 }
