@@ -13,6 +13,14 @@ public class Door : MonoBehaviour
     private Quaternion doorOriginalRotation;
 
     // Start is called before the first frame update
+    void Awake()
+    {
+
+        if (doorKnobs.Length < 1)
+        {
+            Debug.LogError("Doorknobs must be assigned for door functionality");
+        }
+    }
     void Start()
     {
         doorOriginalRotation = door.transform.rotation;
