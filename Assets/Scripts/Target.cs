@@ -7,8 +7,8 @@ using TMPro;
 public class Target : MonoBehaviour
 {
 
-    public GameObject winTextObject;
-    public TextMeshProUGUI countText;
+    // public GameObject winTextObject;
+    // public TextMeshProUGUI countText;
 
     public Color m_FlashDamageColor = Color.white;
 
@@ -73,7 +73,7 @@ public class Target : MonoBehaviour
     private void KillTarget()
     {
         gameObject.SetActive(false);
-        count = count + 1;
-        countText.text = "Count: " + count.ToString();
+        // count = count + 1;
+        // countText.text = "Count: " + count.ToString();
     }
 }

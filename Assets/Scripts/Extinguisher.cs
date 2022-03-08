@@ -12,18 +12,26 @@ public class Extinguisher : MonoBehaviour
     public SteamVR_Action_Boolean releaseAction = null;
     public Text m_AmmoOutput = null;
     public GameObject particles = null;
+    public GameObject projectile = null;
+    public GameObject barrel = null;
+
+    public float Force = 10;
 
     private bool isAttached = false;
     private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
     
     private bool particlesActive = false;
 
-    private bool m_IsReloading = false;
+    // private bool m_IsReloading = false;
     private Hand AttachedHand = null;
     private Interaction interactionSystem = null;
 
+    private Rigidbody projectileRigidBody = null;
 
-
+    private void Awake()
+    {
+        projectileRigidBody = projectile.GetComponent<Rigidbody>();
+    }
     private void Start()
     {
         interactionSystem = GetComponentInParent<Interaction>();
@@ -47,11 +55,14 @@ public class Extinguisher : MonoBehaviour
             {
                 particles.gameObject.SetActive(true);
                 particlesActive = true;
+                StopAllCoroutines();
+                StartCoroutine(Fire());
             }
             else
             {
                 particles.gameObject.SetActive(false);
                 particlesActive = false;
+                projectile.gameObject.SetActive(false);
             }
         }
 
@@ -63,12 +74,34 @@ public class Extinguisher : MonoBehaviour
         }
 
     }
+
+    private IEnumerator Fire()
+    {
+        while(particlesActive)
+        {
+            WaitForSeconds wait = new WaitForSeconds(1.0f);
+            projectile.transform.position = barrel.transform.position;
+            projectile.transform.rotation = barrel.transform.rotation;
+            projectile.gameObject.SetActive(true);
+            projectileRigidBody.AddRelativeForce(Vector3.forward * Force, ForceMode.Impulse);
+            yield return wait;
+            SetInnactive();
+        }
+    }
+
     void HandHoverUpdate(Hand hand)
     {
        interactionSystem.OnHandHover(hand, gameObject, ref isAttached);
        if (!isAttached) return;
        AttachedHand = hand;
        softAttach = false;
+    }
+
+    public void SetInnactive()
+    {
+        projectileRigidBody.velocity = Vector3.zero;
+        projectileRigidBody.angularVelocity = Vector3.zero;
+        projectile.gameObject.SetActive(false);
     }
 }
 
