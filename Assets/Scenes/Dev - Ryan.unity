@@ -11191,7 +11191,7 @@ MonoBehaviour:
   particles: {fileID: 781949372}
   projectile: {fileID: 1729423231}
   barrel: {fileID: 304605737}
-  Force: 50
+  Force: 25
 --- !u!136 &2004734965
 CapsuleCollider:
   m_ObjectHideFlags: 0
