@@ -59,6 +59,7 @@ public class Extinguisher : MonoBehaviour
         {
             interactionSystem.Release(AttachedHand, gameObject, ref isAttached);
             AttachedHand = null;
+            isAttached = false;
         }
 
     }
