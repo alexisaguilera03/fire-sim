@@ -346,7 +346,7 @@ MonoBehaviour:
     actionPath: /actions/default/in/GrabPinch
     needsReinit: 0
   releaseAction:
-    actionPath: /actions/default/in/GrabPinch
+    actionPath: /actions/default/in/GrabGrip
     needsReinit: 0
   m_AmmoOutput: {fileID: 0}
   particles: {fileID: 2066515945}
