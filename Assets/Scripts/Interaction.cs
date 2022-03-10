@@ -65,7 +65,7 @@ public class Interaction : MonoBehaviour
         heldObject.transform.parent = newObject.transform;
         heldObject.transform.rotation = newObject.transform.rotation;
         heldObject.transform.position = newObject.transform.position;
-        heldObject.transform.position += offset;
+        heldObject.transform.position += offset/2;
     }
 
 }
