@@ -60,6 +60,14 @@ public class Interaction : MonoBehaviour
         
     }
 
+    public void AttachToObject(GameObject heldObject, GameObject newObject, Vector3 offset)
+    {
+        heldObject.transform.parent = newObject.transform;
+        heldObject.transform.rotation = newObject.transform.rotation;
+        heldObject.transform.position = newObject.transform.position;
+        heldObject.transform.position += offset;
+    }
+
 }
 
 
