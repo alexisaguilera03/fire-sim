@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
@@ -66,6 +67,24 @@ public class Interaction : MonoBehaviour
         heldObject.transform.rotation = newObject.transform.rotation;
         heldObject.transform.position = newObject.transform.position;
         heldObject.transform.position += offset/2;
+    }
+
+    public bool checkAttached(GameObject newObject)
+    {
+        Pickup pickup = newObject.GetComponent(typeof(Pickup)) as Pickup;
+        return pickup.isAttached;
+    }
+
+    public bool checkIfHolding(Hand hand, ref bool isAttached)
+    {
+        GrabTypes bestGrabType = hand.GetBestGrabbingType(GrabTypes.Pinch);
+        if (bestGrabType == GrabTypes.None)
+        {
+            return false;
+        }
+
+        return true;
+
     }
 
 }

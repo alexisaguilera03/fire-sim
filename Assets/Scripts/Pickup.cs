@@ -11,8 +11,8 @@ public class Pickup : MonoBehaviour
     public SteamVR_Action_Boolean grabAction = null;
     public SteamVR_Action_Boolean releaseAction = null;
 
-    private bool isAttached;
-    private bool softAttach;
+    public bool isAttached = false;
+    public bool softAttach;
     private Hand attachedHand;
 
 
@@ -20,12 +20,23 @@ public class Pickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        interactionSystem = interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
+        interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isAttached) return;
+        if (softAttach)
+        {
+            if (!interactionSystem.checkIfHolding(attachedHand, ref isAttached))
+            {
+                interactionSystem.Release(attachedHand, gameObject, ref isAttached);
+                attachedHand = null;
+                isAttached = false;
+                return;
+            }
+        }
         if (releaseAction.GetStateDown(attachedHand.handType) || Input.GetKeyDown(KeyCode.Mouse1))
         {
             interactionSystem.Release(attachedHand, gameObject, ref isAttached);
@@ -34,11 +45,10 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    void OnHandHoverUpdate(Hand hand)
+    void HandHoverUpdate(Hand hand)
     {
         interactionSystem.OnHandHover(hand, gameObject, ref isAttached);
         if (!isAttached) return;
         attachedHand = hand;
-        softAttach = true;
     }
 }

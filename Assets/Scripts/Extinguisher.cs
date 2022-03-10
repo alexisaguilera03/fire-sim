@@ -25,6 +25,7 @@ public class Extinguisher : MonoBehaviour
     // private bool m_IsReloading = false;
     private Hand AttachedHand = null;
     private Interaction interactionSystem = null;
+    private Pickup pickup = null;
 
     private Rigidbody projectileRigidBody = null;
 
@@ -34,6 +35,7 @@ public class Extinguisher : MonoBehaviour
     }
     private void Start()
     {
+        pickup = gameObject.GetComponent(typeof(Pickup)) as Pickup;
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
         {
@@ -43,11 +45,16 @@ public class Extinguisher : MonoBehaviour
 
     private void Update()
     {
+        
         if (!isAttached)
         {
             return;
         }
 
+        if (AttachedHand is null)
+        {
+            AttachedHand = gameObject.transform.parent.gameObject.GetComponent(typeof(Hand)) as Hand;
+        }
         //print(SteamVR_Actions._default.Squeeze.GetAxis(AttachedHand.handType));
         if ( grabAction.GetStateDown(AttachedHand.handType)|| Input.GetKeyDown(KeyCode.Mouse0))
         {  
@@ -75,6 +82,11 @@ public class Extinguisher : MonoBehaviour
 
     }
 
+    private void LateUpdate()
+    {
+        isAttached = interactionSystem.checkAttached(gameObject);
+    }
+
     private IEnumerator Fire()
     {
         while(particlesActive)
@@ -89,13 +101,13 @@ public class Extinguisher : MonoBehaviour
         }
     }
 
-    void HandHoverUpdate(Hand hand)
-    {
-       interactionSystem.OnHandHover(hand, gameObject, ref isAttached);
-       if (!isAttached) return;
-       AttachedHand = hand;
-       softAttach = false;
-    }
+   // void HandHoverUpdate(Hand hand)
+    //{
+     //  interactionSystem.OnHandHover(hand, gameObject, ref isAttached);
+      // if (!isAttached) return;
+       //AttachedHand = hand;
+       //softAttach = false;
+    //}
 
     public void SetInnactive()
     {
