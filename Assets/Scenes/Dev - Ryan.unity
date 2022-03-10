@@ -11093,6 +11093,7 @@ GameObject:
   - component: {fileID: 2004734965}
   - component: {fileID: 2004734964}
   - component: {fileID: 2004734963}
+  - component: {fileID: 2004734968}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -11255,6 +11256,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004734961}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2004734968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004734961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1b2570b04e24845913dff96d5039f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabAction:
+    actionPath: /actions/default/in/GrabPinch
+    needsReinit: 0
+  releaseAction:
+    actionPath: /actions/default/in/GrabGrip
+    needsReinit: 0
+  isAttached: 0
+  softAttach: 0
 --- !u!1 &2075460709
 GameObject:
   m_ObjectHideFlags: 0
@@ -11269,6 +11290,7 @@ GameObject:
   - component: {fileID: 2075460711}
   - component: {fileID: 2075460714}
   - component: {fileID: 2075460715}
+  - component: {fileID: 2075460716}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -11431,6 +11453,26 @@ MonoBehaviour:
   highlightOnHover: 1
   hideHighlight: []
   hoverPriority: 0
+--- !u!114 &2075460716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075460709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1b2570b04e24845913dff96d5039f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabAction:
+    actionPath: /actions/default/in/GrabPinch
+    needsReinit: 0
+  releaseAction:
+    actionPath: /actions/default/in/GrabGrip
+    needsReinit: 0
+  isAttached: 0
+  softAttach: 0
 --- !u!1001 &2112247043
 PrefabInstance:
   m_ObjectHideFlags: 0
