@@ -7,8 +7,13 @@ public class Pan : MonoBehaviour
 {
     public AudioSource success;
     public GameObject lid;
+
     private bool isAttached;
+
     private Interaction interactionSystem = null;
+
+    private SoundEngine soundEngine = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +22,9 @@ public class Pan : MonoBehaviour
         {
             interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
         }
+
+        soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
+        success = gameObject.GetComponent(typeof(AudioSource)) as AudioSource;
     }
 
     // Update is called once per frame
@@ -32,6 +40,7 @@ public class Pan : MonoBehaviour
         {
             interactionSystem.Release(hand, lid, ref isAttached);
             interactionSystem.AttachToObject(lid, gameObject, Vector3.up);
+            soundEngine.PlaySoundEffect(success);
         }
     }
 }

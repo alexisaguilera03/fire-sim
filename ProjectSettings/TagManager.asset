@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InteractionSystem
   - Projectile
+  - SoundEngine
   layers:
   - Default
   - TransparentFX

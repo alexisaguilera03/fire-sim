@@ -45,7 +45,10 @@ public class Door : MonoBehaviour
 
     void setParents()
     {
-        deadBolt.transform.parent = door.transform;
+        if (deadBolt != null)
+        {
+            deadBolt.transform.parent = door.transform;
+        }
         foreach (GameObject knob in doorKnobs)
         {
             knob.transform.parent = door.transform;

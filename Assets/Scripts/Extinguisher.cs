@@ -25,6 +25,7 @@ public class Extinguisher : MonoBehaviour
     // private bool m_IsReloading = false;
     private Hand AttachedHand = null;
     private Interaction interactionSystem = null;
+    private SoundEngine soundEngine = null;
     private Pickup pickup = null;
 
     private Rigidbody projectileRigidBody = null;
@@ -41,6 +42,8 @@ public class Extinguisher : MonoBehaviour
         {
             interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
         }
+
+        soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
     }
 
     private void Update()
