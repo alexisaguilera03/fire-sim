@@ -61,12 +61,12 @@ public class Interaction : MonoBehaviour
         
     }
 
-    public void AttachToObject(GameObject heldObject, GameObject newObject, Vector3 offset)
+    public void AttachToObject(GameObject heldObject, GameObject newObject, Vector3 position)
     {
+        heldObject.GetComponent<Rigidbody>().isKinematic = true;
         heldObject.transform.parent = newObject.transform;
         heldObject.transform.rotation = newObject.transform.rotation;
-        heldObject.transform.position = newObject.transform.position;
-        heldObject.transform.position += offset/2;
+        heldObject.transform.position = position;
     }
 
     public bool checkAttached(GameObject newObject)
