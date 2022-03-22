@@ -25,6 +25,7 @@ public class Interaction : MonoBehaviour
 
     public void OnHandHover( Hand hand, GameObject objectToAttach, ref bool attached)
     {
+        if (attached) return;
         GrabTypes bestGrabType = hand.GetBestGrabbingType(GrabTypes.Pinch); //this line is used instead to of a SteamVR_Action_Boolean to allow 2d testing as well
         
         if ( bestGrabType != GrabTypes.None && !attached)
