@@ -797,6 +797,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3df22486f7ea7c94cb3e72f7d9b649be, type: 3}
+--- !u!1 &1204620323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7274962620271763810, guid: 3df22486f7ea7c94cb3e72f7d9b649be, type: 3}
+  m_PrefabInstance: {fileID: 1204620322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1218095387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1135,7 +1140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   success: {fileID: 1328426353}
   lid: {fileID: 965617240}
-  smoke: {fileID: 0}
+  smoke: {fileID: 1204620323}
 --- !u!135 &1328426355
 SphereCollider:
   m_ObjectHideFlags: 0
