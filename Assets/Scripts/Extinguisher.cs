@@ -15,7 +15,7 @@ public class Extinguisher : MonoBehaviour
     public GameObject projectile = null;
     public GameObject barrel = null;
 
-    public float Force = 0.5f;
+    public float Force = 5.5f;
 
     private bool isAttached = false;
     private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
@@ -80,6 +80,7 @@ public class Extinguisher : MonoBehaviour
             {
                 particles.gameObject.SetActive(false);
                 particlesActive = false;
+                StopAllCoroutines();
                 Destroy(firedProjectile);
             }
         }
@@ -92,6 +93,7 @@ public class Extinguisher : MonoBehaviour
             isAttached = false;
             if(firedProjectile != null)
             {
+                StopAllCoroutines();
                 Destroy(firedProjectile);
             }
             if (particles.gameObject.activeSelf)
