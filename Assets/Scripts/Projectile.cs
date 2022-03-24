@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float m_Lifetime = 5.0f;
-
-    private Rigidbody m_Ridigbody = null;
 
     private void Start()
     {
