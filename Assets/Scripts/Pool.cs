@@ -30,8 +30,8 @@ public class ProjectilePool : Pool
 
     public void SetAllProjectiles(bool value)
     {
-        foreach(Projectile projectile in m_Projectiles)
-            projectile.SetInnactive();
+        foreach (Projectile projectile in m_Projectiles) { }
+            //projectile.SetInnactive();
     }
 
 }
