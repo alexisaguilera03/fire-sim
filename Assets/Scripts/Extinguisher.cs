@@ -15,7 +15,7 @@ public class Extinguisher : MonoBehaviour
     public GameObject projectile = null;
     public GameObject barrel = null;
 
-    public float Force = 10;
+    public float Force = 0.5f;
 
     private bool isAttached = false;
     private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
@@ -49,7 +49,15 @@ public class Extinguisher : MonoBehaviour
 
     private void Update()
     {
-        
+        if (particlesActive && firedProjectile == null)
+        {
+            Fire();
+        }
+        if (projectileActive && particlesActive)
+        {
+           // firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
+        }
+
         if (!isAttached)
         {
             return;
@@ -60,7 +68,7 @@ public class Extinguisher : MonoBehaviour
             AttachedHand = gameObject.transform.parent.gameObject.GetComponent(typeof(Hand)) as Hand;
         }
         //print(SteamVR_Actions._default.Squeeze.GetAxis(AttachedHand.handType));
-        if ( grabAction.GetStateDown(AttachedHand.handType)|| Input.GetKeyDown(KeyCode.Mouse0))
+        if (grabAction.GetStateDown(AttachedHand.handType)|| Input.GetKeyDown(KeyCode.Mouse0))
         {  
             if(!particlesActive)
             {
@@ -75,11 +83,7 @@ public class Extinguisher : MonoBehaviour
                 Destroy(firedProjectile);
             }
         }
-
-        if (projectileActive && particlesActive)
-        {
-            firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * Force, ForceMode.Impulse);
-        }
+       
 
         if (releaseAction.GetStateDown(AttachedHand.handType) || Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -97,8 +101,10 @@ public class Extinguisher : MonoBehaviour
 
      void Fire()
     {
-        firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation, gameObject.transform) as GameObject;
+        firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
+        firedProjectile.GetComponent<MeshRenderer>().enabled = true; //delete this line after done
         projectileActive = true;
+        firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
         StartCoroutine(waitProjectile(2));
     }
 
