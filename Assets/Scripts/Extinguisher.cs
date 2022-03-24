@@ -90,6 +90,15 @@ public class Extinguisher : MonoBehaviour
             interactionSystem.Release(AttachedHand, gameObject, ref isAttached);
             AttachedHand = null;
             isAttached = false;
+            if(firedProjectile != null)
+            {
+                Destroy(firedProjectile);
+            }
+            if (particles.gameObject.activeSelf)
+            {
+                particles.gameObject.SetActive(false);
+                particlesActive = false;
+            }
         }
 
     }
@@ -102,6 +111,7 @@ public class Extinguisher : MonoBehaviour
      void Fire()
     {
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
+        firedProjectile.GetComponent<Projectile>().extinguisher = this;
         firedProjectile.GetComponent<MeshRenderer>().enabled = true; //delete this line after done
         projectileActive = true;
         firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);

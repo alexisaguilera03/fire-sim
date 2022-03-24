@@ -137,6 +137,10 @@ MonoBehaviour:
     needsReinit: 0
   m_AmmoOutput: {fileID: 0}
   particles: {fileID: 1878716597694781872}
+  projectile: {fileID: 0}
+  barrel: {fileID: 0}
+  Force: 0.5
+  projectileActive: 0
 --- !u!114 &1878716598120520682
 MonoBehaviour:
   m_ObjectHideFlags: 0
