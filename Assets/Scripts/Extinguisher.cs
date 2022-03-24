@@ -19,7 +19,7 @@ public class Extinguisher : MonoBehaviour
 
     private bool isAttached = false;
     private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
-    
+    public bool projectileActive = false;
     private bool particlesActive = false;
 
     // private bool m_IsReloading = false;
@@ -27,6 +27,7 @@ public class Extinguisher : MonoBehaviour
     private Interaction interactionSystem = null;
     private SoundEngine soundEngine = null;
     private Pickup pickup = null;
+    private GameObject firedProjectile;
 
     private Rigidbody projectileRigidBody = null;
 
@@ -65,15 +66,19 @@ public class Extinguisher : MonoBehaviour
             {
                 particles.gameObject.SetActive(true);
                 particlesActive = true;
-                StopAllCoroutines();
-                StartCoroutine(Fire());
+                Fire();
             }
             else
             {
                 particles.gameObject.SetActive(false);
                 particlesActive = false;
-                projectile.gameObject.SetActive(false);
+                Destroy(firedProjectile);
             }
+        }
+
+        if (projectileActive && particlesActive)
+        {
+            firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * Force, ForceMode.Impulse);
         }
 
         if (releaseAction.GetStateDown(AttachedHand.handType) || Input.GetKeyDown(KeyCode.Mouse1))
@@ -85,24 +90,25 @@ public class Extinguisher : MonoBehaviour
 
     }
 
-    private void LateUpdate()
+     void LateUpdate()
     {
         isAttached = interactionSystem.checkAttached(gameObject);
     }
 
-    private IEnumerator Fire()
+     void Fire()
     {
-        while(particlesActive)
-        {
-            WaitForSeconds wait = new WaitForSeconds(1.0f);
-            projectile.transform.position = barrel.transform.position;
-            projectile.transform.rotation = barrel.transform.rotation;
-            projectile.gameObject.SetActive(true);
-            projectileRigidBody.AddRelativeForce(Vector3.forward * Force, ForceMode.Impulse);
-            yield return wait;
-            SetInnactive();
-        }
+        firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation, gameObject.transform) as GameObject;
+        projectileActive = true;
+        StartCoroutine(waitProjectile(2));
     }
+
+     IEnumerator waitProjectile(int seconds)
+     {
+         yield return new WaitForSeconds(seconds);
+         projectileActive = false;
+         Destroy(firedProjectile);
+     }
+
 
    // void HandHoverUpdate(Hand hand)
     //{
