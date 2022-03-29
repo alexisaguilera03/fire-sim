@@ -7,19 +7,26 @@ public class Pan : MonoBehaviour
 {
     public AudioSource success;
     public GameObject lid;
-    public GameObject smoke;
+    public GameObject smokeGameObject;
+    public GameObject fireGameobject;
 
     private bool isAttached;
 
     private Interaction interactionSystem = null;
 
     private SoundEngine soundEngine = null;
+    private GameObject fire;
+    private GameObject smoke;
+
     private ParticleSystem smokeParticleSystem = null;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //todo: adjust positioning
+        fire = Instantiate(fireGameobject, transform.position, fireGameobject.transform.rotation);
+        smoke = Instantiate(smokeGameObject, transform.position, transform.rotation);
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
         {
