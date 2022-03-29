@@ -16,13 +16,21 @@ public class SoundEngine : MonoBehaviour
         
     }
 
-    public void PlaySoundEffect(AudioSource sound)
+    public void PlaySoundEffect(AudioSource sound, bool loop)
     {
+        sound.loop = loop;
         sound.Play();
     }
 
-    public void PlayMusic(AudioSource sound)
+    public void PlayMusic(AudioSource sound, bool loop)
     {
+        sound.loop = loop;
         sound.Play();
+    }
+
+
+    public void StopSound(AudioSource source)
+    {
+        source.Stop();
     }
 }

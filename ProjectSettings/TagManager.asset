@@ -7,6 +7,7 @@ TagManager:
   - InteractionSystem
   - Projectile
   - SoundEngine
+  - Fire
   layers:
   - Default
   - TransparentFX

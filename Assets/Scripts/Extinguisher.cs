@@ -114,7 +114,6 @@ public class Extinguisher : MonoBehaviour
     {
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
         firedProjectile.GetComponent<Projectile>().extinguisher = this;
-        firedProjectile.GetComponent<MeshRenderer>().enabled = true; //delete this line after done
         projectileActive = true;
         firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
         StartCoroutine(waitProjectile(2));
