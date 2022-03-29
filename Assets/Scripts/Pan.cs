@@ -28,6 +28,7 @@ public class Pan : MonoBehaviour
 
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
         success = gameObject.GetComponent(typeof(AudioSource)) as AudioSource;
+       
         smokeParticleSystem = smoke.GetComponentInChildren<ParticleSystem>();
     }
 
@@ -46,7 +47,11 @@ public class Pan : MonoBehaviour
             Vector3 position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.001f, gameObject.transform.position.z);
             interactionSystem.Release(hand, lid, ref isAttached);
             interactionSystem.AttachToObject(lid, gameObject, position);
-            soundEngine.PlaySoundEffect(success);
+            soundEngine.PlaySoundEffect(success, false);
+            foreach (ParticleSystem particleSystem in gameObject.GetComponents<ParticleSystem>())
+            {
+                particleSystem.Stop();
+        }
             smokeParticleSystem.Stop();
         }
     }

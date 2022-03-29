@@ -22,10 +22,11 @@ public class Projectile : MonoBehaviour
         {
             return;
         }
-       // if (collision.gameObject.CompareTag("Fire"))
-       // {
+        if (collision.gameObject.CompareTag("Fire"))
+        {
             //todo: put in code for hitting fire
-       // }
+            Destroy(collision.gameObject);
+        }
         extinguisher.StopAllCoroutines();
         Destroy(gameObject);
     }
