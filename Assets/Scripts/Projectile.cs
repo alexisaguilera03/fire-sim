@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
         {
             if (SuccessExtinguishAudioSource != null)
             {
-                soundEngine.PlaySoundEffect(SuccessExtinguishAudioSource, false, false);
+                soundEngine.PlaySoundEffectPriority(SuccessExtinguishAudioSource, false);
             }
             collision.gameObject.GetComponent<Fire>().stopFire();
         }

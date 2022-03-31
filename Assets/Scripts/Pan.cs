@@ -47,10 +47,11 @@ public class Pan : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        Hand hand = collider.transform.parent.gameObject.GetComponent<Hand>();
+        
         
         if (collider.gameObject == lid)
         {
+            Hand hand = collider.transform.parent.gameObject.GetComponent<Hand>();
             firePutOut = true;
             Vector3 position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.001f, gameObject.transform.position.z);
             interactionSystem.Release(hand, lid, ref isAttached);

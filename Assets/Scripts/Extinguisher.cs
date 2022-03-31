@@ -14,6 +14,7 @@ public class Extinguisher : MonoBehaviour
     public GameObject projectile = null;
     public GameObject barrel = null;
     public float Force = 5.5f;
+    
 
     private bool isAttached = false;
     private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
@@ -26,6 +27,8 @@ public class Extinguisher : MonoBehaviour
     private SoundEngine soundEngine = null;
     private Pickup pickup = null;
     private GameObject firedProjectile;
+    private AudioSource ExtinguisherAudioSource;
+    private AudioSource successExtinguisherAudioSource;
 
     private Rigidbody projectileRigidBody = null;
 
@@ -35,6 +38,13 @@ public class Extinguisher : MonoBehaviour
     }
     private void Start()
     {
+        AudioSource[] audioSources = gameObject.GetComponents<AudioSource>();
+        if (audioSources.Length == 0)
+        {
+            Debug.LogError("Extinguisher AudioSource must be set");
+        }
+        ExtinguisherAudioSource = audioSources[0];
+        successExtinguisherAudioSource = (audioSources.Length > 1) ? audioSources[1] : null;
         pickup = gameObject.GetComponent(typeof(Pickup)) as Pickup;
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
@@ -74,6 +84,7 @@ public class Extinguisher : MonoBehaviour
             {
                 particles.gameObject.SetActive(false);
                 particlesActive = false;
+                soundEngine.StopSound(ExtinguisherAudioSource);
                 StopAllCoroutines();
                 Destroy(firedProjectile);
             }
@@ -94,23 +105,24 @@ public class Extinguisher : MonoBehaviour
             {
                 particles.gameObject.SetActive(false);
                 particlesActive = false;
+                soundEngine.StopSound(ExtinguisherAudioSource);
             }
         }
-
     }
 
-     void LateUpdate()
+    void LateUpdate()
     {
         isAttached = interactionSystem.checkAttached(gameObject);
     }
 
-     void Fire()
+    void Fire()
     {
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
         firedProjectile.GetComponent<Projectile>().extinguisher = this;
-        firedProjectile.GetComponent<Projectile>().SuccessExtinguishAudioSource = gameObject.GetComponent<AudioSource>();
+        firedProjectile.GetComponent<Projectile>().SuccessExtinguishAudioSource = successExtinguisherAudioSource;
         projectileActive = true;
         firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
+        //soundEngine.PlaySoundEffect(ExtinguisherAudioSource, true, false);
         StartCoroutine(waitProjectile(2));
     }
 
@@ -120,6 +132,8 @@ public class Extinguisher : MonoBehaviour
          projectileActive = false;
          Destroy(firedProjectile);
      }
+
+
 }
 
    
