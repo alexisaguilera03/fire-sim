@@ -346,7 +346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &939118076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &939118079
 Canvas:
   m_ObjectHideFlags: 0
@@ -929,9 +929,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hello
-
-'
+  m_text: Put out the fire!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1713,6 +1711,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1596590483}
     m_Modifications:
+    - target: {fileID: 465389402831947945, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
+      propertyPath: grabAction.actionPath
+      value: /actions/default/in/GrabPinch
+      objectReference: {fileID: 0}
+    - target: {fileID: 465389402831947945, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
+      propertyPath: releaseAction.actionPath
+      value: /actions/default/in/GrabGrip
+      objectReference: {fileID: 0}
     - target: {fileID: 1644907994772121272, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
       propertyPath: m_Name
       value: fireExtinguisher
@@ -1720,6 +1726,14 @@ PrefabInstance:
     - target: {fileID: 1878716598120520683, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
       propertyPath: Force
       value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878716598120520683, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
+      propertyPath: grabAction.actionPath
+      value: /actions/default/in/GrabPinch
+      objectReference: {fileID: 0}
+    - target: {fileID: 1878716598120520683, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
+      propertyPath: releaseAction.actionPath
+      value: /actions/default/in/GrabGrip
       objectReference: {fileID: 0}
     - target: {fileID: 2132511287688035330, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
       propertyPath: m_RootOrder
