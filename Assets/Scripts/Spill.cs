@@ -5,16 +5,21 @@ using UnityEngine;
 public class Spill : MonoBehaviour
 {
 
-   public ParticleSystem myParticleSystem;
+   private ParticleSystem myParticleSystem;
+    private Quaternion originalPosition;
     // Start is called before the first frame update
     void Start()
     {
+        myParticleSystem = gameObject.GetComponentInChildren<ParticleSystem>();
+        originalPosition = gameObject.transform.rotation;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Angle(Vector3.down, transform.forward) <= 90f)
+        int difference = (int)Mathf.Round(originalPosition.x - gameObject.transform.position.x);
+        if(difference > 90f)
         {
             myParticleSystem.Play();
         }
