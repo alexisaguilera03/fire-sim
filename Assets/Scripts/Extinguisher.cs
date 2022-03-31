@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
@@ -14,7 +13,6 @@ public class Extinguisher : MonoBehaviour
     public GameObject particles = null;
     public GameObject projectile = null;
     public GameObject barrel = null;
-
     public float Force = 5.5f;
 
     private bool isAttached = false;
@@ -52,10 +50,6 @@ public class Extinguisher : MonoBehaviour
         if (particlesActive && firedProjectile == null)
         {
             Fire();
-        }
-        if (projectileActive && particlesActive)
-        {
-           // firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
         }
 
         if (!isAttached)
@@ -114,6 +108,7 @@ public class Extinguisher : MonoBehaviour
     {
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
         firedProjectile.GetComponent<Projectile>().extinguisher = this;
+        firedProjectile.GetComponent<Projectile>().SuccessExtinguishAudioSource = gameObject.GetComponent<AudioSource>();
         projectileActive = true;
         firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
         StartCoroutine(waitProjectile(2));
@@ -125,53 +120,7 @@ public class Extinguisher : MonoBehaviour
          projectileActive = false;
          Destroy(firedProjectile);
      }
-
-
-   // void HandHoverUpdate(Hand hand)
-    //{
-     //  interactionSystem.OnHandHover(hand, gameObject, ref isAttached);
-      // if (!isAttached) return;
-       //AttachedHand = hand;
-       //softAttach = false;
-    //}
-
-    public void SetInnactive()
-    {
-        projectileRigidBody.velocity = Vector3.zero;
-        projectileRigidBody.angularVelocity = Vector3.zero;
-        projectile.gameObject.SetActive(false);
-    }
 }
-
-/*  private void Fire()
-  {
-      if(m_FiredCount >= m_MaxProjectileCount)
-      {
-          return;
-      }
-      Projectile targetProjectile = m_ProjectilePool.m_Projectiles[m_FiredCount];
-      targetProjectile.Launch(this);
-      UpdateFiredCount(m_FiredCount + 1);
-  }*/
-
-    /*private IEnumerator Reload()
-    {
-        if(m_FiredCount == 0)
-            yield break;
-        m_AmmoOutput.text = "-";
-        m_IsReloading = true;
-        m_ProjectilePool.SetAllProjectiles(true);
-
-        yield return new WaitForSeconds(m_ReloadTime);
-        UpdateFiredCount(0);
-        m_IsReloading = false;
-    }*/
-
-    /*private void UpdateFiredCount(int newValue)
-    {
-        m_FiredCount = newValue;
-        m_AmmoOutput.text = (m_MaxProjectileCount - m_FiredCount).ToString();
-    }*/
 
    
 

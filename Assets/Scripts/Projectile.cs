@@ -6,10 +6,12 @@ using Valve.VR.InteractionSystem;
 public class Projectile : MonoBehaviour
 {
     public Extinguisher extinguisher;
+    public AudioSource SuccessExtinguishAudioSource;
+    private SoundEngine soundEngine;
 
     private void Start()
     {
-        
+        soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
     }
     private void Update()
     {
@@ -24,8 +26,11 @@ public class Projectile : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Fire"))
         {
-            //todo: put in code for hitting fire
-            Destroy(collision.gameObject);
+            if (SuccessExtinguishAudioSource != null)
+            {
+                soundEngine.PlaySoundEffect(SuccessExtinguishAudioSource, false, false);
+            }
+            collision.gameObject.GetComponent<Fire>().stopFire();
         }
         extinguisher.StopAllCoroutines();
         Destroy(gameObject);

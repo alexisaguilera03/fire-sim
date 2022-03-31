@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SoundEngine : MonoBehaviour
 {
+    public bool fireActive = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,16 +17,17 @@ public class SoundEngine : MonoBehaviour
         
     }
 
-    public void PlaySoundEffect(AudioSource sound, bool loop)
+    public void PlaySoundEffect(AudioSource sound, bool loop, bool duplicateAllowed) //duplicate allowed is boolean that will play a sound effect multiple times if true
     {
+        if (!duplicateAllowed && sound.isPlaying) return;
         sound.loop = loop;
-        sound.Play();
+        sound.PlayOneShot(sound.clip); ;
     }
 
     public void PlayMusic(AudioSource sound, bool loop)
     {
         sound.loop = loop;
-        sound.Play();
+        sound.PlayOneShot(sound.clip);
     }
 
 
