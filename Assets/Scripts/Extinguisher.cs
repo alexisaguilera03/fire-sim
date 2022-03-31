@@ -122,7 +122,7 @@ public class Extinguisher : MonoBehaviour
         firedProjectile.GetComponent<Projectile>().SuccessExtinguishAudioSource = successExtinguisherAudioSource;
         projectileActive = true;
         firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
-        //soundEngine.PlaySoundEffect(ExtinguisherAudioSource, true, false);
+        soundEngine.PlaySoundEffect(ExtinguisherAudioSource, true, false);
         StartCoroutine(waitProjectile(2));
     }
 
