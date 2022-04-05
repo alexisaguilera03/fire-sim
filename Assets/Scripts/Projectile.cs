@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,10 @@ using Valve.VR.InteractionSystem;
 
 public class Projectile : MonoBehaviour
 {
+
     public Extinguisher extinguisher;
+    public GameObject shotFrom;
+    public int index;
     public AudioSource SuccessExtinguishAudioSource;
     private SoundEngine soundEngine;
 
@@ -32,7 +36,17 @@ public class Projectile : MonoBehaviour
             }
             collision.gameObject.GetComponent<Fire>().stopFire();
         }
-        extinguisher.StopAllCoroutines();
+
+        if (extinguisher != null)
+        {
+            extinguisher.StopAllCoroutines();
+        }
+
+        if (shotFrom != null)
+        {
+            MonoBehaviour[] scripts = shotFrom.GetComponents<MonoBehaviour>();
+            scripts[index].StopAllCoroutines();
+        }
         Destroy(gameObject);
     }
 
