@@ -32,6 +32,11 @@ public class Spill : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if ((isPlaying && !ProjectileActive) || (projectile == null && ProjectileActive == true))
+        {
+            fire();
+            StartCoroutine(waitProjectile(3));
+        }
 
         if (gameObject.GetComponentInParent<Hand>() == null)
         {
@@ -48,11 +53,7 @@ public class Spill : MonoBehaviour
                 isPlaying = true;
                 myParticleSystem.transform.position = gameObject.transform.position;
                 myParticleSystem.Play();
-                if (!ProjectileActive)
-                {
-                    fire();
-                    StartCoroutine(waitProjectile(3));
-                }
+                
             }
             
         }
@@ -61,25 +62,28 @@ public class Spill : MonoBehaviour
             isPlaying = false;
             myParticleSystem.Stop();
         }
+        
     }
 
     void fire()
     {
+
         ProjectileActive = true;
-        projectile = Instantiate(ProjectileGameObject, transform.position, transform.rotation);
+        projectile = Instantiate(ProjectileGameObject, gameObject.transform.position, gameObject.transform.rotation);
+        Physics.IgnoreCollision(projectile.GetComponent<Collider>(), gameObject.GetComponent<Collider>());
         projectile.GetComponent<MeshRenderer>().enabled = true; //delete when done
         projectile.GetComponent<Projectile>().shotFrom = gameObject;
         projectile.GetComponent<Projectile>().index = index;
-
-
+        
     }
 
 
     
         IEnumerator waitProjectile(int seconds)
         {
-            ProjectileActive = false;
+            
             yield return new WaitForSeconds(seconds);
+            ProjectileActive = false;
             Destroy(projectile);
         }
 

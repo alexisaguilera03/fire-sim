@@ -24,10 +24,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == extinguisher.gameObject || collision.gameObject.GetComponent<Hand>()!=null)
-        {
-            return;
-        }
+
         if (collision.gameObject.CompareTag("Fire"))
         {
             if (SuccessExtinguishAudioSource != null)
@@ -39,6 +36,7 @@ public class Projectile : MonoBehaviour
 
         if (extinguisher != null)
         {
+            extinguisher.projectileActive = false;
             extinguisher.StopAllCoroutines();
         }
 
