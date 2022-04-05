@@ -42,9 +42,7 @@ public class Spill : MonoBehaviour
         {
             return;
         }
-        //Debug.Log("X value: " + gameObject.transform.parent.rotation.x);
         float rotation = Mathf.Abs(gameObject.transform.parent.rotation.x);
-        Debug.Log(rotation);
         if(rotation > 0.71f && rotation != 0)
         {
 
