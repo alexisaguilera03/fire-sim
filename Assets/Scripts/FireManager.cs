@@ -21,9 +21,6 @@ public class FireManager : MonoBehaviour
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
         FireAudioSource = gameObject.GetComponent<AudioSource>();
         StartCoroutine(wait(5));
-
-
-
     }
 
     // Update is called once per frame
