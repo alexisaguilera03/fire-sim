@@ -26,6 +26,7 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (!isAttached) return;
         if (softAttach)
         {
@@ -37,7 +38,7 @@ public class Pickup : MonoBehaviour
                 return;
             }
         }
-        if (releaseAction.GetStateDown(attachedHand.handType) || Input.GetKeyDown(KeyCode.Mouse1))
+        if (releaseAction.GetState(attachedHand.handType) || Input.GetKeyDown(KeyCode.Mouse1))
         {
             interactionSystem.Release(attachedHand, gameObject, ref isAttached);
             attachedHand = null;

@@ -9,7 +9,6 @@ public class Interaction : MonoBehaviour
 {
 
     private Hand.AttachmentFlags attachmentFlags = Hand.AttachmentFlags.ParentToHand | Hand.AttachmentFlags.DetachFromOtherHand | Hand.AttachmentFlags.TurnOnKinematic;
-    public SteamVR_Action_Boolean grabAction;
 
     // Start is called before the first frame update
     void Start()

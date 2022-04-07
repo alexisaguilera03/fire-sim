@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
+        //todo: remove win condition
         if (collision.gameObject.CompareTag("Fire"))
         {
             if (SuccessExtinguishAudioSource != null)

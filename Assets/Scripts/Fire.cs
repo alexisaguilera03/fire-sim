@@ -8,12 +8,14 @@ public class Fire : MonoBehaviour
     public AudioSource FireAudioSource;
     private GameObject smoke;
     private SoundEngine soundEngine = null;
+    private FireManager fireManager;
     private bool destroyFire = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        smoke = Instantiate(SmokeGameObject, transform.position, Quaternion.Euler(0,0,0));
+        fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
+        smoke = Instantiate(SmokeGameObject, transform.position, Quaternion.Euler(0,0,0), transform);
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
         if (!soundEngine.fireActive)
         {
@@ -25,18 +27,13 @@ public class Fire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        fireManager.spread(gameObject.transform.position);
     }
 
     public void stopFire()
     {
         if (destroyFire) return;
         destroyFire = true;
-        if (soundEngine.fireActive)
-        {
-            soundEngine.StopSound(FireAudioSource);
-            soundEngine.fireActive = false;
-        }
         smoke.GetComponentInChildren<ParticleSystem>().Stop();
         gameObject.GetComponent<ParticleSystem>().Stop();
         StartCoroutine(waitToDestroy());
@@ -48,5 +45,13 @@ public class Fire : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        if (fireManager.fireCount > 0)
+        {
+            fireManager.fireCount--;
+        }
     }
 }

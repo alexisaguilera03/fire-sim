@@ -14,7 +14,7 @@ public class Pan : MonoBehaviour
     private bool firePutOut = false;
 
     private Interaction interactionSystem = null;
-
+    private FireManager fireManager;
     private SoundEngine soundEngine = null;
     private GameObject fire;
 
@@ -23,9 +23,9 @@ public class Pan : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
+        fire = fireManager.createFireGameObject(transform.position, fireGameobject.transform.rotation);
         //todo: adjust positioning
-        fire = Instantiate(fireGameobject, transform.position, fireGameobject.transform.rotation);
-        //smoke = Instantiate(smokeGameObject, transform.position, transform.rotation);
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
         {
@@ -33,9 +33,6 @@ public class Pan : MonoBehaviour
         }
 
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
-        //success = gameObject.GetComponent(typeof(AudioSource)) as AudioSource;
-        
-
 
     }
 
@@ -58,9 +55,6 @@ public class Pan : MonoBehaviour
             interactionSystem.AttachToObject(lid, gameObject, position);
             soundEngine.PlaySoundEffect(success, false, false);
             fire.GetComponent<Fire>().stopFire();
-            //smoke.GetComponentInChildren<ParticleSystem>().Stop();
-            //fire.GetComponent<ParticleSystem>().Stop();
-            //smokeParticleSystem.Stop();
         }
     }
 }
