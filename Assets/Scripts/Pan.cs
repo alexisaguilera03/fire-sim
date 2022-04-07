@@ -7,19 +7,25 @@ public class Pan : MonoBehaviour
 {
     public AudioSource success;
     public GameObject lid;
-    public GameObject smoke;
+    public GameObject smokeGameObject;
+    public GameObject fireGameobject;
 
     private bool isAttached;
+    private bool firePutOut = false;
 
     private Interaction interactionSystem = null;
-
+    private FireManager fireManager;
     private SoundEngine soundEngine = null;
-    private ParticleSystem smokeParticleSystem = null;
+    private GameObject fire;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
+        fire = fireManager.createFireGameObject(transform.position, fireGameobject.transform.rotation);
+        //todo: adjust positioning
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
         {
@@ -27,32 +33,28 @@ public class Pan : MonoBehaviour
         }
 
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
-        success = gameObject.GetComponent(typeof(AudioSource)) as AudioSource;
-       
-        smokeParticleSystem = smoke.GetComponentInChildren<ParticleSystem>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        Hand hand = collider.transform.parent.gameObject.GetComponent<Hand>();
+        
         
         if (collider.gameObject == lid)
         {
+            Hand hand = collider.transform.parent.gameObject.GetComponent<Hand>();
+            firePutOut = true;
             Vector3 position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.001f, gameObject.transform.position.z);
             interactionSystem.Release(hand, lid, ref isAttached);
             interactionSystem.AttachToObject(lid, gameObject, position);
-            soundEngine.PlaySoundEffect(success, false);
-            foreach (ParticleSystem particleSystem in gameObject.GetComponents<ParticleSystem>())
-            {
-                particleSystem.Stop();
-        }
-            smokeParticleSystem.Stop();
+            soundEngine.PlaySoundEffect(success, false, false);
+            fire.GetComponent<Fire>().stopFire();
         }
     }
 }

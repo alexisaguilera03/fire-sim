@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
@@ -14,8 +13,8 @@ public class Extinguisher : MonoBehaviour
     public GameObject particles = null;
     public GameObject projectile = null;
     public GameObject barrel = null;
-
     public float Force = 5.5f;
+    
 
     private bool isAttached = false;
     private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
@@ -28,6 +27,8 @@ public class Extinguisher : MonoBehaviour
     private SoundEngine soundEngine = null;
     private Pickup pickup = null;
     private GameObject firedProjectile;
+    private AudioSource ExtinguisherAudioSource;
+    private AudioSource successExtinguisherAudioSource;
 
     private Rigidbody projectileRigidBody = null;
 
@@ -37,6 +38,13 @@ public class Extinguisher : MonoBehaviour
     }
     private void Start()
     {
+        AudioSource[] audioSources = gameObject.GetComponents<AudioSource>();
+        if (audioSources.Length == 0)
+        {
+            Debug.LogError("Extinguisher AudioSource must be set");
+        }
+        ExtinguisherAudioSource = audioSources[0];
+        successExtinguisherAudioSource = (audioSources.Length > 1) ? audioSources[1] : null;
         pickup = gameObject.GetComponent(typeof(Pickup)) as Pickup;
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
@@ -52,10 +60,6 @@ public class Extinguisher : MonoBehaviour
         if (particlesActive && firedProjectile == null)
         {
             Fire();
-        }
-        if (projectileActive && particlesActive)
-        {
-           // firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
         }
 
         if (!isAttached)
@@ -80,6 +84,7 @@ public class Extinguisher : MonoBehaviour
             {
                 particles.gameObject.SetActive(false);
                 particlesActive = false;
+                soundEngine.StopSound(ExtinguisherAudioSource);
                 StopAllCoroutines();
                 Destroy(firedProjectile);
             }
@@ -100,22 +105,25 @@ public class Extinguisher : MonoBehaviour
             {
                 particles.gameObject.SetActive(false);
                 particlesActive = false;
+                soundEngine.StopSound(ExtinguisherAudioSource);
             }
         }
-
     }
 
-     void LateUpdate()
+    void LateUpdate()
     {
         isAttached = interactionSystem.checkAttached(gameObject);
     }
 
-     void Fire()
+    void Fire()
     {
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
+        Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), gameObject.GetComponentInChildren<Collider>());
         firedProjectile.GetComponent<Projectile>().extinguisher = this;
+        firedProjectile.GetComponent<Projectile>().SuccessExtinguishAudioSource = successExtinguisherAudioSource;
         projectileActive = true;
         firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
+        soundEngine.PlaySoundEffect(ExtinguisherAudioSource, true, false);
         StartCoroutine(waitProjectile(2));
     }
 
@@ -127,51 +135,7 @@ public class Extinguisher : MonoBehaviour
      }
 
 
-   // void HandHoverUpdate(Hand hand)
-    //{
-     //  interactionSystem.OnHandHover(hand, gameObject, ref isAttached);
-      // if (!isAttached) return;
-       //AttachedHand = hand;
-       //softAttach = false;
-    //}
-
-    public void SetInnactive()
-    {
-        projectileRigidBody.velocity = Vector3.zero;
-        projectileRigidBody.angularVelocity = Vector3.zero;
-        projectile.gameObject.SetActive(false);
-    }
 }
-
-/*  private void Fire()
-  {
-      if(m_FiredCount >= m_MaxProjectileCount)
-      {
-          return;
-      }
-      Projectile targetProjectile = m_ProjectilePool.m_Projectiles[m_FiredCount];
-      targetProjectile.Launch(this);
-      UpdateFiredCount(m_FiredCount + 1);
-  }*/
-
-    /*private IEnumerator Reload()
-    {
-        if(m_FiredCount == 0)
-            yield break;
-        m_AmmoOutput.text = "-";
-        m_IsReloading = true;
-        m_ProjectilePool.SetAllProjectiles(true);
-
-        yield return new WaitForSeconds(m_ReloadTime);
-        UpdateFiredCount(0);
-        m_IsReloading = false;
-    }*/
-
-    /*private void UpdateFiredCount(int newValue)
-    {
-        m_FiredCount = newValue;
-        m_AmmoOutput.text = (m_MaxProjectileCount - m_FiredCount).ToString();
-    }*/
 
    
 

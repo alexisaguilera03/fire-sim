@@ -8,6 +8,9 @@ TagManager:
   - Projectile
   - SoundEngine
   - Fire
+  - FireManager
+  - Extinguisher
+  - SceneManager
   layers:
   - Default
   - TransparentFX
