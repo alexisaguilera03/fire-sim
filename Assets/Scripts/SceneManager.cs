@@ -71,5 +71,9 @@ public class SceneManager : MonoBehaviour
     {
         winCondition.Fires = fireManager.fireCount;
         winFunction();
+        if (test)
+        {
+            levelLoader.Trigger();
+        }
     }
 }
