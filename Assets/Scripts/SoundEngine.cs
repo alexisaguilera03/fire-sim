@@ -62,4 +62,9 @@ public class SoundEngine : MonoBehaviour
         priority = false;
         //todo: restore sound effects?
     }
+
+    public bool checkPlaying(AudioSource sound)
+    {
+        return sound.isPlaying;
+    }
 }

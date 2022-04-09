@@ -20,7 +20,7 @@ public class FireManager : MonoBehaviour
         rng = new Random((int) DateTime.Now.Ticks);
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
         FireAudioSource = gameObject.GetComponent<AudioSource>();
-        StartCoroutine(wait(5));
+        StartCoroutine(wait(15));
     }
 
     // Update is called once per frame
@@ -74,6 +74,6 @@ public class FireManager : MonoBehaviour
     public GameObject createFireGameObject(Vector3 position, Quaternion rotation)
     {
         fireCount++;
-        return Instantiate(FireGameObject, position, rotation);
+        return Instantiate(FireGameObject, position, rotation, transform);
     }
 }

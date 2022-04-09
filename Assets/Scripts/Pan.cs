@@ -17,12 +17,14 @@ public class Pan : MonoBehaviour
     private FireManager fireManager;
     private SoundEngine soundEngine = null;
     private GameObject fire;
+    private SceneManager sceneManager;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>();
         fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
         fire = fireManager.createFireGameObject(transform.position, fireGameobject.transform.rotation);
         //todo: adjust positioning
@@ -53,8 +55,14 @@ public class Pan : MonoBehaviour
             Vector3 position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.001f, gameObject.transform.position.z);
             interactionSystem.Release(hand, lid, ref isAttached);
             interactionSystem.AttachToObject(lid, gameObject, position);
-            soundEngine.PlaySoundEffect(success, false, false);
+
+            //soundEngine.PlaySoundEffect(success, false, false);
             fire.GetComponent<Fire>().stopFire();
+            if (fireManager.fireCount == 0)
+            {
+                sceneManager.winCondition.WinAudioSource = success;
+                sceneManager.winCondition.Win = true;
+            }
         }
     }
 }
