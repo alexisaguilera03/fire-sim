@@ -97,6 +97,7 @@ public class SceneManager : MonoBehaviour
     void Update()
     {
         //todo: fix loading not waiting for sound to finish
+        //todo: implement steamvr fade
         winCondition.Fires = fireManager.fireCount;
         winFunction();
         if (!winCondition.Win) return;
