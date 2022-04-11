@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class Fire : MonoBehaviour
 {
@@ -52,6 +53,20 @@ public class Fire : MonoBehaviour
         if (fireManager.fireCount > 0)
         {
             fireManager.fireCount--;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Hand>() != null)
+        {
+            if (collision.gameObject.GetComponentInChildren<Spill>() != null)
+            {
+                return;
+            }
+            fireManager.createFire(collision.gameObject.transform);
+            GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().loseCondition.handsOnFire = true;
+            print("lose");
         }
     }
 }

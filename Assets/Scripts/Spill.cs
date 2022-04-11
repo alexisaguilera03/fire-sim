@@ -32,6 +32,10 @@ public class Spill : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            gameObject.transform.parent.transform.rotation = Quaternion.Euler(91,0,0);
+        }
         if ((isPlaying && !ProjectileActive) || (projectile == null && ProjectileActive == true))
         {
             fire();

@@ -8,85 +8,58 @@ using Valve.VR;
 
 public class SceneManager : MonoBehaviour
 {
-    public struct WinCondition
-    {
-        public int Fires { get; set; }
-        public bool Win { get; set; }
-        public AudioSource WinAudioSource { get; set; }
-
-        public WinCondition(int fire = -1, bool won = false, AudioSource winAudioSource = null)
-        {
-            Fires = fire;
-            Win = won;
-            WinAudioSource = winAudioSource;
-        }
-
-        public bool checkWinCondition(int target = -1)
-        {
-            if (this.Fires <= target && target != -1)
-            {
-                this.Win = true;
-            }
-
-            return this.Win;
-        }
-
-        public bool checkWinCondition()
-        {
-            return this.Win;
-        }
-
-        public bool win(SoundEngine soundEngine)
-        {
-            if (WinAudioSource != null)
-            {
-                if (soundEngine.checkPlaying(WinAudioSource))
-                {
-                    return true;
-                }
-                soundEngine.PlaySoundEffectPriority(WinAudioSource, false);
-                return soundEngine.checkPlaying(WinAudioSource);
-
-            }
-
-            return false;
-        }
-
-
-    }
     public string scene1 = "Kitchen";
 
     public string scene2 = "Escape";
     public Scene currentScene;
-
-    public bool test = false;
-    private string nextScene;
-    private SteamVR_LoadLevel levelLoader;
     public WinCondition winCondition;
+    public LoseCondition loseCondition;
+    public bool test = false;
+    public bool load = false;
+    public float maxTime = -1f;
+
+    private string nextScene;
+
+    private SteamVR_LoadLevel levelLoader;
+    
     private Action winFunction;
+    private Action updateWinCondition;
+
     private FireManager fireManager;
+
     private SoundEngine soundEngine;
+
+    private GameObject player;
+
+    private bool loading = false;
+
 
     
     // Start is called before the first frame update
-    //todo: assign objects to use scene manager
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
         fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
         levelLoader = gameObject.GetComponent<SteamVR_LoadLevel>();
         currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        winCondition = gameObject.GetComponent<WinCondition>();
+        loseCondition = gameObject.GetComponent<LoseCondition>();
+        player = GameObject.FindGameObjectWithTag("MainCamera");
         switch (currentScene.name)
         {
             case "Kitchen":
                 nextScene = scene2;
-                winCondition = new WinCondition(0, default);
+                updateWinCondition = () => winCondition.Fires = fireManager.fireCount;
                 winFunction = () => winCondition.checkWinCondition(0);
+                loseCondition.enforceMaxFires = true;
+                loseCondition.maxFires = 10;
+                loseCondition.maxTime = 120f;
+                loseCondition.enforceMaxTime = true;
                 break;
             case "Escape":
                 //todo: update win condition for new scene
-                winCondition = new WinCondition(winCondition.Fires, default);
+                //todo: update win condition updater for new scene
+                //todo: update lose condition for new scene
                 nextScene = "";
                 break;
         }
@@ -96,15 +69,35 @@ public class SceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (test) StartLoad(); //remove when done
         //todo: fix loading not waiting for sound to finish
-        //todo: implement steamvr fade
-        winCondition.Fires = fireManager.fireCount;
-        winFunction();
-        if (!winCondition.Win) return;
-
-        if (!winCondition.win(soundEngine))
+        if (loseCondition.lost)
         {
-            levelLoader.Trigger();
+            Reset();
         }
+        updateWinCondition();
+        winFunction();
+        if (load)
+        {
+            StartLoad();
+        }
+    }
+
+    void StartLoad()
+    {
+        loseCondition.StopAllCoroutines();
+        if (loading) return; //prevent duplicate call
+        //todo: test fade in vr
+        SteamVR_Fade.Start(Color.clear, 0);
+        SteamVR_Fade.Start(Color.black, 5f);
+        //SteamVR_Fade.View(Color.black, 5f);
+        loading = true;
+        //levelLoader.Trigger();
+    }
+
+     void Reset()
+    {
+        nextScene = currentScene.name;
+        StartLoad();
     }
 }

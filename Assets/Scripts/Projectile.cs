@@ -12,10 +12,12 @@ public class Projectile : MonoBehaviour
     public int index;
     public AudioSource SuccessExtinguishAudioSource;
     private SoundEngine soundEngine;
+    private SceneManager sceneManager;
 
     private void Start()
     {
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
+        sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>();
     }
     private void Update()
     {
@@ -24,12 +26,11 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //todo: remove win condition
         if (collision.gameObject.CompareTag("Fire"))
         {
             if (SuccessExtinguishAudioSource != null)
             {
-                soundEngine.PlaySoundEffectPriority(SuccessExtinguishAudioSource, false);
+                sceneManager.winCondition.WinAudioSource = SuccessExtinguishAudioSource;
             }
             collision.gameObject.GetComponent<Fire>().stopFire();
         }
@@ -42,6 +43,10 @@ public class Projectile : MonoBehaviour
 
         if (shotFrom != null)
         {
+            if (shotFrom.gameObject.name == "Mug")
+            {
+                sceneManager.loseCondition.setLost(true);
+            }
             MonoBehaviour[] scripts = shotFrom.GetComponents<MonoBehaviour>();
             scripts[index].StopAllCoroutines();
         }

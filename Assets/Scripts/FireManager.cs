@@ -38,6 +38,7 @@ public class FireManager : MonoBehaviour
 
     public void spread(Vector3 center)
     {
+        if (fireCount >= maxFires) return;
         if (Spread) return; 
         Collider[] hitColliders = Physics.OverlapSphere(center, 5f);
         List <Collider> tmp = new List<Collider>();
@@ -65,14 +66,25 @@ public class FireManager : MonoBehaviour
         Spread = false; 
     }
 
+    public void createFire(Transform newTransform)
+    {
+        if (newTransform.gameObject.GetComponentInChildren<Fire>() != null)
+        {
+            return;
+        } 
+        if (fireCount >= maxFires) return;
+        Instantiate(FireGameObject, newTransform.position, FireGameObject.transform.rotation, newTransform);
+    }
     public void createFire(Vector3 position, Quaternion rotation)
     {
+        if (fireCount >= maxFires) return;
         Instantiate(FireGameObject, position, rotation, gameObject.transform);
         fireCount++;
     }
 
     public GameObject createFireGameObject(Vector3 position, Quaternion rotation)
     {
+        if (fireCount >= maxFires) return null;
         fireCount++;
         return Instantiate(FireGameObject, position, rotation, transform);
     }
