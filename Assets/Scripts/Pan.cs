@@ -50,11 +50,13 @@ public class Pan : MonoBehaviour
         
         if (collider.gameObject == lid)
         {
+            
             if (fireManager.fireCount == 1)
             {
                 sceneManager.winCondition.WinAudioSource = success;
                 //sceneManager.winCondition.Win = true;
             }
+            fire.GetComponent<Fire>().stopFire();
             Hand hand = collider.transform.parent.gameObject.GetComponent<Hand>();
             firePutOut = true;
             Vector3 position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.001f, gameObject.transform.position.z);
@@ -62,7 +64,7 @@ public class Pan : MonoBehaviour
             interactionSystem.AttachToObject(lid, gameObject, position);
 
             //soundEngine.PlaySoundEffect(success, false, false);
-            fire.GetComponent<Fire>().stopFire();
+            
             
         }
     }

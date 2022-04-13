@@ -7,9 +7,8 @@ using Valve.VR.InteractionSystem;
 
 public class Extinguisher : MonoBehaviour
 {
-    public SteamVR_Action_Boolean grabAction = null;
-    public SteamVR_Action_Boolean releaseAction = null;
-    public Text m_AmmoOutput = null;
+    private SteamVR_Action_Boolean grabAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+    private SteamVR_Action_Boolean releaseAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrapGrip");
     public GameObject particles = null;
     public GameObject projectile = null;
     public GameObject barrel = null;
@@ -17,9 +16,9 @@ public class Extinguisher : MonoBehaviour
     
 
     private bool isAttached = false;
-    private bool softAttach = false; //soft attach being true means the player has to hold the trigger to keep item in hand
     public bool projectileActive = false;
     private bool particlesActive = false;
+    private bool displayHint = true;
 
     // private bool m_IsReloading = false;
     private Hand AttachedHand = null;
@@ -29,13 +28,10 @@ public class Extinguisher : MonoBehaviour
     private GameObject firedProjectile;
     private AudioSource ExtinguisherAudioSource;
     private AudioSource successExtinguisherAudioSource;
+    private HintSystem hintSystem;
 
-    private Rigidbody projectileRigidBody = null;
 
-    private void Awake()
-    {
-        projectileRigidBody = projectile.GetComponent<Rigidbody>();
-    }
+
     private void Start()
     {
         AudioSource[] audioSources = gameObject.GetComponents<AudioSource>();
@@ -53,6 +49,7 @@ public class Extinguisher : MonoBehaviour
         }
 
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
+        hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
     }
 
     private void Update()
@@ -67,10 +64,12 @@ public class Extinguisher : MonoBehaviour
             return;
         }
 
-        if (AttachedHand is null)
+        if (displayHint)
         {
-            AttachedHand = gameObject.transform.parent.gameObject.GetComponent(typeof(Hand)) as Hand;
+            hintSystem.displayHint(HintSystem.Hint.Extinguisher);
+            displayHint = false;
         }
+        AttachedHand ??= gameObject.transform.parent.gameObject.GetComponent(typeof(Hand)) as Hand;
         //print(SteamVR_Actions._default.Squeeze.GetAxis(AttachedHand.handType));
         if (grabAction.GetStateDown(AttachedHand.handType)|| Input.GetKeyDown(KeyCode.Mouse0))
         {  
@@ -117,6 +116,7 @@ public class Extinguisher : MonoBehaviour
 
     void Fire()
     {
+        hintSystem.hintTaken = true;
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
         Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), gameObject.GetComponentInChildren<Collider>());
         firedProjectile.GetComponent<Projectile>().extinguisher = this;

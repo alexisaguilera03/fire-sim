@@ -8,8 +8,8 @@ using Valve.VR.InteractionSystem;
 
 public class Pickup : MonoBehaviour
 {
-    public SteamVR_Action_Boolean grabAction = null;
-    public SteamVR_Action_Boolean releaseAction = null;
+    public SteamVR_Action_Boolean grabAction =  SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+    public SteamVR_Action_Boolean releaseAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabGrip");
 
     public bool isAttached = false;
     public bool softAttach;

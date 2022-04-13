@@ -19,8 +19,12 @@ public class LoseCondition : MonoBehaviour
 
     private SoundEngine soundEngine;
 
-    private bool losing = false;
+    private Fade fader;
 
+    private HintSystem hintSystem;
+
+
+    private bool losing = false;
     private bool timing = false; 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +32,8 @@ public class LoseCondition : MonoBehaviour
         sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>();
         fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
+        fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
+        hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
 
 
     }
@@ -35,7 +41,13 @@ public class LoseCondition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(handsOnFire) startLose();
+        if (handsOnFire)
+        {
+            handsOnFire = false;
+            fireManager.Invoke("ExtinguishAllFires", 10);
+            fader.FadeIn(Color.white, 2, 10);
+            Invoke("startLose", 11);
+        }
         if(lose) startLose();
         if (!timing && enforceMaxTime && maxTime > 0)
         {
@@ -71,7 +83,8 @@ public class LoseCondition : MonoBehaviour
 
     void startLose() //todo: implement effects for explosion in kitchen and hands catching on fire
     {
-        if (losing) return; 
+        if (losing) return;
+        hintSystem.removeHint();
         losing = true;
 
         //do stuff

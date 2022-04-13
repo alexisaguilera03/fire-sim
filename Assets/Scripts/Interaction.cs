@@ -7,12 +7,15 @@ using Valve.VR.InteractionSystem;
 
 public class Interaction : MonoBehaviour
 {
-
     private Hand.AttachmentFlags attachmentFlags = Hand.AttachmentFlags.ParentToHand | Hand.AttachmentFlags.DetachFromOtherHand | Hand.AttachmentFlags.TurnOnKinematic;
+
+    private HintSystem hintSystem;
 
     // Start is called before the first frame update
     void Start()
     {
+        hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
+        hintSystem.displayHint(HintSystem.Hint.GrabObjects, 30, 30);
 
     }
 
@@ -29,7 +32,7 @@ public class Interaction : MonoBehaviour
         
         if ( bestGrabType != GrabTypes.None && !attached)
         {
-            
+            hintSystem.hintTaken = true;
             hand.AttachObject(objectToAttach, bestGrabType, attachmentFlags);
             attached = true;
 
@@ -64,7 +67,7 @@ public class Interaction : MonoBehaviour
     public void AttachToObject(GameObject heldObject, GameObject newObject, Vector3 position)
     {
         heldObject.GetComponent<Rigidbody>().isKinematic = true;
-        heldObject.transform.parent = newObject.transform;
+        //heldObject.transform.parent = newObject.transform;
         heldObject.transform.rotation = newObject.transform.rotation;
         heldObject.transform.position = position;
     }

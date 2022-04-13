@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundEngine : MonoBehaviour
 {
     public bool fireActive = false;
+    public bool mute = false;
 
     private bool priority = false;
     // Start is called before the first frame update
@@ -16,11 +17,22 @@ public class SoundEngine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (mute)
+        {
+            AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+            foreach (AudioSource audioSource in audioSources)
+            {
+                if (audioSource.isPlaying)
+                {
+                    StopSound(audioSource);
+                }
+            }
+        }
     }
 
     public void PlaySoundEffect(AudioSource sound, bool loop, bool duplicateAllowed) //duplicate allowed is boolean that will play a sound effect multiple times if true
     {
+        
         if (!duplicateAllowed && sound.isPlaying) return;
         if (priority) return;
         sound.loop = loop;

@@ -29,6 +29,8 @@ public class SceneManager : MonoBehaviour
 
     private SoundEngine soundEngine;
 
+    private Fade fader;
+
     private GameObject player;
 
     private bool loading = false;
@@ -38,13 +40,8 @@ public class SceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
-        fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
-        levelLoader = gameObject.GetComponent<SteamVR_LoadLevel>();
-        currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-        winCondition = gameObject.GetComponent<WinCondition>();
-        loseCondition = gameObject.GetComponent<LoseCondition>();
-        player = GameObject.FindGameObjectWithTag("MainCamera");
+        getObjects();
+        fader.FadeOut(0.5f);
         switch (currentScene.name)
         {
             case "Kitchen":
@@ -73,7 +70,7 @@ public class SceneManager : MonoBehaviour
         //todo: fix loading not waiting for sound to finish
         if (loseCondition.lost)
         {
-            Reset();
+            reset();
         }
         updateWinCondition();
         winFunction();
@@ -83,21 +80,39 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+
     void StartLoad()
     {
-        loseCondition.StopAllCoroutines();
         if (loading) return; //prevent duplicate call
-        //todo: test fade in vr
-        SteamVR_Fade.Start(Color.clear, 0);
-        SteamVR_Fade.Start(Color.black, 5f);
-        //SteamVR_Fade.View(Color.black, 5f);
         loading = true;
-        //levelLoader.Trigger();
+        Destroy(GameObject.FindGameObjectWithTag("InteractionSystem"));
+        loseCondition.StopAllCoroutines();
+        fader.FadeIn(Color.black, 1);
+        Invoke("Load", 2);
     }
 
-     void Reset()
+    void Load()
+    {
+        levelLoader.Trigger();
+    }
+
+     void reset()
     {
         nextScene = currentScene.name;
         StartLoad();
+
+    }
+
+
+     void getObjects()
+     {
+         soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
+         fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
+         levelLoader = gameObject.GetComponent<SteamVR_LoadLevel>();
+         currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+         winCondition = gameObject.GetComponent<WinCondition>();
+         loseCondition = gameObject.GetComponent<LoseCondition>();
+         player = GameObject.FindGameObjectWithTag("MainCamera");
+         fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
     }
 }

@@ -35,6 +35,11 @@ public class Fire : MonoBehaviour
     {
         if (destroyFire) return;
         destroyFire = true;
+        if (fireManager.fireCount - 1 <= 0 && soundEngine.fireActive)
+        {
+            soundEngine.StopSound(FireAudioSource);
+            soundEngine.fireActive = false;
+        }
         smoke.GetComponentInChildren<ParticleSystem>().Stop();
         gameObject.GetComponent<ParticleSystem>().Stop();
         StartCoroutine(waitToDestroy());
@@ -60,7 +65,7 @@ public class Fire : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Hand>() != null)
         {
-            if (collision.gameObject.GetComponentInChildren<Spill>() != null)
+            if (collision.gameObject.GetComponentInChildren<Spill>() == null)
             {
                 return;
             }

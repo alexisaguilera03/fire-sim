@@ -88,4 +88,14 @@ public class FireManager : MonoBehaviour
         fireCount++;
         return Instantiate(FireGameObject, position, rotation, transform);
     }
+
+    public void ExtinguishAllFires()
+    {
+        Fire[] fires = GameObject.FindObjectsOfType<Fire>();
+        StopAllCoroutines();
+        foreach (Fire fire in fires)
+        {
+            fire.stopFire();
+        }
+    }
 }

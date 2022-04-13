@@ -11,6 +11,8 @@ TagManager:
   - FireManager
   - Extinguisher
   - SceneManager
+  - HintSystem
+  - UI
   layers:
   - Default
   - TransparentFX
