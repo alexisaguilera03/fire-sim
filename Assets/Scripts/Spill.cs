@@ -6,12 +6,14 @@ using Valve.VR.InteractionSystem;
 public class Spill : MonoBehaviour
 {
     public GameObject ProjectileGameObject;
+    public GameObject spawner;
     private ParticleSystem myParticleSystem;
     private Quaternion originalPosition;
     private bool isPlaying = false;
     private GameObject projectile;
     private bool ProjectileActive = false;
     private int index;
+   
 
    // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class Spill : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        myParticleSystem.transform.position = spawner.transform.position;
         if (Input.GetKeyDown(KeyCode.R))
         {
             gameObject.transform.parent.transform.rotation = Quaternion.Euler(91,0,0);
@@ -71,7 +74,7 @@ public class Spill : MonoBehaviour
     {
 
         ProjectileActive = true;
-        projectile = Instantiate(ProjectileGameObject, gameObject.transform.position, gameObject.transform.rotation);
+        projectile = Instantiate(ProjectileGameObject, spawner.transform.position, gameObject.transform.rotation);
         Physics.IgnoreCollision(projectile.GetComponent<Collider>(), gameObject.GetComponent<Collider>());
         projectile.GetComponent<MeshRenderer>().enabled = true; //delete when done
         projectile.GetComponent<Projectile>().shotFrom = gameObject;

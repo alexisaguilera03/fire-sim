@@ -43,7 +43,7 @@ public class Projectile : MonoBehaviour
 
         if (shotFrom != null)
         {
-            if (shotFrom.gameObject.name == "Mug")
+            if (shotFrom.gameObject.name != "Mug")
             {
                 sceneManager.loseCondition.setLost(true);
             }
