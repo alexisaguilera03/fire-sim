@@ -34,6 +34,7 @@ public class SceneManager : MonoBehaviour
     private GameObject player;
 
     private bool loading = false;
+    private bool menu = false;
 
 
     
@@ -44,7 +45,15 @@ public class SceneManager : MonoBehaviour
         fader.FadeOut(0.5f);
         switch (currentScene.name)
         {
+            case "Menu":
+                updateWinCondition = null;
+                winFunction = null;
+                loseCondition = null;
+                menu = true;
+                nextScene = scene1;
+                break;
             case "Kitchen":
+                menu = false;
                 nextScene = scene2;
                 updateWinCondition = () => winCondition.Fires = fireManager.fireCount;
                 winFunction = () => winCondition.checkWinCondition(0);
@@ -68,6 +77,9 @@ public class SceneManager : MonoBehaviour
     {
         if (test) StartLoad(); //remove when done
         //todo: fix loading not waiting for sound to finish
+
+
+        if (menu) return;
         if (loseCondition.lost)
         {
             reset();
