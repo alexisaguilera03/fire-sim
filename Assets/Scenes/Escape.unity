@@ -4703,7 +4703,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -2422967922607868722, guid: 5cd15fb57f347423d981de2e43aca8d3, type: 3}
   m_PrefabInstance: {fileID: 1748458248}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &384768145
+--- !u!64 &384768148
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5420,7 +5420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 969129510904168015, guid: d2ff799fd5a53364a89c4561adbb60b0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2ff799fd5a53364a89c4561adbb60b0, type: 3}
@@ -7361,7 +7361,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3293989474905418230, guid: 5cd15fb57f347423d981de2e43aca8d3, type: 3}
   m_PrefabInstance: {fileID: 1748458248}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1027810324
+--- !u!64 &1027810327
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10666,7 +10666,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6768892014693176087, guid: 5cd15fb57f347423d981de2e43aca8d3, type: 3}
   m_PrefabInstance: {fileID: 1748458248}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2028808029
+--- !u!64 &2028808032
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

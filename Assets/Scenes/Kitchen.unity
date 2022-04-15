@@ -9601,6 +9601,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 969129510904168002, guid: d2ff799fd5a53364a89c4561adbb60b0, type: 3}
+      propertyPath: loadAsync
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 969129510904168002, guid: d2ff799fd5a53364a89c4561adbb60b0, type: 3}
+      propertyPath: postLoadSettleTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 969129510904168013, guid: d2ff799fd5a53364a89c4561adbb60b0, type: 3}
       propertyPath: m_RootOrder
       value: 11

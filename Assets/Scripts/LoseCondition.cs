@@ -13,6 +13,7 @@ public class LoseCondition : MonoBehaviour
     public bool lost = false;
     public bool handsOnFire = false;
 
+
     private SceneManager sceneManager;
 
     private FireManager fireManager;
@@ -29,13 +30,7 @@ public class LoseCondition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>();
-        fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
-        soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
-        fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
-        hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
-
-
+        getObjects();
     }
 
     // Update is called once per frame
@@ -96,5 +91,14 @@ public class LoseCondition : MonoBehaviour
         timing = true;
         yield return new WaitForSeconds(seconds);
         lose = true;
+    }
+
+    void getObjects()
+    {
+        sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>();
+        fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
+        soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
+        fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
+        hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
     }
 }
