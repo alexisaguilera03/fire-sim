@@ -62,6 +62,7 @@ public class SceneManager : MonoBehaviour
                 nextScene = scene2;
                 updateWinCondition = () => winCondition.Fires = fireManager.fireCount;
                 winFunction = () => winCondition.checkWinCondition(0);
+
                 loseCondition.enforceMaxFires = true;
                 loseCondition.maxFires = 10;
                 loseCondition.maxTime = 120f;
@@ -69,8 +70,13 @@ public class SceneManager : MonoBehaviour
                 break;
             case "Escape":
                 //todo: update win condition for new scene
-                //todo: update win condition updater for new scene
-                //todo: update lose condition for new scene
+                winFunction = () => winCondition.checkWinCondition();
+                updateWinCondition = () => winCondition.Win = winCondition.Win;  //effectively do nothing
+
+                loseCondition.enforceMaxTime = true;
+                loseCondition.maxTime = 60 * 5;
+                loseCondition.enforceMaxFires = false;
+                
                 nextScene = "";
                 break;
         }
