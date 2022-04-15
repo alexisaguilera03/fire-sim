@@ -16,6 +16,7 @@ public class Interaction : MonoBehaviour
     {
         hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
         hintSystem.displayHint(HintSystem.Hint.GrabObjects, 30, 30);
+        
 
     }
 
@@ -45,9 +46,27 @@ public class Interaction : MonoBehaviour
 
     }
 
+    void addRigidBody()
+    {
+        if (gameObject.GetComponent<Rigidbody>() != null) return;
+        gameObject.AddComponent<Rigidbody>();
+        gameObject.GetComponent<Rigidbody>().useGravity = false;
+    }
+
     public void Release(Hand hand, GameObject objectToDetach, ref bool attached)
     {
         hand.DetachObject(objectToDetach, true);
+        if (objectToDetach.GetComponent<Rigidbody>() is  null)
+        {
+            objectToDetach.gameObject.AddComponent<Rigidbody>();
+        }
+
+        Rigidbody objectRigidBody = objectToDetach.GetComponent<Rigidbody>();
+        if (!objectRigidBody.useGravity)
+        {
+            objectRigidBody.useGravity = true;
+        }
+
         attached = false;
 
     }

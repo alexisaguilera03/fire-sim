@@ -22,6 +22,8 @@ public class Pickup : MonoBehaviour
     void Start()
     {
         interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
+        gameObject.transform.SetParent(interactionSystem.transform, true);
+        gameObject.GetComponent<Outline>().OutlineMode = Outline.Mode.OutlineVisible;
     }
 
     // Update is called once per frame
