@@ -5,6 +5,7 @@ using Valve.VR;
 using Valve.VR.InteractionSystem;
 
 [RequireComponent(typeof(Interactable))]
+[RequireComponent(typeof(Outline))]
 
 public class Pickup : MonoBehaviour
 {

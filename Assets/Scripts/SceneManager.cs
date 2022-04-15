@@ -36,13 +36,16 @@ public class SceneManager : MonoBehaviour
     private bool loading = false;
     private bool menu = false;
 
+    private Vector3? playerSpawnPosition;
 
-    
+    private Quaternion? playerSpawnRotation;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         getObjects();
-        fader.FadeOut(0.5f);
         switch (currentScene.name)
         {
             case "Menu":
@@ -53,6 +56,8 @@ public class SceneManager : MonoBehaviour
                 nextScene = scene1;
                 break;
             case "Kitchen":
+                playerSpawnPosition = new Vector3(-2.7f, 0.5f, -5.2f);
+                playerSpawnRotation = Quaternion.Euler(0,180,0);
                 menu = false;
                 nextScene = scene2;
                 updateWinCondition = () => winCondition.Fires = fireManager.fireCount;
@@ -69,6 +74,8 @@ public class SceneManager : MonoBehaviour
                 nextScene = "";
                 break;
         }
+        SetSpawnPoint();
+        fader.FadeOut(0.5f);
         levelLoader.levelName = nextScene;
     }
 
@@ -92,6 +99,14 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    void SetSpawnPoint()
+    {
+        if (playerSpawnPosition is null || playerSpawnRotation is null) return;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = (Vector3)playerSpawnPosition;
+        player.transform.rotation = (Quaternion)playerSpawnRotation;
+    }
 
     void StartLoad()
     {
@@ -101,6 +116,13 @@ public class SceneManager : MonoBehaviour
         loseCondition.StopAllCoroutines();
         fader.FadeIn(Color.black, 1);
         Invoke("Load", 2);
+    }
+
+    public void LoadFirstLevel()
+    {
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Player"), currentScene);
+        Invoke("Load", 1);
+        
     }
 
     void Load()
@@ -115,7 +137,10 @@ public class SceneManager : MonoBehaviour
 
     }
 
+     void setPlayerPosition()
+     {
 
+     }
      void getObjects()
      {
          soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
