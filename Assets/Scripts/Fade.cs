@@ -72,7 +72,7 @@ public class Fade : MonoBehaviour
         setOutlinesOff();
         fadein = false;
         fader.color = new Color(targetColor.r, targetColor.g, targetColor.b, 0f);
-        for (float i = 0; i < seconds; i += Time.deltaTime)
+        for (float i = 0; i < seconds; i += Time.deltaTime/seconds)  //this line was changed! todo: check if division works
         {
             fader.color = new Color(targetColor.r, targetColor.g, targetColor.b, i);
             yield return null;
