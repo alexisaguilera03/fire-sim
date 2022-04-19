@@ -8,6 +8,9 @@ public class SoundEngine : MonoBehaviour
     public bool mute = false;
 
     private bool priority = false;
+    private bool checkDuplicatesOnStart = false;
+
+    private List<AudioSource> duplicateAudioSources = new List<AudioSource>();
     // Start is called before the first frame update
     void Start()
     {
@@ -30,13 +33,26 @@ public class SoundEngine : MonoBehaviour
         }
     }
 
+
+
     public void PlaySoundEffect(AudioSource sound, bool loop, bool duplicateAllowed) //duplicate allowed is boolean that will play a sound effect multiple times if true
     {
-        
+        /*if (!duplicateAllowed)
+        {
+            duplicateAudioSources.Add(sound);
+            if (!checkDuplicatesOnStart)
+            {
+                checkDuplicatesOnStart = true;
+                StartCoroutine(removeDuplicateSounds());
+            }
+            
+
+        }
+        */
         if (!duplicateAllowed && sound.isPlaying) return;
         if (priority) return;
         sound.loop = loop;
-        sound.PlayOneShot(sound.clip); ;
+        sound.PlayOneShot(sound.clip);
     }
 
     public void PlayMusic(AudioSource sound, bool loop)
@@ -78,5 +94,14 @@ public class SoundEngine : MonoBehaviour
     public bool checkPlaying(AudioSource sound)
     {
         return sound.isPlaying;
+    }
+
+    IEnumerator removeDuplicateSounds()
+    {
+        yield return new WaitForSeconds(1);
+        AudioSource keepPlaying = duplicateAudioSources[0];
+        duplicateAudioSources.RemoveAt(0);
+        List<AudioSource> duplicates = duplicateAudioSources.FindAll(source => source.clip.name == keepPlaying.clip.name);
+        duplicates.ForEach(StopSound);
     }
 }

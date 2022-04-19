@@ -48,6 +48,7 @@ public class FireManager : MonoBehaviour
         tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Fire"));
         tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Extinguisher"));
         tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("InteractionSystem"));
+        tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Zone"));
         hitColliders = tmp.ToArray();
         GameObject newObject = hitColliders[rng.Next(0, hitColliders.Length)].gameObject;
         createFire(newObject.transform.position, FireGameObject.transform.rotation);

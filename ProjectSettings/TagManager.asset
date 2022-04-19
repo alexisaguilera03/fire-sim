@@ -13,6 +13,7 @@ TagManager:
   - SceneManager
   - HintSystem
   - UI
+  - Zone
   layers:
   - Default
   - TransparentFX
