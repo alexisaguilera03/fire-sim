@@ -84,6 +84,7 @@ public class LoseCondition : MonoBehaviour
 
         //do stuff
         lost = true;
+        sceneManager.reset();
     }
 
     private IEnumerator startTimer(float seconds)

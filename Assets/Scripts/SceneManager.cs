@@ -136,7 +136,7 @@ public class SceneManager : MonoBehaviour
         levelLoader.Trigger();
     }
 
-     void reset()
+     public void reset()
     {
         nextScene = currentScene.name;
         StartLoad();
