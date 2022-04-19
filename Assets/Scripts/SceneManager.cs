@@ -54,6 +54,7 @@ public class SceneManager : MonoBehaviour
                 loseCondition = null;
                 menu = true;
                 nextScene = scene1;
+                WristTextManager.Instance.SetObjectiveText("Start your game or select which level you want to play!");
                 break;
             case "Kitchen":
                 playerSpawnPosition = new Vector3(-2.7f, 0.5f, -5.2f);
@@ -62,7 +63,7 @@ public class SceneManager : MonoBehaviour
                 nextScene = scene2;
                 updateWinCondition = () => winCondition.Fires = fireManager.fireCount;
                 winFunction = () => winCondition.checkWinCondition(0);
-
+                WristTextManager.Instance.SetObjectiveText("Put out the grease fire on the stove with one of the highighted objects!");
                 loseCondition.enforceMaxFires = true;
                 loseCondition.maxFires = 10;
                 loseCondition.maxTime = 120f;
@@ -72,7 +73,7 @@ public class SceneManager : MonoBehaviour
                 //todo: update win condition for new scene
                 winFunction = () => winCondition.checkWinCondition();
                 updateWinCondition = () => winCondition.Win = winCondition.Win;  //effectively do nothing
-
+                WristTextManager.Instance.SetObjectiveText("Find your way out of the house, make sure to avoid fire and smoke!");
                 loseCondition.enforceMaxTime = true;
                 loseCondition.maxTime = 60 * 5;
                 loseCondition.enforceMaxFires = false;

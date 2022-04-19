@@ -7,11 +7,9 @@ public class WristTextManager : MonoBehaviour
 {
 
     public static WristTextManager Instance;
-    private TextMeshProUGUI objectiveText;
-
+    public TextMeshProUGUI objectiveText;
     private void Start()
     {
-        objectiveText = GetComponent<TextMeshProUGUI>();
         Instance = this;
     }
 
