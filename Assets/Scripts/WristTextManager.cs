@@ -17,5 +17,4 @@ public class WristTextManager : MonoBehaviour
     {
         objectiveText.SetText(s);
     }
-
 }
