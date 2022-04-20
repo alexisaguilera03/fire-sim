@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundEngine : MonoBehaviour
 {
     public bool fireActive = false;
     public bool mute = false;
+
+    public AudioClip FireAudioClip;
 
     private bool priority = false;
     private bool checkDuplicatesOnStart = false;
@@ -20,6 +23,7 @@ public class SoundEngine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        preventDuplicateFireAudio();
         if (mute)
         {
             AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
@@ -33,8 +37,24 @@ public class SoundEngine : MonoBehaviour
         }
     }
 
-
-
+    void preventDuplicateFireAudio()
+    {
+        bool found = false;
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audioSource in audioSources)
+        {
+            if (audioSource.isPlaying && audioSource.clip.name == FireAudioClip.name && !found)
+            {
+                found = true;
+                continue;
+            } 
+            if (audioSource.isPlaying && audioSource.clip.name == FireAudioClip.name && found)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+    
     public void PlaySoundEffect(AudioSource sound, bool loop, bool duplicateAllowed) //duplicate allowed is boolean that will play a sound effect multiple times if true
     {
         /*if (!duplicateAllowed)
@@ -80,28 +100,6 @@ public class SoundEngine : MonoBehaviour
         sound.PlayOneShot(sound.clip);
     }
 
-    void waitUntilDone(AudioSource sound)
-    {
-        while (sound.isPlaying)
-        {
-            //do nothing
-        }
 
-        priority = false;
-        //todo: restore sound effects?
-    }
 
-    public bool checkPlaying(AudioSource sound)
-    {
-        return sound.isPlaying;
-    }
-
-    IEnumerator removeDuplicateSounds()
-    {
-        yield return new WaitForSeconds(1);
-        AudioSource keepPlaying = duplicateAudioSources[0];
-        duplicateAudioSources.RemoveAt(0);
-        List<AudioSource> duplicates = duplicateAudioSources.FindAll(source => source.clip.name == keepPlaying.clip.name);
-        duplicates.ForEach(StopSound);
-    }
 }

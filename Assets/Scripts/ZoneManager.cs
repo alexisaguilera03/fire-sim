@@ -51,13 +51,15 @@ public class ZoneManager : MonoBehaviour
 
         startZoneOnStart();
         if (soundEngine.fireActive) return;
-        soundEngine.mute = true;
-        StartCoroutine(unmute());
+        //soundEngine.mute = true;
+        //StartCoroutine(unmute());
     }
 
     // Update is called once per frame
     void Update()
     {
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, camera.transform.position.y, gameObject.transform.position.z);
         if (usePlayerHeight)
         {
             float playerHeight = player.transform.localPosition.y;

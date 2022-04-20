@@ -4638,9 +4638,9 @@ PrefabInstance:
       value: SoundEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7361947682676013610, guid: f28e863b9a93aba40a81eccb9c198c28, type: 3}
-      propertyPath: mute
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: FireAudioSource
+      value: 
+      objectReference: {fileID: 8300000, guid: 6f4a2d59aa3654a44b45b679b154684d, type: 3}
     - target: {fileID: 7361947682676013611, guid: f28e863b9a93aba40a81eccb9c198c28, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -5236,6 +5236,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5431536014652224781, guid: 01bcb9c9c87f4374c99abcac5939388e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5431536014652224782, guid: 01bcb9c9c87f4374c99abcac5939388e, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
