@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using Valve.VR.InteractionSystem;
 
 public class ZoneManager : MonoBehaviour
@@ -28,6 +31,7 @@ public class ZoneManager : MonoBehaviour
 
     private SoundEngine soundEngine;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,15 +52,17 @@ public class ZoneManager : MonoBehaviour
         {
             tryGetCeilingSmokeInChildren();
         }
-
+        getOtherObjects();
+        gameObject.transform.DetachChildren(); //prevent objects from following player and is super janky but works
         startZoneOnStart();
-        if (soundEngine.fireActive) return;
+        StartCoroutine(wait());
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!active) return;
         GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, camera.transform.position.y, gameObject.transform.position.z);
         if (usePlayerHeight)
@@ -69,6 +75,35 @@ public class ZoneManager : MonoBehaviour
         }
     }
 
+    void resetParent()
+    {
+        foreach (GameObject fireSpawner in fireSpawners)
+        {
+            fireSpawner.transform.SetParent(gameObject.transform, true);
+        }
+
+        if (ceilingSmokeEnabled)
+        {
+            foreach (GameObject smoke in ceilingSmoke)
+            {
+                smoke.transform.SetParent(gameObject.transform, true);
+            }
+        }
+
+        if (Objects.Length > 0)
+        {
+            foreach (GameObject otherGameObject in Objects)
+            {
+                otherGameObject.transform.SetParent(gameObject.transform, true);
+            }
+        }
+    }
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(1);
+        active = true;
+    }
+
     void OnEnable()
     {
         Start(); //is this line needed?
@@ -76,6 +111,7 @@ public class ZoneManager : MonoBehaviour
 
     void OnDisable()
     {
+        resetParent();
         stopZone(); //is this function needed? Does every child become inactive if parent is inactive
     }
 
@@ -90,6 +126,7 @@ public class ZoneManager : MonoBehaviour
         List<GameObject> fireSpawnersList = new List<GameObject>();
         foreach (FireSpawner fireSpawner in tmp)
         {
+            fireSpawner.transform.SetParent(transform, true);
             fireSpawnersList.Add(fireSpawner.gameObject);
         }
 
@@ -111,6 +148,7 @@ public class ZoneManager : MonoBehaviour
         List<GameObject> ceilingSmokeGameObjects = new List<GameObject>();
         foreach (SmokeDetection smokeDetection in tmp)
         {
+            smokeDetection.gameObject.transform.SetParent(gameObject.transform, true);
             ceilingSmokeGameObjects.Add(smokeDetection.gameObject);
         }
 
@@ -118,6 +156,22 @@ public class ZoneManager : MonoBehaviour
         {
             throw new UnityException("Could not get Ceiling Smoke Objects from Children");
         }
+
+        ceilingSmoke = ceilingSmokeGameObjects.ToArray();
+    }
+
+    void getOtherObjects()
+    {
+        List<GameObject> tmp = new List<GameObject>();
+        foreach (Transform child in transform)
+        {
+            tmp.Add(child.gameObject);
+        }
+
+        tmp = tmp.Except(fireSpawners.ToList()).ToList();
+        tmp = tmp.Except(ceilingSmoke.ToList()).ToList();
+        Objects = tmp.ToArray();
+
     }
 
     void startZoneOnStart()

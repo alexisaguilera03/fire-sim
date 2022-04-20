@@ -34,6 +34,10 @@ public class Door : MonoBehaviour
         getInteractionSystem();
         setParents();
         setLimits();
+        if (deathDoor)
+        {
+            setDoorknobColor();
+        }
     }
 
     // Update is called once per frame
@@ -42,6 +46,7 @@ public class Door : MonoBehaviour
         if (deathDoor)
         {
             checkDeathDoor();
+            //todo: create function to give haptic feedback to the player if they get close to the knob
         }
         
     }
@@ -74,6 +79,19 @@ public class Door : MonoBehaviour
         joint.limits = limits;
         joint.useLimits = true;
 
+    }
+
+    void setDoorknobColor()
+    {
+        foreach (GameObject knob in doorKnobs)
+        {
+            foreach (MeshRenderer rend in knob.GetComponentsInChildren<MeshRenderer>())
+            {
+                rend.GetComponent<MeshRenderer>().material.color = Color.Lerp(Color.red, rend.GetComponent<MeshRenderer>().material.color, Mathf.PingPong(Time.time, 1) / 1);
+            }
+            
+            
+        }
     }
 
     void checkDeathDoor()

@@ -5,7 +5,7 @@ using Valve.VR.InteractionSystem;
 
 public class SmokeDetection : MonoBehaviour
 {
-    public GameObject Teleporting;
+    private GameObject Teleporting;
 
     private Fade fader;
 
@@ -22,6 +22,7 @@ public class SmokeDetection : MonoBehaviour
         fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
         head = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().headCollider.gameObject;
         hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
+        Teleporting = GameObject.FindGameObjectWithTag("Teleporting");
 
 
     }

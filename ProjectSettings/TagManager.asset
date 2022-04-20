@@ -15,6 +15,7 @@ TagManager:
   - UI
   - Zone
   - Explosion
+  - Teleporting
   layers:
   - Default
   - TransparentFX
