@@ -5,10 +5,14 @@ using Valve.VR.InteractionSystem;
 
 public class Door : MonoBehaviour
 {
+    public bool deathDoor = false;
     public GameObject door;
     public GameObject[] doorKnobs;
     public GameObject deadBolt;
     private Interaction interactionSystem = null;
+    private Fade fader;
+    private bool playerInteracted = false;
+    private bool dead = false;
 
     private Quaternion doorOriginalRotation;
 
@@ -23,6 +27,9 @@ public class Door : MonoBehaviour
     }
     void Start()
     {
+        //playerInteracted = true; //debug remove when done
+        gameObject.GetComponent<Collider>().isTrigger = true;
+        fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
         doorOriginalRotation = door.transform.rotation;
         getInteractionSystem();
         setParents();
@@ -32,7 +39,11 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+        if (deathDoor)
+        {
+            checkDeathDoor();
+        }
+        
     }
     void getInteractionSystem()
     {
@@ -63,6 +74,36 @@ public class Door : MonoBehaviour
         joint.limits = limits;
         joint.useLimits = true;
 
+    }
+
+    void checkDeathDoor()
+    {
+        if (!playerInteracted) return;
+        Quaternion currentRotation = gameObject.transform.rotation;
+        if (currentRotation != doorOriginalRotation)
+        {
+            killPlayer();
+        }
+    }
+
+    void killPlayer()
+    {
+        if (dead) return;
+
+        dead = true;
+        var explostion = Instantiate(GameObject.FindGameObjectWithTag("Explosion"),GameObject.FindGameObjectWithTag("MainCamera").transform.position + Vector3.forward/5, GameObject.FindGameObjectWithTag("MainCamera").transform.rotation);
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().loseCondition.lose = true;
+        GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>().FadeIn(Color.white, 1);
+        Destroy(explostion, 1f);
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform.root.gameObject.CompareTag("Player"))
+        {
+            playerInteracted = true;
+            gameObject.GetComponent<Collider>().isTrigger = false; //todo: make less janky
+        }
     }
 
 

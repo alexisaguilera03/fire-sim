@@ -51,8 +51,7 @@ public class ZoneManager : MonoBehaviour
 
         startZoneOnStart();
         if (soundEngine.fireActive) return;
-        //soundEngine.mute = true;
-        //StartCoroutine(unmute());
+
     }
 
     // Update is called once per frame
@@ -191,10 +190,4 @@ public class ZoneManager : MonoBehaviour
         }
     }
 
-    IEnumerator unmute()  //this is so janky
-    {
-        yield return new WaitForSeconds(1);
-        soundEngine.mute = false;
-        soundEngine.PlaySoundEffect(FindObjectOfType<Fire>().FireAudioSource, true, false);
-    }
 }

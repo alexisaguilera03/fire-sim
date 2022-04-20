@@ -94,6 +94,7 @@ public class SceneManager : MonoBehaviour
 
 
         if (menu) return;
+        levelLoader.levelName = nextScene;
         if (loseCondition.lost)
         {
             reset();
@@ -140,6 +141,7 @@ public class SceneManager : MonoBehaviour
      public void reset()
     {
         nextScene = currentScene.name;
+        levelLoader.postLoadSettleTime = 0f;
         StartLoad();
 
     }
