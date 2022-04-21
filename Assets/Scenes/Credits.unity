@@ -245,9 +245,55 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "UNL CSE492VR\n\nThanks For Playing!\n\n\nDevelopers:\n\nMiguel AguileraOrtiz\n\nRyan
-    Schumacher\n\nAliya Sime\n\nPhillip Evans\n\n\nSpecial Thanks to:\n\nChris Bourke\n\nSteven
-    Kolbe\n\nJaden Goter\n\n\nMade Using \n\nUnity 2020.3.25f1\n\nSteamVR 1.14\n\n"
+  m_text: 'UNL CSE492VR
+
+
+    Thanks For Playing!
+
+
+
+    Developers:
+
+
+    Leader
+    Man
+
+
+    Ryan Schumacher
+
+
+    Aliya Sime
+
+
+    Phillip Evans
+
+
+
+    Special
+    Thanks to:
+
+
+    Chris Bourke
+
+
+    Steven Kolbe
+
+
+    Jaden Goter
+
+
+
+    Made
+    Using:
+
+
+    Unity 2020.3.25f1
+
+
+    SteamVR 1.14
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 664674530f7f6c64ba6193e9c27f3c35, type: 2}
   m_sharedMaterial: {fileID: -7974757493582833674, guid: 664674530f7f6c64ba6193e9c27f3c35, type: 2}
