@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireActive: 0
   mute: 0
-  FireAudioClip: {fileID: 8300000, guid: 6f4a2d59aa3654a44b45b679b154684d, type: 3}
+  FireAudioClip: {fileID: 8300000, guid: 488875525ec1549cfb9f239332f91cbc, type: 3}
