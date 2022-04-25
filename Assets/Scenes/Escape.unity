@@ -12579,7 +12579,6 @@ MonoBehaviour:
   endRotation: {x: 0, y: 0, z: 0, w: 0}
   rotateTowards: 0
   moveTowards: 0
-  wakeUp: 1
 --- !u!4 &1418597502
 Transform:
   m_ObjectHideFlags: 0

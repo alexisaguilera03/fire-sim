@@ -75,9 +75,9 @@ public class SceneManager : MonoBehaviour
                 loseCondition.enforceMaxTime = true;
                 loseCondition.maxTime = 60 * 5;
                 loseCondition.enforceMaxFires = false;
-                playerManager.wakeUp = true;
-                playerManager.endPosition = new Vector3(23.854f, 2.55f, -29.51f);
-                
+                playerManager.startPosition = new Vector3(21.792f, 2.55f, -28.82f);
+                playerManager.startRotation = Quaternion.Euler(0,90,0);
+
                 nextScene = "";
                 break;
         }

@@ -12,14 +12,17 @@ public class PlayerManager : MonoBehaviour
     public Quaternion endRotation;
     public bool rotateTowards;
     public bool moveTowards;
-    public bool wakeUp;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = Resources.FindObjectsOfTypeAll<Player>()[0].gameObject;
-        if(wakeUp) WakeUp();
-        
+        player = (GameObject.FindGameObjectWithTag("Player") == null) ? Resources.FindObjectsOfTypeAll<Player>()[0].gameObject : GameObject.FindGameObjectWithTag("Player");
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Escape")
+        {
+            WakeUp();
+        }
+        StartCoroutine(wait());
+
     }
 
     // Update is called once per frame
@@ -74,11 +77,17 @@ public class PlayerManager : MonoBehaviour
             yield return null;
         }
         Destroy(gameObject.GetComponent<Camera>());
-        player.transform.rotation = transform.rotation;
         player.SetActive(true);
         Load.ready = true;
         GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>().FadeOut(1f);
         
 
+    }
+
+    IEnumerator wait()
+    {
+        yield return new WaitUntil(() => startPosition != new Vector3());
+        player.transform.localPosition = startPosition;
+        player.transform.rotation = startRotation;
     }
 }

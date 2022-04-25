@@ -39,7 +39,6 @@ public class Door : MonoBehaviour
         }
 
         if (!Load.ready) return;
-        fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
         getInteractionSystem();
     }
 
@@ -50,6 +49,7 @@ public class Door : MonoBehaviour
         {
             if (Load.ready)
             {
+                if (GameObject.FindGameObjectWithTag("UI") == null) return;
                 fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
                 if(interactionSystem is null) getInteractionSystem();
             }
