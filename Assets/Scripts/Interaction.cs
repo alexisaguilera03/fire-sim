@@ -14,9 +14,7 @@ public class Interaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
-        hintSystem.displayHint(HintSystem.Hint.GrabObjects, 30, 30);
-        
+
 
     }
 
@@ -33,7 +31,11 @@ public class Interaction : MonoBehaviour
         
         if ( bestGrabType != GrabTypes.None && !attached)
         {
-            hintSystem.hintTaken = true;
+            hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
+            if (hintSystem.activeHint == HintSystem.Hint.GrabObjects)
+            {
+                hintSystem.hintTaken = true;
+            }
             hand.AttachObject(objectToAttach, bestGrabType, attachmentFlags);
             attached = true;
 

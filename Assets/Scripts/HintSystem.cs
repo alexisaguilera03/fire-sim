@@ -15,13 +15,13 @@ public class HintSystem : MonoBehaviour
         DropObjects,
         Extinguisher
     }
-    public Hint FirstHint;
+    public Hint hint;
     public Sprite[] Sprites;
 
     private Image currentHint;
 
     private Sprite nextHintSprite;
-    private Hint activeHint = Hint.None;
+    public Hint activeHint = Hint.None;
     private Hint previousHint = Hint.None;
 
     private bool flash = false;

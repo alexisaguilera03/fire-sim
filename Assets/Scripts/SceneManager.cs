@@ -17,6 +17,7 @@ public class SceneManager : MonoBehaviour
     public bool test = false;
     public bool load = false;
     public float maxTime = -1f;
+    public GameObject loadingScreen;
 
     private string nextScene;
 
@@ -31,14 +32,14 @@ public class SceneManager : MonoBehaviour
 
     private Fade fader;
 
+    private PlayerManager playerManager;
+
     private GameObject player;
 
     private bool loading = false;
     private bool menu = false;
 
-    private Vector3? playerSpawnPosition;
 
-    private Quaternion? playerSpawnRotation;
 
 
 
@@ -57,32 +58,30 @@ public class SceneManager : MonoBehaviour
                 if (WristTextManager.Instance != null) WristTextManager.Instance.SetObjectiveText("Start your game or select which level you want to play!");
                 break;
             case "Kitchen":
-                playerSpawnPosition = new Vector3(-2.7f, 0.5f, -5.2f);
-                playerSpawnRotation = Quaternion.Euler(0,180,0);
                 menu = false;
                 nextScene = scene2;
                 updateWinCondition = () => winCondition.Fires = fireManager.fireCount;
                 winFunction = () => winCondition.checkWinCondition(0);
-                if (WristTextManager.Instance != null) WristTextManager.Instance.SetObjectiveText("Put out the grease fire on the stove with one of the highighted objects!");
+                if (WristTextManager.Instance != null) WristTextManager.Instance.SetObjectiveText("Put out the grease fire on the stove with one of the highlighted objects!");
                 loseCondition.enforceMaxFires = true;
                 loseCondition.maxFires = 10;
                 loseCondition.maxTime = 120f;
                 loseCondition.enforceMaxTime = true;
                 break;
             case "Escape":
-                //todo: update win condition for new scene
                 winFunction = () => winCondition.checkWinCondition();
                 updateWinCondition = () => winCondition.Win = winCondition.Win;  //effectively do nothing
                 if(WristTextManager.Instance != null)WristTextManager.Instance.SetObjectiveText("Find your way out of the house, make sure to avoid fire and smoke!");
                 loseCondition.enforceMaxTime = true;
                 loseCondition.maxTime = 60 * 5;
                 loseCondition.enforceMaxFires = false;
+                playerManager.wakeUp = true;
+                playerManager.endPosition = new Vector3(23.854f, 2.55f, -29.51f);
                 
                 nextScene = "";
                 break;
         }
-        SetSpawnPoint();
-        fader.FadeOut(0.5f);
+        fader.FadeOut(0.5f);  //update this
         levelLoader.levelName = nextScene;
     }
 
@@ -90,7 +89,6 @@ public class SceneManager : MonoBehaviour
     void Update()
     {
         if (test) StartLoad(); //remove when done
-        //todo: fix loading not waiting for sound to finish
 
 
         if (menu) return;
@@ -107,15 +105,6 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    void SetSpawnPoint()
-    {
-        if (playerSpawnPosition is null || playerSpawnRotation is null) return;
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.transform.position = (Vector3)playerSpawnPosition;
-        player.transform.rotation = (Quaternion)playerSpawnRotation;
-    }
-
     void StartLoad()
     {
         if (loading) return; //prevent duplicate call
@@ -123,6 +112,7 @@ public class SceneManager : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("InteractionSystem"));
         loseCondition.StopAllCoroutines();
         fader.FadeIn(Color.black, 1);
+        Invoke("createLoadingScreen", 1);
         Invoke("Load", 2);
     }
 
@@ -146,10 +136,13 @@ public class SceneManager : MonoBehaviour
 
     }
 
-     void setPlayerPosition()
+     void createLoadingScreen()
      {
+        GameObject.FindGameObjectWithTag("Player").SetActive(false);
+        GameObject sceneLoadingScreen = ((GameObject.Find("LoadingArea") is null) ? null : GameObject.Find("LoadingArea")) ?? Instantiate(loadingScreen, new Vector3(300, 300), Quaternion.identity);
 
      }
+
      void getObjects()
      {
          soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
@@ -160,5 +153,6 @@ public class SceneManager : MonoBehaviour
          loseCondition = gameObject.GetComponent<LoseCondition>();
          player = GameObject.FindGameObjectWithTag("MainCamera");
          fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
-    }
+         playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
+     }
 }

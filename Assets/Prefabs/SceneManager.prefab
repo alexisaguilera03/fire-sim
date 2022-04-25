@@ -55,6 +55,7 @@ MonoBehaviour:
   test: 0
   load: 0
   maxTime: -1
+  loadingScreen: {fileID: 3664099696053630704, guid: 86ed92da085db9047a02be31f3e433e6, type: 3}
 --- !u!114 &969129510904168002
 MonoBehaviour:
   m_ObjectHideFlags: 0

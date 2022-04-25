@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using Valve.VR.InteractionSystem;
 
@@ -29,20 +30,30 @@ public class Door : MonoBehaviour
     {
         //playerInteracted = true; //debug remove when done
         gameObject.GetComponent<Collider>().isTrigger = true;
-        fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
         doorOriginalRotation = door.transform.rotation;
-        getInteractionSystem();
         setParents();
         setLimits();
         if (deathDoor)
         {
             setDoorknobColor();
         }
+
+        if (!Load.ready) return;
+        fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
+        getInteractionSystem();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (fader is null)
+        {
+            if (Load.ready)
+            {
+                fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
+                if(interactionSystem is null) getInteractionSystem();
+            }
+        }
         if (deathDoor)
         {
             checkDeathDoor();

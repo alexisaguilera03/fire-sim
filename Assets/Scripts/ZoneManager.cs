@@ -104,10 +104,7 @@ public class ZoneManager : MonoBehaviour
         active = true;
     }
 
-    void OnEnable()
-    {
-        Start(); //is this line needed?
-    }
+
 
     void OnDisable()
     {

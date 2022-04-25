@@ -16,6 +16,7 @@ TagManager:
   - Zone
   - Explosion
   - Teleporting
+  - PlayerManager
   layers:
   - Default
   - TransparentFX
