@@ -56,6 +56,8 @@ public class Firetruck : MonoBehaviour
     {
         GameObject player = (Player.instance == null) ? Resources.FindObjectsOfTypeAll<Player>()[0].gameObject : Player.instance.rigSteamVR;
         player.SetActive(true);
+        gameObject.transform.position = new Vector3(transform.position.x, 1.479f, transform.position.z);
+        Load.ready = true;
     }
 
     IEnumerator Drive()

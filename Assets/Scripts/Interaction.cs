@@ -69,6 +69,11 @@ public class Interaction : MonoBehaviour
             objectRigidBody.useGravity = true;
         }
 
+        if (objectRigidBody.isKinematic)
+        {
+            objectRigidBody.isKinematic = false;
+        }
+
         attached = false;
 
     }

@@ -64,7 +64,7 @@ public class Door : MonoBehaviour
     void getInteractionSystem()
     {
         interactionSystem = GetComponentInParent<Interaction>();
-        if (interactionSystem == null)
+        if (interactionSystem == null && GameObject.FindGameObjectWithTag("InteractionSystem") != null)
         {
             interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
         }

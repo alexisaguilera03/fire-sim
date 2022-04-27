@@ -7,7 +7,7 @@ public class SoundEngine : MonoBehaviour
 {
     public bool fireActive = false;
     public bool mute = false;
-
+    private AudioSource fireAudioSource;
     public AudioClip FireAudioClip;
 
     private bool priority = false;
@@ -17,7 +17,8 @@ public class SoundEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        fireAudioSource = gameObject.GetComponent<AudioSource>();
+        FireAudioClip = fireAudioSource.clip;
     }
 
     // Update is called once per frame
@@ -34,6 +35,11 @@ public class SoundEngine : MonoBehaviour
                     StopSound(audioSource);
                 }
             }
+        }
+
+        if (fireActive && !fireAudioSource.isPlaying)
+        {
+            PlaySoundEffect(fireAudioSource, true, false);
         }
     }
 
@@ -70,6 +76,7 @@ public class SoundEngine : MonoBehaviour
         }
         */
         if (!duplicateAllowed && sound.isPlaying) return;
+        if (sound.clip.name == "Fire_Sound") fireAudioSource = sound;
         if (priority) return;
         sound.loop = loop;
         sound.PlayOneShot(sound.clip);
