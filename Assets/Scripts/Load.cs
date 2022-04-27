@@ -11,11 +11,9 @@ public class Load : MonoBehaviour
 
     public static bool ready = false;
 
-    private PlayerManager playerManager;
     // Start is called before the first frame update
     void Start()
     {
-        playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
 
         foreach (Transform mainObject in MainGameObjects.transform)
         {

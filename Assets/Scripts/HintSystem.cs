@@ -13,7 +13,8 @@ public class HintSystem : MonoBehaviour
         Duck,
         GrabObjects,
         DropObjects,
-        Extinguisher
+        Extinguisher,
+        Hose
     }
     public Hint hint;
     public Sprite[] Sprites;
@@ -86,6 +87,14 @@ public class HintSystem : MonoBehaviour
                 break;
             case Hint.GrabObjects:
                 currentHint.sprite = Sprites[1];
+                break;
+            case Hint.None:
+                break;
+            case Hint.DropObjects:
+                break;
+            case Hint.Extinguisher:
+                break;
+            case Hint.Hose:
                 break;
             default:
                 return;

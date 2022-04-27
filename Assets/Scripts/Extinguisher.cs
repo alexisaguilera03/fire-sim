@@ -8,7 +8,7 @@ using Valve.VR.InteractionSystem;
 public class Extinguisher : MonoBehaviour
 {
     private SteamVR_Action_Boolean grabAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
-    private SteamVR_Action_Boolean releaseAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrapGrip");
+    private SteamVR_Action_Boolean releaseAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabGrip");
     public GameObject particles = null;
     public GameObject projectile = null;
     public GameObject barrel = null;
@@ -24,7 +24,6 @@ public class Extinguisher : MonoBehaviour
     private Hand AttachedHand = null;
     private Interaction interactionSystem = null;
     private SoundEngine soundEngine = null;
-    private Pickup pickup = null;
     private GameObject firedProjectile;
     private AudioSource ExtinguisherAudioSource;
     private AudioSource successExtinguisherAudioSource;
@@ -41,7 +40,6 @@ public class Extinguisher : MonoBehaviour
         }
         ExtinguisherAudioSource = audioSources[0];
         successExtinguisherAudioSource = (audioSources.Length > 1) ? audioSources[1] : null;
-        pickup = gameObject.GetComponent(typeof(Pickup)) as Pickup;
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)
         {
@@ -70,7 +68,6 @@ public class Extinguisher : MonoBehaviour
             displayHint = false;
         }
         AttachedHand ??= gameObject.transform.parent.gameObject.GetComponent(typeof(Hand)) as Hand;
-        //print(SteamVR_Actions._default.Squeeze.GetAxis(AttachedHand.handType));
         if (grabAction.GetStateDown(AttachedHand.handType)|| Input.GetKeyDown(KeyCode.Mouse0))
         {  
             if(!particlesActive)
@@ -116,7 +113,10 @@ public class Extinguisher : MonoBehaviour
 
     void Fire()
     {
-        hintSystem.hintTaken = true;
+        if (hintSystem.activeHint == HintSystem.Hint.Extinguisher)
+        {
+            hintSystem.hintTaken = true;
+        }
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
         Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), gameObject.GetComponentInChildren<Collider>());
         firedProjectile.GetComponent<Projectile>().extinguisher = this;

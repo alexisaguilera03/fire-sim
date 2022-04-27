@@ -6,11 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 7e5fcf68058c7b94b8497050db624535
+  - enabled: 1
     path: Assets/Scenes/Kitchen.unity
     guid: 0a8636f88ba7f1949995551dd3713968
   - enabled: 1
     path: Assets/Scenes/Escape.unity
     guid: da581ab1463076a4e91162d6d297df83
+  - enabled: 1
+    path: Assets/Scenes/FireFighter.unity
+    guid: e5f7913a368ec4813add03169d5632e8
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: a3d70265e7b572f48838f563ae6a0c55
   m_configObjects:
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 40caa1427015f704e8aaf674330be4d2, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 89681cc8cb0a16b4891160f1d0dfca53, type: 2}

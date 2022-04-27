@@ -48,6 +48,10 @@ public class Pickup : MonoBehaviour
             isAttached = false;
         }
     }
+    void LateUpdate()
+    {
+        isAttached = interactionSystem.checkAttached(gameObject);
+    }
 
     void HandHoverUpdate(Hand hand)
     {

@@ -93,6 +93,8 @@ public class SceneManager : MonoBehaviour
                 playerManager.startRotation = new Quaternion(); //todo: update
                 nextScene = "Credits";
                 break;
+            default:
+                throw new UnityException("No options for scene " + currentScene);
         }
         levelLoader.levelName = nextScene;
         fader.FadeOut(0.5f);  //update this

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HouseManager : MonoBehaviour
@@ -15,7 +16,12 @@ public class HouseManager : MonoBehaviour
         {
             singleHouse = true;
         }
-        StartCoroutine(loadHouses());
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FireFighter")
+        {
+            StartCoroutine(loadHouses());
+        }
+        StartCoroutine(loadHouses(10));
     }
 
     // Update is called once per frame
@@ -32,16 +38,7 @@ public class HouseManager : MonoBehaviour
 
     void getUnloadedHouses()
     {
-        List<GameObject> tmp = new List<GameObject>();
-        foreach (Transform child in transform)
-        {
-            if (!child.gameObject.activeSelf)
-            {
-                tmp.Add(child.gameObject);
-            }
-            
-        }
-        houses = tmp.ToArray();
+        houses = (from Transform child in transform where !child.gameObject.activeSelf select child.gameObject).ToArray();
     }
 
     IEnumerator loadHouse()
@@ -50,13 +47,23 @@ public class HouseManager : MonoBehaviour
         houses[0].SetActive(true);
     }
 
-    IEnumerator loadHouses()
+    IEnumerator loadHouses(int seconds)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(seconds);
         foreach (GameObject house in houses)
         {
             house.SetActive(true);
             yield return new WaitForSeconds(1);
+        }
+    }
+
+    IEnumerator loadHouses()
+    {
+        yield return new WaitForFixedUpdate();
+        foreach (GameObject house in houses)
+        {
+            house.SetActive(true);
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }
