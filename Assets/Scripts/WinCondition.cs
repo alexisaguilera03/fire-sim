@@ -65,6 +65,7 @@ public class WinCondition : MonoBehaviour
         }
         else
         {
+            sceneManager.load = true;
         }
     }
 
@@ -72,6 +73,7 @@ public class WinCondition : MonoBehaviour
     {
         yield return new WaitWhile(() => sound.isPlaying);
         Won = true;
+        sceneManager.load = true;
     }
 }
 

@@ -3,7 +3,10 @@ guid: e03236f18cdbdf34cbe47fccd729d437
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - winCondition: {instanceID: 0}
+  - loseCondition: {instanceID: 0}
+  - loadingScreen: {fileID: 3664099696053630704, guid: 86ed92da085db9047a02be31f3e433e6, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

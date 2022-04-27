@@ -8,7 +8,8 @@ public class LoseCondition : MonoBehaviour
     public float maxTime = -1f;
 
     public bool enforceMaxFires = false;
-    public bool enforceMaxTime = false; 
+    public bool enforceMaxTime = false;
+    public bool enforceHandsOnFire = true;
     public bool lose = false;
     public bool lost = false;
     public bool handsOnFire = false;
@@ -36,7 +37,7 @@ public class LoseCondition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (handsOnFire)
+        if (handsOnFire && enforceHandsOnFire)
         {
             handsOnFire = false;
             fireManager.Invoke("ExtinguishAllFires", 10);

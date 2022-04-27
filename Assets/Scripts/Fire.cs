@@ -63,7 +63,7 @@ public class Fire : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<Hand>() != null)
+        if (collision.gameObject.GetComponent<Hand>() != null && GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().loseCondition.enforceHandsOnFire)
         {
             if (collision.gameObject.GetComponentInChildren<Spill>() == null)
             {

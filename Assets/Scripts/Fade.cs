@@ -17,8 +17,12 @@ public class Fade : MonoBehaviour
         //gameObject.transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform, false);
         gameObject.transform.parent = GameObject.FindGameObjectWithTag("MainCamera").transform;
         fader = gameObject.GetComponent<Image>();
+        fader.color = Color.white;
         currentColor = fader.color;
-        outlines = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponentsInChildren<Outline>();
+        if (GameObject.FindGameObjectWithTag("InteractionSystem") != null)
+        {
+            outlines = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponentsInChildren<Outline>();
+        }
     }
 
     // Update is called once per frame
@@ -69,7 +73,10 @@ public class Fade : MonoBehaviour
 
     IEnumerator fadeIn(Color targetColor, float seconds)
     {
-        setOutlinesOff();
+        if (outlines != null)
+        {
+            setOutlinesOff();
+        }
         fadein = false;
         fader.color = new Color(targetColor.r, targetColor.g, targetColor.b, 0f);
         for (float i = 0; i < seconds; i += Time.deltaTime/seconds)  //this line was changed! todo: check if division works
@@ -84,13 +91,18 @@ public class Fade : MonoBehaviour
 
     IEnumerator fadeOut(float seconds)
     {
+        yield return new WaitForSeconds(0.5f);
         fadeout = false;
         for (float i = seconds; i > 0; i -= Time.deltaTime)
         {
             fader.color = new Color(currentColor.r, currentColor.g, currentColor.b, i);
             yield return null;
         }
-        resetOutlines();
+
+        if (outlines != null)
+        {
+            resetOutlines();
+        }
         fader.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0);
     }
 

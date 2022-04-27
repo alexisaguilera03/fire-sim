@@ -67,22 +67,36 @@ public class SceneManager : MonoBehaviour
                 loseCondition.maxFires = 10;
                 loseCondition.maxTime = 120f;
                 loseCondition.enforceMaxTime = true;
+                loseCondition.enforceHandsOnFire = true;
                 break;
             case "Escape":
-                winFunction = () => winCondition.checkWinCondition();
-                updateWinCondition = () => winCondition.Win = winCondition.Win;  //effectively do nothing
+                winFunction = () => winCondition.checkWinCondition(default);
+                updateWinCondition = () => winCondition.Fires = fireManager.fireCount; 
                 if(WristTextManager.Instance != null)WristTextManager.Instance.SetObjectiveText("Find your way out of the house, make sure to avoid fire and smoke!");
                 loseCondition.enforceMaxTime = true;
                 loseCondition.maxTime = 60 * 5;
                 loseCondition.enforceMaxFires = false;
+                loseCondition.enforceHandsOnFire = true;
                 playerManager.startPosition = new Vector3(21.792f, 2.55f, -28.82f);
                 playerManager.startRotation = Quaternion.Euler(0,90,0);
-
-                nextScene = "";
+                nextScene = "FireFighter";
+                break;
+            case "FireFighter":
+                winFunction = () => winCondition.checkWinCondition(0);
+                updateWinCondition = () => winCondition.Fires = fireManager.fireCount;
+                if(WristTextManager.Instance != null)WristTextManager.Instance.SetObjectiveText("Put out the fire as quickly as possible!");
+                loseCondition.enforceMaxTime = true;
+                loseCondition.maxTime = 60 * 10;
+                loseCondition.enforceMaxFires = false;
+                loseCondition.enforceHandsOnFire = false;
+                playerManager.startPosition = new Vector3(); //todo: Update
+                playerManager.startRotation = new Quaternion(); //todo: update
+                nextScene = "Credits";
                 break;
         }
-        fader.FadeOut(0.5f);  //update this
         levelLoader.levelName = nextScene;
+        fader.FadeOut(0.5f);  //update this
+        
     }
 
     // Update is called once per frame
@@ -90,9 +104,7 @@ public class SceneManager : MonoBehaviour
     {
         if (test) StartLoad(); //remove when done
 
-
         if (menu) return;
-        levelLoader.levelName = nextScene;
         if (loseCondition.lost)
         {
             reset();
@@ -119,8 +131,16 @@ public class SceneManager : MonoBehaviour
     public void LoadFirstLevel()
     {
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Player"), currentScene);
+        createLoadingScreen();
         Invoke("Load", 1);
         
+    }
+
+    public void LevelSelect(string levelName)
+    {
+        levelLoader.levelName = levelName;
+        StartLoad();
+
     }
 
     void Load()
@@ -139,7 +159,15 @@ public class SceneManager : MonoBehaviour
      void createLoadingScreen()
      {
         GameObject.FindGameObjectWithTag("Player").SetActive(false);
-        GameObject sceneLoadingScreen = ((GameObject.Find("LoadingArea") is null) ? null : GameObject.Find("LoadingArea")) ?? Instantiate(loadingScreen, new Vector3(300, 300), Quaternion.identity);
+        GameObject sceneLoadingScreen = GameObject.Find("LoadingArea");
+        if (sceneLoadingScreen is null)
+        {
+            sceneLoadingScreen = Instantiate(loadingScreen, new Vector3(300, 300), Quaternion.identity);
+        }
+        else
+        {
+            sceneLoadingScreen.GetComponentInChildren<Camera>().enabled = true;
+        }
 
      }
 

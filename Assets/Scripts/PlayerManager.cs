@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = (GameObject.FindGameObjectWithTag("Player") == null) ? Resources.FindObjectsOfTypeAll<Player>()[0].gameObject : GameObject.FindGameObjectWithTag("Player");
+        player = (Player.instance == null) ? Resources.FindObjectsOfTypeAll<Player>()[0].gameObject : Player.instance.rigSteamVR;
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Escape")
         {
             WakeUp();
@@ -42,6 +42,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator getUp()
     {
+        yield return new WaitForSeconds(2);
         float progress = 0f;
         yield return new WaitForSeconds(1f);
         while (gameObject.transform.rotation.eulerAngles != new Vector3(0, 0, 0))

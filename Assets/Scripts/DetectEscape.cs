@@ -21,6 +21,7 @@ public class DetectEscape : MonoBehaviour
     {
         if (!collider.transform.root.gameObject.CompareTag("Player")) return;
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().winCondition.Win = true;
+        print("Escaped!");
         Destroy(gameObject);
     }
 }
