@@ -89,8 +89,8 @@ public class SceneManager : MonoBehaviour
                 loseCondition.maxTime = 60 * 10;
                 loseCondition.enforceMaxFires = false;
                 loseCondition.enforceHandsOnFire = false;
-                playerManager.startPosition = new Vector3(); //todo: Update
-                playerManager.startRotation = new Quaternion(); //todo: update
+                playerManager.startPosition = new Vector3(20.83f, 0.88f, -48.87f);
+                playerManager.startRotation = Quaternion.Euler(0,0,0); 
                 nextScene = "Credits";
                 break;
             default:

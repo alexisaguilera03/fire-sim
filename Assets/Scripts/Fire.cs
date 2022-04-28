@@ -29,6 +29,7 @@ public class Fire : MonoBehaviour
     void Update()
     {
         fireManager.spread(gameObject.transform.position);
+        soundEngine.fireActive = true;
     }
 
     public void stopFire()

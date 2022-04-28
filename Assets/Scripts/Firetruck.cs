@@ -15,6 +15,8 @@ public class Firetruck : MonoBehaviour
 
     private bool ready = false, rotate = false;
 
+    public bool test;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,12 @@ public class Firetruck : MonoBehaviour
         {
             followCamera.gameObject.transform.rotation = Quaternion.Slerp(followCamera.gameObject.transform.rotation, Quaternion.LookRotation(House.transform.position - followCamera.gameObject.transform.position), Time.deltaTime * 2);
 
+        }
+
+        if (test)
+        {
+            test = false;
+            GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>().ExtinguishAllFires();
         }
     }
 

@@ -54,6 +54,7 @@ public class WinCondition : MonoBehaviour
     }
     private void startWin()
     {
+        print("Won! moving to next scene");
 
         if (WinAudioSource != null)
         {
