@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Valve.VR;
+using Valve.VR.Extras;
+using Valve.VR.InteractionSystem;
 
 public class SceneManager : MonoBehaviour
 {
@@ -104,7 +106,7 @@ public class SceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (test) StartLoad(); //remove when done
+        if (test) LoadFirstLevel(); //remove when done
 
         if (menu) return;
         if (loseCondition.lost)
@@ -132,7 +134,9 @@ public class SceneManager : MonoBehaviour
 
     public void LoadFirstLevel()
     {
-        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Player"), currentScene);
+        //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Player"), currentScene);
+        Destroy(Player.instance.rightHand.gameObject.GetComponent<SteamVR_LaserPointer>());
+        Destroy(Player.instance.rightHand.gameObject.GetComponent<SteamVRLaserWrapper>());
         createLoadingScreen();
         Invoke("Load", 1);
         
@@ -181,7 +185,7 @@ public class SceneManager : MonoBehaviour
          currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
          winCondition = gameObject.GetComponent<WinCondition>();
          loseCondition = gameObject.GetComponent<LoseCondition>();
-         player = GameObject.FindGameObjectWithTag("MainCamera");
+         player = Player.instance.rightHand.gameObject;
          fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
          playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
      }

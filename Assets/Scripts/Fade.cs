@@ -23,6 +23,7 @@ public class Fade : MonoBehaviour
         {
             outlines = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponentsInChildren<Outline>();
         }
+        FadeOut(1);
     }
 
     // Update is called once per frame
