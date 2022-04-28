@@ -12,6 +12,10 @@ public class CreditScroller : MonoBehaviour
 
     void Update()
     {
+        if(text.transform.position.y >= 1650)
+        {
+            return;
+        }
         logo.transform.Translate(Vector3.up * speed);
         text.transform.Translate(Vector3.up * speed);
     }
