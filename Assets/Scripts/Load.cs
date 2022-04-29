@@ -14,16 +14,19 @@ public class Load : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (MainGameObjects == null)
+        {
+            ready = true;
+            StartCoroutine(wait());
+            return;
+        }
 
         foreach (Transform mainObject in MainGameObjects.transform)
         {
             EssentialGameObjects.Add(mainObject.gameObject);
         }
 
-        if (MainGameObjects == null)
-        {
-            ready = true;
-        }
+        
         StartCoroutine(wait());
     }
 

@@ -16,8 +16,8 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = (Player.instance == null) ? Resources.FindObjectsOfTypeAll<Player>()[0].gameObject : Player.instance.rigSteamVR.transform.root.gameObject;
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Escape")
+        player = GameManager.player;
+        if (GameManager.Instance.currentLevel == "Escape")
         {
             WakeUp();
         }

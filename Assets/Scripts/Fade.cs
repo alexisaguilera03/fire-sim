@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Valve.VR.InteractionSystem;
 
 public class Fade : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class Fade : MonoBehaviour
     void Start()
     {
         //gameObject.transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform, false);
-        gameObject.transform.parent = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        StartCoroutine(setParent());
         fader = gameObject.GetComponent<Image>();
         fader.color = Color.white;
         currentColor = fader.color;
@@ -39,6 +41,11 @@ public class Fade : MonoBehaviour
         {
             StartCoroutine(fadeOut(1));
         }
+    }
+
+    void OnEnable()
+    {
+        Start();
     }
 
     public void FadeIn(Color targetColor, float seconds)
@@ -111,5 +118,17 @@ public class Fade : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         StartCoroutine(fadeIn(targetColor, seconds));
+    }
+
+    IEnumerator getObjects()
+    {
+        yield return new WaitForEndOfFrame();
+
+    }
+
+    IEnumerator setParent()
+    {
+        yield return new WaitForFixedUpdate();
+        gameObject.transform.SetParent(GameObject.FindGameObjectWithTag("MainCamera").transform, true);
     }
 }

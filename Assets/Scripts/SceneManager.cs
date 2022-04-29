@@ -13,7 +13,7 @@ public class SceneManager : MonoBehaviour
     public string scene1 = "Kitchen";
 
     public string scene2 = "Escape";
-    public Scene currentScene;
+    public string currentScene;
     public WinCondition winCondition;
     public LoseCondition loseCondition;
     public bool test = false;
@@ -23,7 +23,7 @@ public class SceneManager : MonoBehaviour
 
     private string nextScene;
 
-    private SteamVR_LoadLevel levelLoader;
+    private GameManager gameManager;
     
     private Action winFunction;
     private Action updateWinCondition;
@@ -49,7 +49,7 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         getObjects();
-        switch (currentScene.name)
+        switch (currentScene)
         {
             case "Menu":
                 updateWinCondition = null;
@@ -98,7 +98,8 @@ public class SceneManager : MonoBehaviour
             default:
                 throw new UnityException("No options for scene " + currentScene);
         }
-        levelLoader.levelName = nextScene;
+
+        gameManager.nextLevel = nextScene;
         fader.FadeOut(0.5f);  //update this
         
     }
@@ -117,7 +118,7 @@ public class SceneManager : MonoBehaviour
         winFunction();
         if (load)
         {
-            StartLoad();
+            Load();
         }
     }
 
@@ -134,31 +135,33 @@ public class SceneManager : MonoBehaviour
 
     public void LoadFirstLevel()
     {
-        //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Player"), currentScene);
+        test = false;
+        gameManager.LoadFirstLevel();
+        /*
         Destroy(Player.instance.rightHand.gameObject.GetComponent<SteamVR_LaserPointer>());
         Destroy(Player.instance.rightHand.gameObject.GetComponent<SteamVRLaserWrapper>());
         createLoadingScreen();
         Invoke("Load", 1);
+        */
         
     }
 
     public void LevelSelect(string levelName)
     {
-        levelLoader.levelName = levelName;
-        StartLoad();
+        gameManager.LevelSelect(levelName);
 
     }
 
     void Load()
     {
-        levelLoader.Trigger();
+        load = (!load) && load;
+        gameManager.Load();
     }
 
      public void reset()
     {
-        nextScene = currentScene.name;
-        levelLoader.postLoadSettleTime = 0f;
-        StartLoad();
+        nextScene = gameManager.currentLevel;
+        gameManager.reset();
 
     }
 
@@ -181,11 +184,10 @@ public class SceneManager : MonoBehaviour
      {
          soundEngine = GameObject.FindGameObjectWithTag("SoundEngine").GetComponent<SoundEngine>();
          fireManager = GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>();
-         levelLoader = gameObject.GetComponent<SteamVR_LoadLevel>();
-         currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+         gameManager = GameManager.Instance;
+         currentScene = gameManager.currentLevel;
          winCondition = gameObject.GetComponent<WinCondition>();
          loseCondition = gameObject.GetComponent<LoseCondition>();
-         player = Player.instance.rightHand.gameObject;
          fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
          playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
      }

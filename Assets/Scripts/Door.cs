@@ -29,7 +29,7 @@ public class Door : MonoBehaviour
     void Start()
     {
         //playerInteracted = true; //debug remove when done
-        gameObject.GetComponent<Collider>().isTrigger = true;
+        gameObject.GetComponentInChildren<Collider>().isTrigger = true;
         doorOriginalRotation = door.transform.rotation;
         setParents();
         setLimits();
@@ -131,7 +131,7 @@ public class Door : MonoBehaviour
         if (collider.transform.root.gameObject.CompareTag("Player"))
         {
             playerInteracted = true;
-            gameObject.GetComponent<Collider>().isTrigger = false; //todo: make less janky
+            gameObject.GetComponentInChildren<Collider>().isTrigger = false; //todo: make less janky
         }
     }
 

@@ -53,7 +53,11 @@ public class ZoneManager : MonoBehaviour
             tryGetCeilingSmokeInChildren();
         }
         getOtherObjects();
-        gameObject.transform.DetachChildren(); //prevent objects from following player and is super janky but works
+        //foreach (Transform children in transform)
+      //  {
+        //    children.gameObject.transform.SetParent(gameObject.transform.root, true);
+       // }
+        //gameObject.transform.DetachChildren(); //prevent objects from following player and is super janky but works
         startZoneOnStart();
         StartCoroutine(wait());
 
@@ -63,8 +67,8 @@ public class ZoneManager : MonoBehaviour
     void Update()
     {
         if (!active) return;
-        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, camera.transform.position.y, gameObject.transform.position.z);
+            //GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+        //gameObject.transform.position = new Vector3(gameObject.transform.position.x, camera.transform.position.y, gameObject.transform.position.z);
         if (usePlayerHeight)
         {
             float playerHeight = player.transform.localPosition.y;

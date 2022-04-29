@@ -14,6 +14,18 @@ public class SoundEngine : MonoBehaviour
     private bool checkDuplicatesOnStart = false;
 
     private List<AudioSource> duplicateAudioSources = new List<AudioSource>();
+
+    void Awake()
+    {
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audio in audioSources)
+        {
+            if (!audio.playOnAwake) continue;
+            audio.playOnAwake = false;
+            audio.Stop();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +36,7 @@ public class SoundEngine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         preventDuplicateFireAudio();
         if (mute)
         {
