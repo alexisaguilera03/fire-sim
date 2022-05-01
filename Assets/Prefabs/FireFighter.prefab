@@ -23462,6 +23462,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingArea
       objectReference: {fileID: 0}
+    - target: {fileID: 3664099696053630704, guid: 86ed92da085db9047a02be31f3e433e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3664099696053630707, guid: 86ed92da085db9047a02be31f3e433e6, type: 3}
       propertyPath: m_RootOrder
       value: 0

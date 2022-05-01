@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 153878, guid: 7a135b1a2cb9c8f488d4dd00c55ab283, type: 3}
+      propertyPath: m_TagString
+      value: Teleporting
+      objectReference: {fileID: 0}
     - target: {fileID: 475244, guid: 7a135b1a2cb9c8f488d4dd00c55ab283, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -291,6 +295,7 @@ MonoBehaviour:
   Credit: {fileID: 2309328968663488919, guid: c8cac270bc44f1e4a88504778f089c72, type: 3}
   _kitchen: {fileID: 351315588}
   Teleporting: {fileID: 117058672}
+  LoadingScreen: {fileID: 3664099696053630704, guid: 86ed92da085db9047a02be31f3e433e6, type: 3}
   currentLevel: 
   nextLevel: 
 --- !u!4 &659390533
@@ -360,10 +365,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 844964845025344926, guid: 1670fd9387b90b94bb64ab835180569b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3293577378701694935, guid: 1670fd9387b90b94bb64ab835180569b, type: 3}
-      propertyPath: BypassListenerEffects
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

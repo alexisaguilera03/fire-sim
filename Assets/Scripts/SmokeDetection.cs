@@ -20,7 +20,7 @@ public class SmokeDetection : MonoBehaviour
     void Start()
     {
         fader = GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>();
-        head = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().headCollider.gameObject;
+        head = GameManager.player.GetComponent<Player>().headCollider.gameObject;
         hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
         Teleporting = GameObject.FindGameObjectWithTag("Teleporting");
 
@@ -57,6 +57,7 @@ public class SmokeDetection : MonoBehaviour
                 StopAllCoroutines();
             }
             inSmoke = false;
+            fader.StopAllCoroutines();
             fader.FadeOut(1);
             Teleporting.SetActive(true);
         }

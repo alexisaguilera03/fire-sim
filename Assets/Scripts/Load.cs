@@ -50,7 +50,7 @@ public class Load : MonoBehaviour
     IEnumerator wait()
     {
         yield return new WaitForSeconds(0.5f);
-        gameObject.GetComponent<Camera>().enabled = false;
+        //gameObject.GetComponent<Camera>().enabled = false;
         gameObject.GetComponent<AudioListener>().enabled = false;
         yield return new WaitUntil(() => ready);
         StartObjects();
