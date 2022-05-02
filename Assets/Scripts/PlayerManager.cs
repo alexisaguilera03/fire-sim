@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Valve.VR.InteractionSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -37,6 +35,7 @@ public class PlayerManager : MonoBehaviour
         gameObject.transform.position = new Vector3(22.2f,4.07f,-29.956f);
         gameObject.transform.rotation = Quaternion.Euler(0,90,0);
         Camera camera = gameObject.AddComponent<Camera>();
+        gameObject.AddComponent<AudioListener>();
         StartCoroutine(getUp());
     }
 
@@ -78,6 +77,7 @@ public class PlayerManager : MonoBehaviour
             yield return null;
         }
         Destroy(gameObject.GetComponent<Camera>());
+        Destroy(gameObject.GetComponent<AudioListener>());
         player.SetActive(true);
         Load.ready = true;
         GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>().FadeOut(1f);

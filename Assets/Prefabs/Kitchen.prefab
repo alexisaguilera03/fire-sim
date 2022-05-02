@@ -5811,7 +5811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabAction:
-    actionPath: /actions/default/in/GrabPinch
+    actionPath: /actions/default/in/GrabGrip
     needsReinit: 0
   releaseAction:
     actionPath: /actions/default/in/GrabGrip
@@ -6342,7 +6342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabAction:
-    actionPath: /actions/default/in/GrabPinch
+    actionPath: /actions/default/in/GrabGrip
     needsReinit: 0
   releaseAction:
     actionPath: /actions/default/in/GrabGrip
@@ -6428,7 +6428,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 465389402831947945, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
       propertyPath: grabAction.actionPath
-      value: /actions/default/in/GrabPinch
+      value: /actions/default/in/GrabGrip
       objectReference: {fileID: 0}
     - target: {fileID: 465389402831947945, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
       propertyPath: releaseAction.actionPath
@@ -8819,6 +8819,10 @@ PrefabInstance:
     - target: {fileID: 7001455904469763390, guid: 7638ce6c4831cd04fa103f7c5696fa45, type: 3}
       propertyPath: m_Name
       value: HintSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001455904469763390, guid: 7638ce6c4831cd04fa103f7c5696fa45, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7638ce6c4831cd04fa103f7c5696fa45, type: 3}

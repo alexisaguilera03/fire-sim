@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using UnityEditor;
 using UnityEngine;
-using Valve.VR.InteractionSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,11 +8,21 @@ public class GameManager : MonoBehaviour
 
     public GameObject Menu, Kitchen, Escape, FireFighter, Credit, _kitchen, Teleporting, LoadingScreen;
 
+    public AudioSource FireAlarm;
+
     public static GameObject player;
 
     public string currentLevel = "", nextLevel = "";
 
     private GameObject current, next, loading;
+
+    private Fade fader;
+
+    private List<GameObject> gc = new List<GameObject>();
+
+    private bool isLoading;
+
+    public bool isPlaying;
 
 
     // Start is called before the first frame update
@@ -33,7 +39,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        isPlaying = FireAlarm.isPlaying;
     }
 
     public void LevelSelect(string level)
@@ -51,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         if (current.name.Contains("Menu"))
         {
+            gc.Add(current);
             current.SetActive(false);
         }
         loading.SetActive(true);
@@ -62,18 +69,27 @@ public class GameManager : MonoBehaviour
         current = Instantiate(Kitchen);
         yield return new WaitForFixedUpdate();
         current.SetActive(true);
+        StartCoroutine(garbageCollect());
 
     }
 
     public void Load()
     {
-        //todo: loading screen
 
+        if (isLoading) return;
         StartCoroutine(load());
     }
 
     private IEnumerator load()
     {
+        isLoading = true;
+        gc.Add(current);
+        if (FireAlarm.isPlaying)
+        {
+            FireAlarm.Stop();
+        }
+        fader.FadeIn(Color.black, 1);
+        yield return new WaitForSeconds(1);
         current.SetActive(false);
         player.SetActive(false);
         loading.SetActive(true);
@@ -87,28 +103,44 @@ public class GameManager : MonoBehaviour
                 player.transform.rotation = Quaternion.Euler(0,0,0);
                 currentLevel = "Escape";
                 current = Instantiate(Escape);
-                player.SetActive(true);
-                yield return new WaitForEndOfFrame();
                 current.SetActive(true);
                 loading.SetActive(false);
-                yield return new WaitForSeconds(7.5f);
+                FireAlarm.loop = true;
+                FireAlarm.Play();
+                var tmp = current.transform.Find("PlayerManager");
+                yield return new WaitUntil(() => tmp.GetComponent<Camera>() != null);
+                yield return new WaitUntil(() => tmp.GetComponent<Camera>() == null);
+                FireAlarm.volume /= 3;
+                player.SetActive(true);
                 current.transform.Find("MainObjects").gameObject.SetActive(true);
                 break;
             case "FireFighter":
+                player.transform.position = new Vector3(21.71f, 0f, -47.9f);
                 currentLevel = "FireFighter";
                 current = Instantiate(FireFighter);
                 current.transform.Find("HouseManager");
                 var test = current.transform.Find("FireTruck").GetComponent<Firetruck>();
-                var a = test.GetComponent<Camera>();
-                player.SetActive(true);
-                yield return new WaitForEndOfFrame();
                 current.SetActive(true);
                 loading.SetActive(false);
+                yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera != null);
+                yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera == null);
+                current.transform.Find("MainObjects").gameObject.SetActive(true);
+                player.SetActive(true);
+                break;
+            case "Credits":
+                currentLevel = "Credits";
+                current = Instantiate(Credit);
+                current.SetActive(true);
+                loading.SetActive(false);
+                yield return new WaitForFixedUpdate();
+                player.SetActive(true);
                 break;
             default:
                 throw new UnityException("Could not load next level");
         }
-        
+
+        isLoading = false;
+        StartCoroutine(garbageCollect());
     }
 
     public void reset()
@@ -122,6 +154,7 @@ public class GameManager : MonoBehaviour
         tmp.SetActive(true);
         player = GameObject.FindGameObjectWithTag("Player");
         yield return new WaitUntil(() => player.GetComponentInChildren<Fade>() != null);
+        fader = player.GetComponentInChildren<Fade>();
         Kitchen = _kitchen;
         player.transform.parent = null;
         Teleporting.SetActive(true);
@@ -131,6 +164,16 @@ public class GameManager : MonoBehaviour
         tmp.SetActive(false);
         current = Instantiate(Menu);
         current.SetActive(true);
+
+    }
+
+    IEnumerator garbageCollect()
+    {
+        yield return new WaitForSeconds(5f);
+        if (gc.Count <= 0) yield break;
+        var tmp = gc[0];
+        gc.RemoveAt(0);
+        Destroy(tmp);
 
     }
 }

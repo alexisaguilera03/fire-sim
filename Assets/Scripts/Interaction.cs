@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using Valve.VR;
 using Valve.VR.InteractionSystem;
 
 public class Interaction : MonoBehaviour

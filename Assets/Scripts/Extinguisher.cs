@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
 [RequireComponent(typeof(Interactable))]

@@ -1,12 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Valve.VR;
-using Valve.VR.Extras;
-using Valve.VR.InteractionSystem;
 
 public class SceneManager : MonoBehaviour
 {
@@ -107,7 +100,11 @@ public class SceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (test) LoadFirstLevel(); //remove when done
+        if (test)
+        {
+            test = false;
+            LoadFirstLevel(); //remove when done
+        }
 
         if (menu) return;
         if (loseCondition.lost)
@@ -154,7 +151,7 @@ public class SceneManager : MonoBehaviour
 
     void Load()
     {
-        load = (!load) && load;
+        load = false;
         gameManager.Load();
     }
 

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR.InteractionSystem;
 
@@ -8,9 +7,9 @@ public class Firetruck : MonoBehaviour
 
     public GameObject TargetPositionGameObject, FireExtinguisher, Mask, Houses, House, Nozzle;
 
-    private Camera followCamera;
+    public Camera followCamera;
 
-    private AudioSource siren;
+    public  AudioSource siren;
     private SoundEngine soundEngine;
 
     private bool ready = false, rotate = false;
@@ -72,6 +71,7 @@ public class Firetruck : MonoBehaviour
     {
         //todo: add siren sound effect
         yield return new WaitUntil(() => ready);
+        soundEngine.PlaySoundEffect(siren, true, false);
         followCamera.gameObject.SetActive(true);
         yield return new WaitForEndOfFrame();
         
@@ -93,7 +93,9 @@ public class Firetruck : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed);
             yield return null;
         }
+        
         yield return new WaitForSeconds(2);
+        soundEngine.StopSound(siren);
         rotate = false;
         Destroy(followCamera.gameObject);
         Play();

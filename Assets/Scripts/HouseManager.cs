@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ public class HouseManager : MonoBehaviour
             singleHouse = true;
         }
 
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FireFighter")
+        if (GameManager.Instance.currentLevel == "FireFighter")
         {
             StartCoroutine(loadHouses());
         }

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
-using Valve.VR.InteractionSystem;
 
 public class Door : MonoBehaviour
 {
