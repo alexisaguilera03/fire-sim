@@ -75,7 +75,6 @@ public class Spill : MonoBehaviour
         ProjectileActive = true;
         projectile = Instantiate(ProjectileGameObject, spawner.transform.position, gameObject.transform.rotation);
         Physics.IgnoreCollision(projectile.GetComponent<Collider>(), gameObject.GetComponent<Collider>());
-        projectile.GetComponent<MeshRenderer>().enabled = true; //delete when done
         projectile.GetComponent<Projectile>().shotFrom = gameObject;
         projectile.GetComponent<Projectile>().index = index;
         

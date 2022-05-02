@@ -145,7 +145,17 @@ public class GameManager : MonoBehaviour
 
     public void reset()
     {
+        nextLevel = currentLevel;
+        var tmp = player.GetComponentsInChildren<Fire>();
+        if (tmp.Length > 0)
+        {
+            foreach (var t in tmp)
+            {
+                t.stopFire();
+            }
+        }
 
+        StartCoroutine(load());
     }
 
     IEnumerator getPlayer()

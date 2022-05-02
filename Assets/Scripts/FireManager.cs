@@ -43,7 +43,7 @@ public class FireManager : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(center, 5f);
         List <Collider> tmp = new List<Collider>();
         tmp = hitColliders.ToList();
-        tmp.RemoveAll(x => x.gameObject.transform.root.GetChild(0).name.Contains("House") == true);
+        tmp.RemoveAll(x => x.gameObject.transform.root.name.Contains("House") == true);
         tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Player"));
         tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Fire"));
         tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Extinguisher"));
