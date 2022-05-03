@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR.Extras;
+using Valve.VR.InteractionSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -83,10 +84,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator load()
     {
-        if (player.GetComponent<SteamVR_LaserPointer>() != null)
+        if (player.GetComponentInChildren<SteamVR_LaserPointer>() != null)
         {
-            Destroy(player.GetComponent<SteamVRLaserWrapper>());
-            Destroy(player.GetComponent<SteamVR_LaserPointer>());
+            Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
+            Destroy(player.GetComponentInChildren<SteamVR_LaserPointer>());
         }
         isLoading = true;
         gc.Add(current);
@@ -171,8 +172,8 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = new Vector3(-0.42f, 0.692f, -2.026f);
         player.transform.rotation = Quaternion.Euler(0,0,0);
-        player.AddComponent<SteamVRLaserWrapper>();
-        player.AddComponent<SteamVR_LaserPointer>();
+        player.GetComponent<Player>().rightHand.gameObject.AddComponent<SteamVRLaserWrapper>();
+        player.GetComponent<Player>().rightHand.gameObject.AddComponent<SteamVR_LaserPointer>();
         Camera = GameObject.FindGameObjectWithTag("MainCamera");
         yield return new WaitUntil(() => player.GetComponentInChildren<Fade>() != null);
         fader = player.GetComponentInChildren<Fade>();
