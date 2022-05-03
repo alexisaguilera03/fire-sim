@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.Extras;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     public string currentLevel = "", nextLevel = "";
 
-    private GameObject current, next, loading;
+    private GameObject current, next, loading, Camera;
 
     private Fade fader;
 
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
         //todo: loading screen
         currentLevel = "Kitchen";
         loading.SetActive(false);
-        player.SetActive(true);
+        Camera.SetActive(true);
         current = Instantiate(Kitchen);
         yield return new WaitForFixedUpdate();
         current.SetActive(true);
@@ -82,6 +83,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator load()
     {
+        if (player.GetComponent<SteamVR_LaserPointer>() != null)
+        {
+            Destroy(player.GetComponent<SteamVRLaserWrapper>());
+            Destroy(player.GetComponent<SteamVR_LaserPointer>());
+        }
         isLoading = true;
         gc.Add(current);
         if (FireAlarm.isPlaying)
@@ -91,7 +97,7 @@ public class GameManager : MonoBehaviour
         fader.FadeIn(Color.black, 1);
         yield return new WaitForSeconds(1);
         current.SetActive(false);
-        player.SetActive(false);
+        Camera.SetActive(false);
         loading.SetActive(true);
         yield return new WaitForSeconds(3);
         switch (nextLevel)
@@ -111,7 +117,7 @@ public class GameManager : MonoBehaviour
                 yield return new WaitUntil(() => tmp.GetComponent<Camera>() != null);
                 yield return new WaitUntil(() => tmp.GetComponent<Camera>() == null);
                 FireAlarm.volume /= 3;
-                player.SetActive(true);
+                Camera.SetActive(true);
                 current.transform.Find("MainObjects").gameObject.SetActive(true);
                 break;
             case "FireFighter":
@@ -125,7 +131,7 @@ public class GameManager : MonoBehaviour
                 yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera != null);
                 yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera == null);
                 current.transform.Find("MainObjects").gameObject.SetActive(true);
-                player.SetActive(true);
+                Camera.SetActive(true);
                 break;
             case "Credits":
                 currentLevel = "Credits";
@@ -133,7 +139,7 @@ public class GameManager : MonoBehaviour
                 current.SetActive(true);
                 loading.SetActive(false);
                 yield return new WaitForFixedUpdate();
-                player.SetActive(true);
+                Camera.SetActive(true);
                 break;
             default:
                 throw new UnityException("Could not load next level");
@@ -163,15 +169,19 @@ public class GameManager : MonoBehaviour
         GameObject tmp = Instantiate(Kitchen);
         tmp.SetActive(true);
         player = GameObject.FindGameObjectWithTag("Player");
+        player.AddComponent<SteamVRLaserWrapper>();
+        player.AddComponent<SteamVR_LaserPointer>();
+        Camera = GameObject.FindGameObjectWithTag("MainCamera");
         yield return new WaitUntil(() => player.GetComponentInChildren<Fade>() != null);
         fader = player.GetComponentInChildren<Fade>();
         Kitchen = _kitchen;
         player.transform.parent = null;
         Teleporting.SetActive(true);
-        player.SetActive(false);
+        Camera.SetActive(false);
         yield return new WaitForFixedUpdate();
         tmp.BroadcastMessage("StopAllCoroutines");
         tmp.SetActive(false);
+        gc.Add(tmp);
         current = Instantiate(Menu);
         current.SetActive(true);
 
