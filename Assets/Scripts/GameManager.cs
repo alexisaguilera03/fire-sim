@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
         gc.Add(tmp);
         current = Instantiate(Menu);
         current.SetActive(true);
+        Camera.SetActive(true);
 
     }
 
