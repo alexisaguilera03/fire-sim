@@ -177,8 +177,6 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = new Vector3(-0.42f, 0.692f, -2.026f);
         player.transform.rotation = Quaternion.Euler(0,0,0);
-        player.GetComponent<Player>().rightHand.gameObject.AddComponent<SteamVRLaserWrapper>();
-        player.GetComponent<Player>().rightHand.gameObject.AddComponent<SteamVR_LaserPointer>();
         Camera = GameObject.FindGameObjectWithTag("MainCamera");
         yield return new WaitUntil(() => player.GetComponentInChildren<Fade>() != null);
         fader = player.GetComponentInChildren<Fade>();
