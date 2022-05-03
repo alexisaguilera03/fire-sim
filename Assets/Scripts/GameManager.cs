@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
             Destroy(player.GetComponentInChildren<SteamVR_LaserPointer>());
-            Destroy(player.transform.Find("New Game Object"));
+            Destroy(player.GetComponent<Player>().rightHand.transform.Find("New Game Object").gameObject);
         }
         loading.SetActive(true);
         yield return new WaitForSeconds(3);
@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
             Destroy(player.GetComponentInChildren<SteamVR_LaserPointer>());
+            Destroy(player.GetComponent<Player>().rightHand.transform.Find("New Game Object").gameObject);
         }
         isLoading = true;
         gc.Add(current);
