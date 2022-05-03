@@ -62,6 +62,11 @@ public class GameManager : MonoBehaviour
             gc.Add(current);
             current.SetActive(false);
         }
+        if (player.GetComponentInChildren<SteamVR_LaserPointer>() != null)
+        {
+            Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
+            Destroy(player.GetComponentInChildren<SteamVR_LaserPointer>());
+        }
         loading.SetActive(true);
         yield return new WaitForSeconds(3);
         //todo: loading screen
