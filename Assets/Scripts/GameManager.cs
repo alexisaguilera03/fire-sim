@@ -169,6 +169,8 @@ public class GameManager : MonoBehaviour
         GameObject tmp = Instantiate(Kitchen);
         tmp.SetActive(true);
         player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = new Vector3(-0.42f, 0.692f, -2.026f);
+        player.transform.rotation = Quaternion.Euler(0,0,0);
         player.AddComponent<SteamVRLaserWrapper>();
         player.AddComponent<SteamVR_LaserPointer>();
         Camera = GameObject.FindGameObjectWithTag("MainCamera");
