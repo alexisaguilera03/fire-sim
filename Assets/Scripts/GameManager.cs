@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject Menu, Kitchen, Escape, FireFighter, Credit, _kitchen, Teleporting, LoadingScreen;
 
-    public AudioSource FireAlarm;
+    public AudioSource FireAlarm, KitchenTimeout, HandsOnFire, EscapeTimeout, FireFighterTimeout, EscapeIntro, FireFighterIntro;
 
     public static GameObject player;
 
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private bool isLoading;
 
-    public bool isPlaying;
+    public bool isPlaying, TimedOut, handsOnFire;
 
 
     // Start is called before the first frame update
@@ -57,11 +57,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator loadFirstLevel()
     {
-        if (current.name.Contains("Menu"))
-        {
-            gc.Add(current);
-            current.SetActive(false);
-        }
+        fader.FadeIn(Color.white, 2f);
+        yield return new WaitForSeconds(2.1f);
+        gc.Add(current);
+        current.SetActive(false);
+        
         if (player.GetComponentInChildren<SteamVR_LaserPointer>() != null)
         {
             Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
@@ -70,13 +70,14 @@ public class GameManager : MonoBehaviour
         }
         loading.SetActive(true);
         yield return new WaitForSeconds(3);
-        //todo: loading screen
         currentLevel = "Kitchen";
         loading.SetActive(false);
-        Camera.SetActive(true);
         current = Instantiate(Kitchen);
         yield return new WaitForFixedUpdate();
+        player.transform.position = new Vector3(-3.09f, 0.42f, -5.15f);
+        player.transform.rotation = Quaternion.Euler(0,180,0);
         current.SetActive(true);
+        Camera.SetActive(true);
         StartCoroutine(garbageCollect());
 
     }
@@ -90,27 +91,68 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator load()
     {
+        isLoading = true;
+        //fader.FadeIn(Color.white, 2f);
+        //yield return new WaitForSeconds(2.1f);
         if (player.GetComponentInChildren<SteamVR_LaserPointer>() != null)
         {
             Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
             Destroy(player.GetComponentInChildren<SteamVR_LaserPointer>());
             Destroy(player.GetComponent<Player>().rightHand.transform.Find("New Game Object").gameObject);
         }
-        isLoading = true;
+        
         gc.Add(current);
         if (FireAlarm.isPlaying)
         {
             FireAlarm.Stop();
         }
+
+        if (TimedOut && KitchenTimeout != null && !handsOnFire)
+        {
+            AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+            foreach (AudioSource source in audioSources)
+            {
+                source.Stop();
+            }
+            
+            switch (currentLevel)
+            {
+                case "Kitchen":
+                    KitchenTimeout.Play();
+                    yield return new WaitUntil(() => !KitchenTimeout.isPlaying);
+                    break;
+                case "Escape":
+                    EscapeTimeout.Play();
+                    yield return new WaitUntil(() => !EscapeTimeout.isPlaying);
+                    break;
+                case "FireFighter":
+                    FireFighterTimeout.Play();
+                    yield return new WaitUntil(() => !FireFighterTimeout.isPlaying);
+                    break;
+            }
+        }
+
+        if (handsOnFire)
+        {
+            AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+            foreach (AudioSource source in audioSources)
+            {
+                source.Stop();
+            }
+            HandsOnFire.Play();
+            yield return new WaitUntil(() => !HandsOnFire.isPlaying);
+        }
+
         fader.FadeIn(Color.black, 1);
         yield return new WaitForSeconds(1);
         current.SetActive(false);
         Camera.SetActive(false);
         loading.SetActive(true);
         yield return new WaitForSeconds(3);
-        switch (nextLevel)
+        switch (nextLevel) //todo: insert intro audio
         {
             case "Kitchen":
+                StartCoroutine(loadFirstLevel());
                 break;
             case "Escape":
                 player.transform.position = new Vector3(22f, 2.282f, -28.68f);
@@ -152,7 +194,6 @@ public class GameManager : MonoBehaviour
             default:
                 throw new UnityException("Could not load next level");
         }
-
         isLoading = false;
         StartCoroutine(garbageCollect());
     }
@@ -177,10 +218,11 @@ public class GameManager : MonoBehaviour
         GameObject tmp = Instantiate(Kitchen);
         tmp.SetActive(true);
         player = GameObject.FindGameObjectWithTag("Player");
-        player.transform.position = new Vector3(-0.42f, 0.692f, -2.026f);
-        player.transform.rotation = Quaternion.Euler(0,0,0);
         Camera = GameObject.FindGameObjectWithTag("MainCamera");
         yield return new WaitUntil(() => player.GetComponentInChildren<Fade>() != null);
+        player.transform.position = new Vector3(-0.42f, 0.692f, -2.026f);
+        player.transform.rotation = Quaternion.Euler(0, 0, 0);
+        Camera = GameObject.FindGameObjectWithTag("MainCamera");
         fader = player.GetComponentInChildren<Fade>();
         Kitchen = _kitchen;
         player.transform.parent = null;

@@ -39,6 +39,7 @@ public class LoseCondition : MonoBehaviour
         if (handsOnFire && enforceHandsOnFire)
         {
             handsOnFire = false;
+            GameManager.Instance.handsOnFire = true;
             fireManager.Invoke("ExtinguishAllFires", 10);
             fader.FadeIn(Color.white, 2, 10);
             Invoke("startLose", 11);
@@ -91,6 +92,7 @@ public class LoseCondition : MonoBehaviour
     {
         timing = true;
         yield return new WaitForSeconds(seconds);
+        GameManager.Instance.TimedOut = true;
         lose = true;
     }
 

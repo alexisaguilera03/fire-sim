@@ -151,12 +151,15 @@ public class SceneManager : MonoBehaviour
 
     void Load()
     {
-        load = false;
+        if (loading) return;
+        loading = true;
         gameManager.Load();
     }
 
      public void reset()
     {
+        if (loading) return;
+        loading = true;
         nextScene = gameManager.currentLevel;
         gameManager.reset();
 

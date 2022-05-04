@@ -98,7 +98,7 @@ public class Firetruck : MonoBehaviour
         soundEngine.StopSound(siren);
         rotate = false;
         Destroy(followCamera.gameObject);
-        Play();
+        //Play();
 
     }
 }

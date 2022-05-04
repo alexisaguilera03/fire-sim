@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -536,10 +536,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu
       objectReference: {fileID: 0}
-    - target: {fileID: 2655178541556377206, guid: e84d168ad70d5094ca9de90c39423c42, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2655178541556377207, guid: e84d168ad70d5094ca9de90c39423c42, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -584,10 +580,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2655178541795845251, guid: e84d168ad70d5094ca9de90c39423c42, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c2039fa6eaae91b449aa4a5258d887c7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e84d168ad70d5094ca9de90c39423c42, type: 3}
 --- !u!1001 &3317232732995798725
@@ -651,7 +643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3317232732683030973, guid: 9a756db081ceb6546b5afebc94f65352, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a756db081ceb6546b5afebc94f65352, type: 3}
@@ -666,6 +658,10 @@ PrefabInstance:
       propertyPath: Sprites.Array.data[2]
       value: 
       objectReference: {fileID: 21300000, guid: a8eb2d4216c0bd44fa567679a879685e, type: 3}
+    - target: {fileID: 1723885983506025784, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4442487799667106317, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
