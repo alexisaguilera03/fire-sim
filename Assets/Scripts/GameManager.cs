@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject Menu, Kitchen, Escape, FireFighter, Credit, _kitchen, Teleporting, LoadingScreen;
 
-    public AudioSource FireAlarm, KitchenTimeout, HandsOnFire, EscapeTimeout, FireFighterTimeout, EscapeIntro, FireFighterIntro;
+    public AudioSource FireAlarm, KitchenTimeout, HandsOnFire, EscapeTimeout, FireFighterTimeout, KitchenIntro, EscapeIntro, FireFighterIntro;
 
     public static GameObject player;
 
@@ -71,12 +71,14 @@ public class GameManager : MonoBehaviour
         loading.SetActive(true);
         yield return new WaitForSeconds(3);
         currentLevel = "Kitchen";
-        loading.SetActive(false);
         current = Instantiate(Kitchen);
         yield return new WaitForFixedUpdate();
         player.transform.position = new Vector3(-3.09f, 0.42f, -5.15f);
         player.transform.rotation = Quaternion.Euler(0,180,0);
+        loading.SetActive(false);
         current.SetActive(true);
+        KitchenIntro.playOnAwake = true;
+        KitchenIntro.enabled = true;
         Camera.SetActive(true);
         StartCoroutine(garbageCollect());
 
@@ -92,8 +94,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator load()
     {
         isLoading = true;
-        //fader.FadeIn(Color.white, 2f);
-        //yield return new WaitForSeconds(2.1f);
         if (player.GetComponentInChildren<SteamVR_LaserPointer>() != null)
         {
             Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
@@ -165,6 +165,8 @@ public class GameManager : MonoBehaviour
                 FireAlarm.Play();
                 var tmp = current.transform.Find("PlayerManager");
                 yield return new WaitUntil(() => tmp.GetComponent<Camera>() != null);
+                EscapeIntro.playOnAwake = true;
+                EscapeIntro.enabled = true;
                 yield return new WaitUntil(() => tmp.GetComponent<Camera>() == null);
                 FireAlarm.volume /= 3;
                 Camera.SetActive(true);
@@ -175,11 +177,12 @@ public class GameManager : MonoBehaviour
                 currentLevel = "FireFighter";
                 current = Instantiate(FireFighter);
                 current.transform.Find("HouseManager");
-                var test = current.transform.Find("FireTruck").GetComponent<Firetruck>();
                 current.SetActive(true);
                 loading.SetActive(false);
                 yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera != null);
                 yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera == null);
+                FireFighterIntro.playOnAwake = true;
+                FireFighterIntro.enabled = true;
                 current.transform.Find("MainObjects").gameObject.SetActive(true);
                 Camera.SetActive(true);
                 break;

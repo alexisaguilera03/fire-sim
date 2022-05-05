@@ -55,7 +55,7 @@ public class WinCondition : MonoBehaviour
     {
         print("Won! moving to next scene");
 
-        if (WinAudioSource != null)
+        if (WinAudioSource != null && WinAudioSource.clip != null)
         {
             if (playing) return;
             playing = true;

@@ -12,7 +12,8 @@ public class HintSystem : MonoBehaviour
         GrabObjects,
         DropObjects,
         Extinguisher,
-        Hose
+        Hose,
+        DeathDoor
     }
     public Hint hint;
     public Sprite[] Sprites;
@@ -69,7 +70,7 @@ public class HintSystem : MonoBehaviour
         {
             previousHint = activeHint;
             activeHint = hint;
-            if (previousHint == activeHint){
+            if (previousHint == activeHint && !hintTaken){
                 return; //prevent hint that is currently being displayed from displaying again
             }
             else
@@ -77,8 +78,10 @@ public class HintSystem : MonoBehaviour
                 removeHint();
             }
         }
+
+        this.hint = hint;
         
-        switch (hint) //todo: add other hints
+        switch (hint)
         {
             case Hint.Duck:
                 currentHint.sprite = Sprites[0];
@@ -87,12 +90,19 @@ public class HintSystem : MonoBehaviour
                 currentHint.sprite = Sprites[1];
                 break;
             case Hint.None:
+                currentHint.sprite = Sprites[2];
                 break;
             case Hint.DropObjects:
+                currentHint.sprite = Sprites[3];
                 break;
             case Hint.Extinguisher:
+                currentHint.sprite = Sprites[4];
                 break;
             case Hint.Hose:
+                currentHint.sprite = Sprites[5];
+                break;
+            case Hint.DeathDoor:
+                currentHint.sprite = Sprites[6];
                 break;
             default:
                 return;
@@ -134,6 +144,7 @@ public class HintSystem : MonoBehaviour
 
     public void removeHint()
     {
+        hint = Hint.None;
         flash = false;
         StopAllCoroutines();
         CancelInvoke();

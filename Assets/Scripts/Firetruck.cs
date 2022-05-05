@@ -9,7 +9,7 @@ public class Firetruck : MonoBehaviour
 
     public Camera followCamera;
 
-    public  AudioSource siren;
+    public  AudioSource siren, WinAudioSource;
     private SoundEngine soundEngine;
 
     private bool ready = false, rotate = false;
@@ -43,6 +43,13 @@ public class Firetruck : MonoBehaviour
         {
             test = false;
             GameObject.FindGameObjectWithTag("FireManager").GetComponent<FireManager>().ExtinguishAllFires();
+        }
+
+        if (GameObject.FindGameObjectWithTag("SceneManager") == null) return;
+
+        if (GameObject.FindGameObjectWithTag("SceneManager").GetComponent<WinCondition>().WinAudioSource == null)
+        {
+            GameObject.FindGameObjectWithTag("SceneManager").GetComponent<WinCondition>().WinAudioSource = WinAudioSource;
         }
     }
 

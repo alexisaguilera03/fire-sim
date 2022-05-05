@@ -12,6 +12,7 @@ public class LoseCondition : MonoBehaviour
     public bool lose = false;
     public bool lost = false;
     public bool handsOnFire = false;
+    public AudioSource LoseAudioSource;
 
 
     private SceneManager sceneManager;
@@ -59,11 +60,21 @@ public class LoseCondition : MonoBehaviour
 
     public void setLost(bool explosion)
     {
-        if (explosion)
+        if (explosion && LoseAudioSource != null)
         {
-            lost = true;
-            //do stuff for death
+            StartCoroutine(playDeathSound());
         }
+        else
+        {
+            lose = true;
+        }
+    }
+
+    IEnumerator playDeathSound()
+    {
+        soundEngine.PlaySoundEffectPriority(LoseAudioSource, false);
+        yield return new WaitWhile(() => LoseAudioSource.isPlaying);
+        lose = true;
     }
     public void checkLoseCondition()
     {

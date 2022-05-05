@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Valve.VR;
 using Valve.VR.InteractionSystem;
@@ -38,6 +39,7 @@ public class Extinguisher : MonoBehaviour
             Debug.LogError("Extinguisher AudioSource must be set");
         }
         ExtinguisherAudioSource = audioSources[0];
+        ExtinguisherAudioSource = audioSources.ToList().Find(x => x.clip.name == "Fire Extinguisher");
         successExtinguisherAudioSource = (audioSources.Length > 1) ? audioSources[1] : null;
         interactionSystem = GetComponentInParent<Interaction>();
         if (interactionSystem == null)

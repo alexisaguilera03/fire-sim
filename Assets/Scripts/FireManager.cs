@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 using Random = System.Random;
 
 public class FireManager : MonoBehaviour
@@ -43,12 +44,12 @@ public class FireManager : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(center, 5f);
         List <Collider> tmp = new List<Collider>();
         tmp = hitColliders.ToList();
-        tmp.RemoveAll(x => x.gameObject.transform.root.name.Contains("House") == true);
-        tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Player"));
-        tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Fire"));
+        tmp.RemoveAll(x => x.GetComponentInParent<HouseManager>() != null);
+        tmp.RemoveAll(x => x.GetComponentInParent<Player>()!= null);
+        tmp.RemoveAll(x => x.GetComponentInParent<Fire>()!= null || x.GetComponent<Fire>() != null);
         tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Extinguisher"));
-        tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("InteractionSystem"));
-        tmp.RemoveAll(x => x.gameObject.transform.root.CompareTag("Zone"));
+        tmp.RemoveAll(x => x.GetComponentInParent<Interaction>() != null);
+        tmp.RemoveAll(x => x.GetComponentInParent<ZoneManager>()!= null || x.GetComponent<ZoneManager>()!= null);
         hitColliders = tmp.ToArray();
         GameObject newObject = hitColliders[rng.Next(0, hitColliders.Length)].gameObject;
         createFire(newObject.transform.position, FireGameObject.transform.rotation);

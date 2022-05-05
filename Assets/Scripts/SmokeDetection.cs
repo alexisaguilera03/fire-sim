@@ -50,6 +50,7 @@ public class SmokeDetection : MonoBehaviour
             if (hintShown)
             {
                 hintSystem.hintTaken = true;
+                hintShown = false;
             }
             else
             {

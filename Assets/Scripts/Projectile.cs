@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     public GameObject shotFrom;
     public int index;
     public AudioSource SuccessExtinguishAudioSource;
+    public AudioSource GreaseFireDeathAudioSource;
     private SoundEngine soundEngine;
     private SceneManager sceneManager;
 
@@ -41,6 +42,7 @@ public class Projectile : MonoBehaviour
         {
             if (shotFrom.gameObject.name != "Mug")
             {
+                sceneManager.loseCondition.LoseAudioSource = GreaseFireDeathAudioSource;
                 sceneManager.loseCondition.setLost(true);
             }
             MonoBehaviour[] scripts = shotFrom.GetComponents<MonoBehaviour>();

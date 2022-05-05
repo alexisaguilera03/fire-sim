@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -24,6 +25,10 @@ public class Door : MonoBehaviour
     }
     void Start()
     {
+        if (GameManager.Instance.currentLevel == "FireFighter")
+        {
+            deathDoor = false;
+        }
         //playerInteracted = true; //debug remove when done
         gameObject.GetComponentInChildren<Collider>().isTrigger = true;
         doorOriginalRotation = door.transform.rotation;
@@ -116,10 +121,20 @@ public class Door : MonoBehaviour
         if (dead) return;
 
         dead = true;
-        var explostion = Instantiate(GameObject.FindGameObjectWithTag("Explosion"),GameObject.FindGameObjectWithTag("MainCamera").transform.position + Vector3.forward/5, GameObject.FindGameObjectWithTag("MainCamera").transform.rotation);
+        var explosion = Instantiate(GameObject.FindGameObjectWithTag("Explosion"),GameObject.FindGameObjectWithTag("MainCamera").transform.position + Vector3.forward/5, GameObject.FindGameObjectWithTag("MainCamera").transform.rotation);
+        
+        Destroy(explosion, 1f);
+        StartCoroutine(showDeathHint());
+    }
+
+    IEnumerator showDeathHint()
+    {
+        GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>().FadeIn(Color.black, 1);
+        GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>().displayHint(0,5);
+        yield return new WaitUntil(() => GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>().hint == HintSystem.Hint.None);
+        yield return new WaitUntil(() => GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>().hint == HintSystem.Hint.None);
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().loseCondition.lose = true;
         GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>().FadeIn(Color.white, 1);
-        Destroy(explostion, 1f);
     }
 
     void OnTriggerEnter(Collider collider)
