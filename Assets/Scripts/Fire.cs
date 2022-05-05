@@ -10,6 +10,7 @@ public class Fire : MonoBehaviour
     private SoundEngine soundEngine = null;
     private FireManager fireManager;
     private bool destroyFire = false;
+    private bool handsOnFire = false;
 
     // Start is called before the first frame update
     void Start()
@@ -63,13 +64,18 @@ public class Fire : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<Hand>() != null && GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().loseCondition.enforceHandsOnFire)
+        if (collision.gameObject.name.Contains("Hand"))
         {
-            if (collision.gameObject.GetComponentInChildren<Spill>() == null)
+            if (GameManager.Instance.currentLevel == "FireFighter") return;
+            if (collision.gameObject.GetComponentInChildren<Spill>() != null)
             {
                 return;
             }
-            fireManager.createFire(collision.gameObject.transform);
+            if (handsOnFire) return;
+            handsOnFire = true;
+            var tmp = fireManager.createFireGameObject(collision.gameObject.transform.position, Quaternion.Euler(0,0,0));
+            tmp.GetComponent<Collider>().enabled = false;
+            tmp.transform.SetParent(collision.gameObject.transform);
             GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().loseCondition.handsOnFire = true;
             print("lose");
         }

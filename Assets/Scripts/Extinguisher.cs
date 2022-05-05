@@ -7,7 +7,7 @@ using Valve.VR.InteractionSystem;
 
 public class Extinguisher : MonoBehaviour
 {
-    private SteamVR_Action_Boolean grabAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+    private SteamVR_Action_Boolean grabAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
     private SteamVR_Action_Boolean releaseAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabGrip");
     public GameObject particles = null;
     public GameObject projectile = null;

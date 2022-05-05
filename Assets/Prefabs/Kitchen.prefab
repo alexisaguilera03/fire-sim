@@ -5811,7 +5811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabAction:
-    actionPath: /actions/default/in/GrabGrip
+    actionPath: /actions/default/in/InteractUI
     needsReinit: 0
   releaseAction:
     actionPath: /actions/default/in/GrabGrip
@@ -6342,7 +6342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabAction:
-    actionPath: /actions/default/in/GrabGrip
+    actionPath: /actions/default/in/InteractUI
     needsReinit: 0
   releaseAction:
     actionPath: /actions/default/in/GrabGrip
@@ -6428,7 +6428,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 465389402831947945, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
       propertyPath: grabAction.actionPath
-      value: /actions/default/in/GrabGrip
+      value: /actions/default/in/InteractUI
       objectReference: {fileID: 0}
     - target: {fileID: 465389402831947945, guid: e928c843d3c2a3347bca0e2b20993968, type: 3}
       propertyPath: releaseAction.actionPath

@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f4f80a06ed22e4588e4a0c60bafccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabAction:
+    actionPath: /actions/default/in/InteractUI
+    needsReinit: 0

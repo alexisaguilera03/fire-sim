@@ -1305,9 +1305,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8120895119451338509, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
+      propertyPath: grabAction.actionPath
+      value: /actions/default/in/InteractUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8558618471494530208, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
+      propertyPath: grabAction.actionPath
+      value: /actions/default/in/InteractUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8558618471715807360, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
+      propertyPath: grabAction.actionPath
+      value: /actions/default/in/InteractUI
+      objectReference: {fileID: 0}
     - target: {fileID: 8558618472865502666, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8558618473152314366, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
+      propertyPath: grabAction.actionPath
+      value: /actions/default/in/InteractUI
       objectReference: {fileID: 0}
     - target: {fileID: 8558618473219996152, guid: b66b35e45ceacf44b8b61483c47ce638, type: 3}
       propertyPath: m_Name

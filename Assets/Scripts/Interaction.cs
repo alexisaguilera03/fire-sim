@@ -1,8 +1,10 @@
 using UnityEngine;
+using Valve.VR;
 using Valve.VR.InteractionSystem;
 
 public class Interaction : MonoBehaviour
 {
+    public SteamVR_Action_Boolean grabAction;
     private Hand.AttachmentFlags attachmentFlags = Hand.AttachmentFlags.ParentToHand | Hand.AttachmentFlags.DetachFromOtherHand | Hand.AttachmentFlags.TurnOnKinematic;
 
     private HintSystem hintSystem;
@@ -25,7 +27,7 @@ public class Interaction : MonoBehaviour
         if (attached) return;
         GrabTypes bestGrabType = hand.GetBestGrabbingType(GrabTypes.Pinch); //this line is used instead to of a SteamVR_Action_Boolean to allow 2d testing as well
         
-        if ( bestGrabType != GrabTypes.None && !attached)
+        if ( bestGrabType != GrabTypes.None && !attached || grabAction.GetState(hand.handType) )
         {
             hintSystem = GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>();
             if (hintSystem.activeHint == HintSystem.Hint.GrabObjects)

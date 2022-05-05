@@ -19,7 +19,7 @@ public class Hose : MonoBehaviour
     private bool particlesActive = false;
     private bool displayHint = true;
 
-    private SteamVR_Action_Boolean grabAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+    private SteamVR_Action_Boolean grabAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
     private SteamVR_Action_Boolean releaseAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabGrip");
 
     private Hand AttachedHand = null;
@@ -110,9 +110,9 @@ public class Hose : MonoBehaviour
                 hintSystem.hintTaken = true;
             }
             firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
-            Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), gameObject.GetComponentInChildren<Collider>());
+            Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), barrel.GetComponentInChildren<Collider>());
             projectileActive = true;
-            firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
+            firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * Force, ForceMode.Impulse);
             //todo: find rushing water sound effect
             //soundEngine.PlaySoundEffect(ExtinguisherAudioSource, true, false);
             StartCoroutine(waitProjectile(2));

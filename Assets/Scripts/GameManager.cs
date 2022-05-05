@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         
         if (player.GetComponentInChildren<SteamVR_LaserPointer>() != null)
         {
-            Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>());
+            Destroy(player.GetComponentInChildren<SteamVRLaserWrapper>()); 
             Destroy(player.GetComponentInChildren<SteamVR_LaserPointer>());
             Destroy(player.GetComponent<Player>().rightHand.transform.Find("New Game Object").gameObject);
         }
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         KitchenIntro.playOnAwake = true;
         KitchenIntro.enabled = true;
         Camera.SetActive(true);
+        fader.FadeOut(1);
         StartCoroutine(garbageCollect());
 
     }

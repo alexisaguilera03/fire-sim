@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabAction:
-    actionPath: /actions/default/in/GrabGrip
+    actionPath: /actions/default/in/InteractUI
     needsReinit: 0
   releaseAction:
     actionPath: /actions/default/in/GrabGrip
