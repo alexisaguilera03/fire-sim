@@ -131,7 +131,7 @@ public class Door : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>().FadeIn(Color.black, 1);
         GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>().displayHint(0,5);
-        yield return new WaitUntil(() => GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>().hint == HintSystem.Hint.None);
+        yield return new WaitUntil(() => GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>().hint != HintSystem.Hint.None);
         yield return new WaitUntil(() => GameObject.FindGameObjectWithTag("HintSystem").GetComponent<HintSystem>().hint == HintSystem.Hint.None);
         GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManager>().loseCondition.lose = true;
         GameObject.FindGameObjectWithTag("UI").GetComponent<Fade>().FadeIn(Color.white, 1);
