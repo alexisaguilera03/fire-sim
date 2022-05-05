@@ -78,21 +78,20 @@ public class LoseCondition : MonoBehaviour
     }
     public void checkLoseCondition()
     {
-        if (enforceMaxFires)
-        {
-            if (fireManager.fireCount >= maxFires)
-            {
-                lose = true;
-            }
-        }
+        if (!enforceMaxFires) return;
+
+        if (fireManager.fireCount < maxFires) return;
+        GameManager.Instance.TimedOut = true;
+        lose = true;
 
     }
 
     void startLose() //todo: implement effects for explosion in kitchen and hands catching on fire
     {
         if (losing) return;
-        hintSystem.removeHint();
         losing = true;
+        hintSystem.removeHint();
+        
 
         //do stuff
         lost = true;

@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> gc = new List<GameObject>();
 
-    private bool isLoading;
+    private bool isLoading, isResetting;
 
     public bool isPlaying, TimedOut, handsOnFire;
 
@@ -173,13 +173,13 @@ public class GameManager : MonoBehaviour
                 current.transform.Find("MainObjects").gameObject.SetActive(true);
                 break;
             case "FireFighter":
-                player.transform.position = new Vector3(21.71f, 0f, -47.9f);
+                player.transform.position = new Vector3(21.71f, 1f, -47.9f);
                 currentLevel = "FireFighter";
                 current = Instantiate(FireFighter);
                 current.transform.Find("HouseManager");
                 current.SetActive(true);
-                loading.SetActive(false);
                 yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera != null);
+                loading.SetActive(false);
                 yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera == null);
                 FireFighterIntro.playOnAwake = true;
                 FireFighterIntro.enabled = true;
@@ -189,8 +189,10 @@ public class GameManager : MonoBehaviour
             case "Credits":
                 currentLevel = "Credits";
                 current = Instantiate(Credit);
-                current.SetActive(true);
+                player.transform.position = new Vector3(-7.1f, 1f, -5.34f);
+                player.transform.rotation = Quaternion.Euler(0,0,0);
                 loading.SetActive(false);
+                current.SetActive(true);
                 yield return new WaitForFixedUpdate();
                 Camera.SetActive(true);
                 break;
@@ -198,11 +200,15 @@ public class GameManager : MonoBehaviour
                 throw new UnityException("Could not load next level");
         }
         isLoading = false;
+        isResetting = false;
         StartCoroutine(garbageCollect());
     }
 
     public void reset()
     {
+        if (isResetting) return;
+        isResetting = true;
+        fader.FadeIn(Color.white, 1);
         nextLevel = currentLevel;
         var tmp = player.GetComponentsInChildren<Fire>();
         if (tmp.Length > 0)
@@ -213,9 +219,36 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        StartCoroutine(load());
+        StartCoroutine(TimedOut ? playTimeout() : load());
     }
 
+    IEnumerator playTimeout()
+    {
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource source in audioSources)
+        {
+            source.Stop();
+        }
+        switch (currentLevel)
+        {
+            case "Kitchen":
+                KitchenTimeout.Play();
+                yield return new WaitUntil(() => !KitchenTimeout.isPlaying);
+                break;
+            case "Escape":
+                EscapeTimeout.Play();
+                yield return new WaitUntil(() => !EscapeTimeout.isPlaying);
+                break;
+            case "FireFighter":
+                FireFighterTimeout.Play();
+                yield return new WaitUntil(() => !FireFighterTimeout.isPlaying);
+                break;
+            default:
+                yield break;
+        }
+
+        StartCoroutine(load());
+    }
     IEnumerator getPlayer()
     {
         GameObject tmp = Instantiate(Kitchen);
