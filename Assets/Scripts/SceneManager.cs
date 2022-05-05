@@ -93,7 +93,7 @@ public class SceneManager : MonoBehaviour
         }
 
         gameManager.nextLevel = nextScene;
-        fader.FadeOut(0.5f);  //update this
+       // fader.FadeOut(0.5f);  //update this
         
     }
 
@@ -103,7 +103,7 @@ public class SceneManager : MonoBehaviour
         if (test)
         {
             test = false;
-            LoadFirstLevel(); //remove when done
+            LevelSelect("Credits"); //remove when done
         }
 
         if (menu) return;
@@ -134,13 +134,6 @@ public class SceneManager : MonoBehaviour
     {
         test = false;
         gameManager.LoadFirstLevel();
-        /*
-        Destroy(Player.instance.rightHand.gameObject.GetComponent<SteamVR_LaserPointer>());
-        Destroy(Player.instance.rightHand.gameObject.GetComponent<SteamVRLaserWrapper>());
-        createLoadingScreen();
-        Invoke("Load", 1);
-        */
-        
     }
 
     public void LevelSelect(string levelName)

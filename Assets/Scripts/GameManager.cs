@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
         Camera.SetActive(false);
         loading.SetActive(true);
         yield return new WaitForSeconds(3);
-        switch (nextLevel) //todo: insert intro audio
+        switch (nextLevel) 
         {
             case "Kitchen":
                 StartCoroutine(loadFirstLevel());
@@ -176,7 +176,6 @@ public class GameManager : MonoBehaviour
                 player.transform.position = new Vector3(21.71f, 1f, -47.9f);
                 currentLevel = "FireFighter";
                 current = Instantiate(FireFighter);
-                current.transform.Find("HouseManager");
                 current.SetActive(true);
                 yield return new WaitUntil(() => current.transform.Find("FireTruck").GetComponent<Firetruck>().followCamera != null);
                 loading.SetActive(false);
