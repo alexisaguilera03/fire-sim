@@ -51,8 +51,12 @@ public class FireManager : MonoBehaviour
         tmp.RemoveAll(x => x.GetComponentInParent<Interaction>() != null);
         tmp.RemoveAll(x => x.GetComponentInParent<ZoneManager>()!= null || x.GetComponent<ZoneManager>()!= null);
         tmp.RemoveAll(x => x.gameObject.name.Contains("Cube"));
+        tmp.RemoveAll(x => x.gameObject.name.ToLower().Contains("street"));
+        tmp.RemoveAll(x => x.gameObject.GetComponent<TeleportArea>() != null);
+        if (tmp.Count == 0) return;
         hitColliders = tmp.ToArray();
-        GameObject newObject = hitColliders[rng.Next(0, hitColliders.Length)].gameObject;
+        if (hitColliders.Length == 0) return;
+        GameObject newObject = hitColliders[rng.Next(0, hitColliders.Length-1)].gameObject;
         createFire(newObject.transform.position, FireGameObject.transform.rotation);
         StartCoroutine(wait());
     }

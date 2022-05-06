@@ -6700,6 +6700,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: proxyAxorr_fiveFootSix
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bd75a14058b0160498b208d30d72fbab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd75a14058b0160498b208d30d72fbab, type: 3}
 --- !u!4 &879137001233341992 stripped

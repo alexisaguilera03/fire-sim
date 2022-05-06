@@ -7751,7 +7751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3317232732983244578
 Transform:
   m_ObjectHideFlags: 0
@@ -8390,7 +8390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3317232733246791745
 Transform:
   m_ObjectHideFlags: 0
@@ -8501,7 +8501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3317232733261229066
 Transform:
   m_ObjectHideFlags: 0
@@ -9169,7 +9169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3317232733482075682
 Transform:
   m_ObjectHideFlags: 0
@@ -9280,7 +9280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3317232733489957429
 Transform:
   m_ObjectHideFlags: 0
@@ -10358,6 +10358,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3bb945206207f48d4b35980827a37f68, type: 3}
       propertyPath: m_Name
       value: BedFinal (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3bb945206207f48d4b35980827a37f68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bb945206207f48d4b35980827a37f68, type: 3}
@@ -14238,6 +14242,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BedFinal (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3bb945206207f48d4b35980827a37f68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bb945206207f48d4b35980827a37f68, type: 3}
 --- !u!1 &53463741153041909 stripped
@@ -16288,6 +16296,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7695899551250295778, guid: 5cd15fb57f347423d981de2e43aca8d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6574310683302627148, guid: 5cd15fb57f347423d981de2e43aca8d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5cd15fb57f347423d981de2e43aca8d3, type: 3}
       propertyPath: m_Name
       value: fireplace
@@ -16788,6 +16804,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: dbd0a126ed034492cb78cb8750ebbd7b, type: 3}
       propertyPath: m_Name
       value: smallChristmasTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dbd0a126ed034492cb78cb8750ebbd7b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbd0a126ed034492cb78cb8750ebbd7b, type: 3}
@@ -17409,6 +17429,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 745c0a4050a75437293547a26b4db89c, type: 3}
       propertyPath: m_Name
       value: christmasTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 745c0a4050a75437293547a26b4db89c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 745c0a4050a75437293547a26b4db89c, type: 3}
@@ -20359,6 +20383,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3bb945206207f48d4b35980827a37f68, type: 3}
       propertyPath: m_Name
       value: BedFinal
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3bb945206207f48d4b35980827a37f68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bb945206207f48d4b35980827a37f68, type: 3}

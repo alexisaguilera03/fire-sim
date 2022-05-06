@@ -103,7 +103,7 @@ public class SceneManager : MonoBehaviour
         if (test)
         {
             test = false;
-            LevelSelect("Credits"); //remove when done
+            LevelSelect("FireFighter"); //remove when done
         }
 
         if (menu) return;
