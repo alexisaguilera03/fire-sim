@@ -39,6 +39,7 @@ public class FireManager : MonoBehaviour
 
     public void spread(Vector3 center)
     {
+        if (GameManager.Instance.currentLevel == "FireFighter") return; //prevent spreading of fire in firefighter scene
         if (fireCount >= maxFires) return;
         if (Spread) return; 
         Collider[] hitColliders = Physics.OverlapSphere(center, 5f);
