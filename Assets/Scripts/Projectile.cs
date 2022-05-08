@@ -29,7 +29,26 @@ public class Projectile : MonoBehaviour
             {
                 sceneManager.winCondition.WinAudioSource = SuccessExtinguishAudioSource;
             }
-            collision.gameObject.GetComponent<Fire>().stopFire();
+            if (shotFrom != null && shotFrom.gameObject.name == "Mug")
+            {
+                sceneManager.loseCondition.LoseAudioSource = GreaseFireDeathAudioSource;
+                sceneManager.loseCondition.setLost(true);
+                MonoBehaviour[] scripts = shotFrom.GetComponents<MonoBehaviour>();
+                if (scripts.Length == 1)
+                {
+                    scripts[0].StopAllCoroutines();
+                }
+                else
+                {
+                    scripts[index].StopAllCoroutines();
+                }
+            }
+            else
+            {
+                collision.gameObject.GetComponent<Fire>().stopFire();
+            }
+            
+            
         }
 
         if (extinguisher != null)
@@ -40,13 +59,16 @@ public class Projectile : MonoBehaviour
 
         if (shotFrom != null)
         {
-            if (shotFrom.gameObject.name != "Mug")
-            {
-                sceneManager.loseCondition.LoseAudioSource = GreaseFireDeathAudioSource;
-                sceneManager.loseCondition.setLost(true);
-            }
             MonoBehaviour[] scripts = shotFrom.GetComponents<MonoBehaviour>();
-            scripts[index].StopAllCoroutines();
+            if (scripts.Length == 1)
+            {
+                scripts[0].StopAllCoroutines();
+            }
+            else
+            {
+                scripts[index].StopAllCoroutines();
+            }
+            
         }
         Destroy(gameObject);
     }

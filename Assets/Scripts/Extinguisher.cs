@@ -121,7 +121,10 @@ public class Extinguisher : MonoBehaviour
         firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
         Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), gameObject.GetComponentInChildren<Collider>());
         firedProjectile.GetComponent<Projectile>().extinguisher = this;
-        firedProjectile.GetComponent<Projectile>().SuccessExtinguishAudioSource = successExtinguisherAudioSource;
+        if (GameManager.Instance.currentLevel != "FireFighter")
+        {
+            firedProjectile.GetComponent<Projectile>().SuccessExtinguishAudioSource = successExtinguisherAudioSource;
+        }
         projectileActive = true;
         firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.left * Force, ForceMode.Impulse);
         soundEngine.PlaySoundEffect(ExtinguisherAudioSource, true, false);

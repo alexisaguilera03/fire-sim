@@ -111,6 +111,16 @@ public class Hose : MonoBehaviour
             }
             firedProjectile = Instantiate(projectile, barrel.transform.position, barrel.transform.rotation) as GameObject;
             Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), barrel.GetComponentInChildren<Collider>());
+            Physics.IgnoreCollision(firedProjectile.GetComponent<Collider>(), gameObject.GetComponent<Collider>());
+            MonoBehaviour[] scripts = gameObject.GetComponents<MonoBehaviour>();
+            for (int i = 0; i < scripts.Length; i++)
+            {
+                if (scripts[i] == this)
+                {
+                    firedProjectile.GetComponent<Projectile>().index = i;
+                }
+            }
+            projectile.GetComponent<Projectile>().shotFrom = gameObject;
             projectileActive = true;
             firedProjectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * Force, ForceMode.Impulse);
             //todo: find rushing water sound effect
