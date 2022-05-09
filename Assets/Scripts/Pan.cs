@@ -44,15 +44,13 @@ public class Pan : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        
-        
         if (collider.gameObject == lid)
         {
+            fire.GetComponent<Fire>().preventHandsFire = true;
             
             if (fireManager.fireCount == 1)
             {
                 sceneManager.winCondition.WinAudioSource = success;
-                //sceneManager.winCondition.Win = true;
             }
             fire.GetComponent<Fire>().stopFire();
             Hand hand = collider.transform.parent.gameObject.GetComponent<Hand>();
@@ -61,9 +59,7 @@ public class Pan : MonoBehaviour
             interactionSystem.Release(hand, lid, ref isAttached);
             interactionSystem.AttachToObject(lid, gameObject, position);
 
-            //soundEngine.PlaySoundEffect(success, false, false);
-            
-            
+
         }
     }
 }
