@@ -218,16 +218,6 @@ public class GameManager : MonoBehaviour
                 t.stopFire();
             }
 
-            if (player.GetComponent<Player>().rightHand.gameObject.GetComponent<Collider>().enabled == false || player.GetComponent<Player>().leftHand.gameObject.GetComponent<Collider>().enabled == false)
-            {
-                var _player = player.GetComponent<Player>();
-                var left = _player.leftHand.gameObject;
-                var right = _player.rightHand.gameObject;
-                left.GetComponent<Collider>().enabled = true;
-                right.GetComponent<Collider>().enabled = true;
-
-
-            }
         }
         
 
