@@ -103,7 +103,7 @@ public class SceneManager : MonoBehaviour
         if (test)
         {
             test = false;
-            LevelSelect("FireFighter"); //remove when done
+            LevelSelect("Kitchen"); //remove when done
         }
 
         if (menu) return;

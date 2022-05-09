@@ -12,7 +12,7 @@ public class LoseCondition : MonoBehaviour
     public bool lose = false;
     public bool lost = false;
     public bool handsOnFire = false;
-    public AudioSource LoseAudioSource;
+    public AudioSource LoseAudioSource, GreaseFireDeathAudioSource;
 
 
     private SceneManager sceneManager;
@@ -60,6 +60,7 @@ public class LoseCondition : MonoBehaviour
 
     public void setLost(bool explosion)
     {
+        LoseAudioSource = GreaseFireDeathAudioSource;
         if (explosion && LoseAudioSource != null)
         {
             StartCoroutine(playDeathSound());

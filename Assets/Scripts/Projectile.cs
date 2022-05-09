@@ -1,4 +1,6 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class Projectile : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class Projectile : MonoBehaviour
     public AudioSource GreaseFireDeathAudioSource;
     private SoundEngine soundEngine;
     private SceneManager sceneManager;
+    private bool exploded;
 
     private void Start()
     {
@@ -21,9 +24,15 @@ public class Projectile : MonoBehaviour
         
     }
 
+    private AudioSource returnAudioSource()
+    {
+        var test = new AudioSource();
+        return GreaseFireDeathAudioSource;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Fire"))
+        if (collision.gameObject.CompareTag("Fire") && !exploded)
         {
             if (SuccessExtinguishAudioSource != null)
             {
@@ -31,7 +40,11 @@ public class Projectile : MonoBehaviour
             }
             if (shotFrom != null && shotFrom.gameObject.name == "Mug")
             {
-                sceneManager.loseCondition.LoseAudioSource = GreaseFireDeathAudioSource;
+                exploded = true;
+                bool attached = false;
+                var interactionSystem = GameObject.FindGameObjectWithTag("InteractionSystem").GetComponent<Interaction>();
+                interactionSystem.Release(shotFrom.GetComponentInParent<Hand>(), shotFrom, ref attached);
+                //sceneManager.loseCondition.LoseAudioSource = returnAudioSource();
                 sceneManager.loseCondition.setLost(true);
                 MonoBehaviour[] scripts = shotFrom.GetComponents<MonoBehaviour>();
                 if (scripts.Length == 1)
